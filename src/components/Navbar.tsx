@@ -6,11 +6,6 @@ const Navbar: React.FC = () => {
       <div className="container mx-auto flex justify-center"> {/* Updated this line */}
         <ul className="flex space-x-4">
           <li>
-            <a href="#" className="hover:underline text-center"> {/* Added text-center */}
-              Home
-            </a>
-          </li>
-          <li>
             <a href="/bracelets" className="hover:underline text-center"> {/* Added text-center */}
               Bracelets
             </a>
@@ -18,6 +13,11 @@ const Navbar: React.FC = () => {
           <li>
             <a href="#" className="hover:underline text-center"> {/* Added text-center */}
               Contact
+            </a>
+          </li>
+          <li>
+            <a href="#" className="hover:underline text-center"> {/* Added text-center */}
+              Home
             </a>
           </li>
         </ul>
