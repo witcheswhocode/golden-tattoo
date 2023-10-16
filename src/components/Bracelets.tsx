@@ -1,15 +1,15 @@
 import React from 'react';
-import VegetableList from './VegetableList';
+import BraceletIdeas from './BraceletIdeas';
 import AlphabetInputs from './AlphabetInputs';
 
 type LetterCount = { [letter: string]: number };
 
-const About = () => {
-  const vegetables = [
+const Bracelets = () => {
+  const bracelets = [
     { id: 1, name: 'Carrot' },
     { id: 2, name: 'Broccoli' },
     { id: 3, name: 'Tomato' },
-    // Add more vegetable objects as needed
+    // Add more bracelet objects as needed
   ];
 
   function decrementLetterCounts(word: string, letterCounts: LetterCount): LetterCount {
@@ -47,11 +47,11 @@ const About = () => {
 
   return (
     <div className="container mx-auto mt-8">
-      <h1 className="text-2xl font-bold mb-4">Vegetable Tally</h1>
+      <h1 className="text-2xl font-bold mb-4">bracelet Tally</h1>
       <AlphabetInputs />
-      <VegetableList vegetables={vegetables} />
+      <BraceletIdeas bracelets={bracelets} />
     </div>
   );
 };
 
-export default About;
+export default Bracelets;

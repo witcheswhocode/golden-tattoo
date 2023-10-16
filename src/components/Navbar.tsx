@@ -11,8 +11,8 @@ const Navbar: React.FC = () => {
             </a>
           </li>
           <li>
-            <a href="/about" className="hover:underline text-center"> {/* Added text-center */}
-              About
+            <a href="/bracelets" className="hover:underline text-center"> {/* Added text-center */}
+              Bracelets
             </a>
           </li>
           <li>
