@@ -1,8 +1,16 @@
 import React, { useState } from 'react';
 
 function AlphabetInputs() {
-  const [inputValues, setInputValues] = useState<{ [key: string]: string }>({});
-  //const alphabet = ['A','B','C','D','E','F','G','H','I','J','K','L','M/W','N','O','P','Q','R','S','T','U','V','X','Y','Z']
+  const [inputValues, setInputValues] = useState<{[key: string]: string}>({});
+  /*setInputValues({ 'A': '2', 'B': '2', 'C': '2', 
+                    'D': '2', 'E': '2', 'F': '2', 
+                    'G': '2', 'H': '2', 'I': '2', 
+                    'J': '2', 'K': '2', 'L': '2', 
+                    'M': '2', 'N': '2', 'O': '2', 
+                    'P': '2', 'Q': '2', 'R': '2', 
+                    'S': '2', 'T': '2', 'U': '2', 
+                    'V': '2', 'W': '2', 'X': '2', 
+                    'Y': '2', 'Z': '2' });*/
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
