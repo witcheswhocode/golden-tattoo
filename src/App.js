@@ -23,7 +23,7 @@ function App() {
 
   return (
     <Router>
-      <Header />
+      <Header theme={theme} />
       <Navbar />
       <Dropdown items={dropdownItems} theme={theme} handleThemeChange={handleThemeChange} />
       <Routes>

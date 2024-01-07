@@ -1,13 +1,14 @@
 import React from 'react';
 
 interface HeaderProps {
-  // Define your prop types here
+  theme: string
 }
 
 function Header(props: HeaderProps) {
+  console.log(`bg-${props.theme}-main`)
   return (
-    <header className="bg-blue-500 text-white p-4">
-      <h1 className="text-2xl">My Website</h1>
+    <header className={`bg-[${props.theme}-main] text-white p-4`}>
+      <h1 className={`text-${props.theme}-secondary text-2xl`}>My Website</h1>
     </header>
   );
 }
