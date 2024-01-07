@@ -6,9 +6,14 @@ import Home from "./components/Home";
 import Bracelets from "./components/Bracelets";
 import Contact from "./components/Contact";
 import Navbar from "./components/Navbar";
-import ThemeDropdown from "./components/ThemeDropdown";
+import Dropdown from "./components/Dropdown";
 
 function App() {
+  const dropdownItems = [
+    { value: "folklore", label: "folklore" },
+    { value: "reputation", label: "reputation" },
+    { value: "midnights", label: "midnights" },
+  ];
   const [theme, setTheme] = useState('theme');
 
   function handleThemeChange(theme){
@@ -20,7 +25,7 @@ function App() {
     <Router>
       <Header />
       <Navbar />
-      <ThemeDropdown theme={theme} handleThemeChange={handleThemeChange} />
+      <Dropdown items={dropdownItems} theme={theme} handleThemeChange={handleThemeChange} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/bracelets" element={<Bracelets />} />
