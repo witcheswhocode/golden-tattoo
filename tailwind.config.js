@@ -12,13 +12,13 @@ module.exports = {
         },
         folklore: {
           backgroundColor: '#000000',
-          main: '#000000',
+          main: '#FFFFFF',
           secondary: 'forestgreen',
           third: 'yellow',
         },
         reputation: {
           backgroundColor: '#000000',
-          main: '#000000',
+          main: 'lightblue',
           secondary: '#FFA500',
           third: '#FFA500',
         },
