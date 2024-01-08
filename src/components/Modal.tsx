@@ -1,5 +1,5 @@
-import React from 'react';
-import { DataItem } from './DataTable'; // Update the import path accordingly
+import React from "react";
+import { DataItem } from "./DataTable"; // Update the import path accordingly
 
 interface ModalProps {
   data: DataItem;
@@ -9,7 +9,7 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ data, onClose }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="bg-black opacity-50 fixed inset-0"></div>
+      <div className="bg-black opacity-50 fixed inset-0" onClick={onClose} ></div>
       <div className="bg-white w-96 p-4 rounded shadow-lg z-10">
         <div className="flex justify-end">
           <span className="cursor-pointer" onClick={onClose}>
