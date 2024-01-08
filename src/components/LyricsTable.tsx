@@ -1,33 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DataTable from "./DataTable";
 import Modal from "./Modal";
+import { TableRow } from "./DataTable";
 
-interface DataItem {
-  id: number;
-  name: string;
-  age: number;
-  email: string;
-}
 const LyricsTable: React.FC = () => {
-  const [selectedItem, setSelectedItem] = useState<DataItem | null>(null);
+  const [selectedItem, setSelectedItem] = useState<TableRow | null>(null);
+  const [tableRows, setTableRows] = useState<TableRow[] | null>(null);
 
-  const openModal = (item: DataItem) => {
+  const openModal = (item: TableRow) => {
     setSelectedItem(item);
   };
 
   const closeModal = () => {
     setSelectedItem(null);
   };
-  const data: DataItem[] = [
-    { id: 1, name: "John Doe", age: 25, email: "john@example.com" },
-    { id: 2, name: "Jane Doe", age: 30, email: "jane@example.com" },
-    { id: 3, name: "Bob Smith", age: 28, email: "bob@example.com" },
-    // Add more items as needed
-  ];
+
+  useEffect(() => {
+    fetch('http://localhost:3001/users')
+      .then((response) => response.json())
+      .then((data) => setTableRows(data))
+      .catch((error) => console.error('Error fetching data:', error));
+  }, []);
 
   return (
     <div className="container mx-auto p-4">
-      <DataTable data={data} openModal={openModal} />
+      {tableRows && <DataTable data={tableRows} openModal={openModal} />}
       {selectedItem && <Modal data={selectedItem} onClose={closeModal} />}
     </div>
   );

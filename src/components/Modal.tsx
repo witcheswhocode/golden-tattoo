@@ -1,8 +1,8 @@
 import React from "react";
-import { DataItem } from "./DataTable"; // Update the import path accordingly
+import { TableRow } from "./DataTable"; // Update the import path accordingly
 
 interface ModalProps {
-  data: DataItem;
+  data: TableRow;
   onClose: () => void;
 }
 
@@ -29,10 +29,7 @@ const Modal: React.FC<ModalProps> = ({ data, onClose }) => {
             </svg>
           </span>
         </div>
-        <h2 className="text-2xl font-bold mb-4">{data.name}</h2>
-        <p>ID: {data.id}</p>
-        <p>Age: {data.age}</p>
-        <p>Email: {data.email}</p>
+        <h2 className="text-2xl font-bold mb-4">{data.word}</h2>
         {/* Add more information as needed */}
       </div>
     </div>

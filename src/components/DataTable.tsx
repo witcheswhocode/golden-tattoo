@@ -1,20 +1,24 @@
 import React, { useState } from "react";
 
-export interface DataItem {
-  id: number;
-  name: string;
-  age: number;
-  email: string;
-  // Add more properties as needed
+export interface TableRow {
+  wordid: number;
+  word: string;
+  otherwords: string;
+  categories: string;
+  categorieshtml: string;
+  songcount: number;
+  wordcount: number;
+  totalcount: number;
+  active: number;
 }
 
 interface DataTableProps {
-  data: DataItem[];
-  openModal: (value: DataItem) => void;
+  data: TableRow[];
+  openModal: (value: TableRow) => void;
 }
 
 const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
-  const handleOpenModal = (item: DataItem) => {
+  const handleOpenModal = (item: TableRow) => {
     props.openModal(item);
   };
 
@@ -32,14 +36,14 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
       <tbody>
         {props.data.map((item) => (
           <tr
-            key={item.id}
+            key={item.wordid}
             onClick={() => handleOpenModal(item)}
             className="cursor-pointer"
           >
-            <td className="border-b">{item.id}</td>
-            <td className="border-b">{item.name}</td>
-            <td className="border-b">{item.age}</td>
-            <td className="border-b">{item.email}</td>
+            <td className="border-b">{item.wordid}</td>
+            <td className="border-b">{item.word}</td>
+            <td className="border-b">{item.songcount}</td>
+            <td className="border-b">{item.categories}</td>
             {/* Add more columns as needed */}
           </tr>
         ))}
