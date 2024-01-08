@@ -26,10 +26,9 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
     <table className="min-w-full border border-gray-300">
       <thead>
         <tr>
-          <th className="border-b">ID</th>
-          <th className="border-b">Name</th>
-          <th className="border-b">Age</th>
-          <th className="border-b">Email</th>
+          <th className="border-b">word</th>
+          <th className="border-b">song count</th>
+          <th className="border-b">categories</th>
           {/* Add more columns as needed */}
         </tr>
       </thead>
@@ -40,7 +39,6 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
             onClick={() => handleOpenModal(item)}
             className="cursor-pointer"
           >
-            <td className="border-b">{item.wordid}</td>
             <td className="border-b">{item.word}</td>
             <td className="border-b">{item.songcount}</td>
             <td className="border-b">{item.categories}</td>
