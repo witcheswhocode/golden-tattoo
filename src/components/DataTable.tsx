@@ -30,16 +30,63 @@ interface DataTableProps {
   openModal: (value: TableRow) => void;
 }
 
+const getConsecutiveMatches = (str: string, searchTerm: string) => {
+  let count = 0;
+  let maxCount = 0;
+
+  for (let i = 0; i < str.length; i++) {
+    if (str[i] === searchTerm[count]) {
+      count++;
+      maxCount = Math.max(maxCount, count);
+    } else {
+      count = 0;
+    }
+  }
+
+  return maxCount;
+};
+
 const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(20);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = props.data.slice(indexOfFirstItem, indexOfLastItem);
-  const totalPages = Math.ceil(props.data.length / itemsPerPage);
+  const filteredData = props.data
+    .filter((item) =>
+      item.otherwords.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .sort((a, b) => {
+      const startsWithSearchTermA = a.otherwords
+        .toLowerCase()
+        .startsWith(searchTerm.toLowerCase());
+      const startsWithSearchTermB = b.otherwords
+        .toLowerCase()
+        .startsWith(searchTerm.toLowerCase());
 
-  console.log(totalPages)
+      if (startsWithSearchTermA && !startsWithSearchTermB) {
+        return -1;
+      } else if (!startsWithSearchTermA && startsWithSearchTermB) {
+        return 1;
+      } else {
+        // If both or neither start with the search term, compare consecutive character matches
+        const consecutiveMatchesA = getConsecutiveMatches(
+          a.otherwords.toLowerCase(),
+          searchTerm.toLowerCase()
+        );
+        const consecutiveMatchesB = getConsecutiveMatches(
+          b.otherwords.toLowerCase(),
+          searchTerm.toLowerCase()
+        );
+
+        return consecutiveMatchesB - consecutiveMatchesA; // Sort in descending order of consecutive matches
+      }
+    });
+
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(props.data.length / itemsPerPage);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -51,6 +98,12 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
 
   return (
     <>
+      <input
+        type="text"
+        placeholder="Search..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
       <table className="min-w-full border border-gray-300">
         <thead>
           <tr>
@@ -73,7 +126,12 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
           ))}
         </tbody>
       </table>
-      <Pagination pages={Array.from(Array(props.data.length).keys()).map(x => x++)} totalItems={props.data.length} itemsPerPage={itemsPerPage} handlePageChange={handlePageChange} />
+      <Pagination
+        pages={Array.from(Array(props.data.length).keys()).map((x) => x++)}
+        totalItems={props.data.length}
+        itemsPerPage={itemsPerPage}
+        handlePageChange={handlePageChange}
+      />
     </>
   );
 };
