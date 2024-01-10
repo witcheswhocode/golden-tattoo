@@ -6,11 +6,11 @@ interface ModalProps {
   onClose: () => void;
 }
 const Modal: React.FC<ModalProps> = ({ data, onClose }) => {
-  const createDiv = (albumshort: string) => (
-    <div key={albumshort}>
-      <div className="text-center text-xl">{albumshort}</div>
+  const createDiv = (albumshort: string, song: string) => (
+    <div key={`${albumshort}-${song}`}>
+      <div className="text-center text-xl">{`${albumshort} - ${song}`}</div>
       {data
-        .filter((item) => item.albumshort === albumshort)
+        .filter((item) => item.albumshort === albumshort && item.song === song)
         .map((filteredItem) => (
           <div
             className="text-m"
@@ -20,12 +20,15 @@ const Modal: React.FC<ModalProps> = ({ data, onClose }) => {
         ))}
     </div>
   );
-
-  // Get unique album values
-  const uniqueAlbumshorts = [...new Set(data.map((item) => item.albumshort))];
-
-  // Render div elements for each unique album
-  const result = uniqueAlbumshorts.map((albumshort) => createDiv(albumshort));
+  
+  // Get unique album and song combinations
+  const uniqueAlbumsAndSongs = [...new Set(data.map((item) => `${item.albumshort}-${item.song}`))];
+  
+  // Render div elements for each unique album and song combination
+  const result = uniqueAlbumsAndSongs.map((combination) => {
+    const [albumshort, song] = combination.split('-');
+    return createDiv(albumshort, song);
+  });
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
