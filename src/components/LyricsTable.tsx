@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
-import DataTable from "./DataTable";
+import DataTable, { ModalData } from "./DataTable";
 import Modal from "./Modal";
 import { TableRow } from "./DataTable";
 
 const LyricsTable: React.FC = () => {
-  const [selectedItem, setSelectedItem] = useState<TableRow | null>(null);
+  const [selectedItem, setSelectedItem] = useState<ModalData[] | null>(null);
   const [tableRows, setTableRows] = useState<TableRow[] | null>(null);
 
   const openModal = (item: TableRow) => {
-    setSelectedItem(item);
+    fetch(`http://localhost:3001/getLyrics/${item.wordid}`)
+      .then((response) => response.json())
+      .then((data) => setSelectedItem(data.data))
+      .catch((error) => console.error("Error fetching modal data:", error));
   };
 
   const closeModal = () => {
@@ -16,10 +19,10 @@ const LyricsTable: React.FC = () => {
   };
 
   useEffect(() => {
-    fetch('http://localhost:3001/users')
+    fetch("http://localhost:3001/words")
       .then((response) => response.json())
       .then((data) => setTableRows(data))
-      .catch((error) => console.error('Error fetching data:', error));
+      .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
   return (

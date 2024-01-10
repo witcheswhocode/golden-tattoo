@@ -1,12 +1,12 @@
 import React from "react";
-import { TableRow } from "./DataTable"; // Update the import path accordingly
+import { ModalData } from "./DataTable"; // Update the import path accordingly
 
 interface ModalProps {
-  data: TableRow;
+  data: ModalData[];
   onClose: () => void;
 }
-
 const Modal: React.FC<ModalProps> = ({ data, onClose }) => {
+console.log(data)
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="bg-black opacity-50 fixed inset-0" onClick={onClose} ></div>
@@ -29,8 +29,9 @@ const Modal: React.FC<ModalProps> = ({ data, onClose }) => {
             </svg>
           </span>
         </div>
-        <h2 className="text-2xl font-bold mb-4">{data.word}</h2>
-        {/* Add more information as needed */}
+        {data.map((item)=>(
+          <div>{item.lyric}</div>
+        ))}
       </div>
     </div>
   );

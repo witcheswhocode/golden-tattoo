@@ -12,6 +12,17 @@ export interface TableRow {
   active: number;
 }
 
+export interface ModalData {
+  lyricid: number;
+  wordid: number;
+  songid: number;
+  albumid: number;
+  lyric: string;
+  subtext: string;
+  lyrichtml: string;
+  lyricnum: string;
+}
+
 interface DataTableProps {
   data: TableRow[];
   openModal: (value: TableRow) => void;
