@@ -6,10 +6,12 @@ interface ModalProps {
   onClose: () => void;
 }
 const Modal: React.FC<ModalProps> = ({ data, onClose }) => {
-console.log(data)
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      <div className="bg-black opacity-50 fixed inset-0" onClick={onClose} ></div>
+      <div
+        className="bg-black opacity-50 fixed inset-0"
+        onClick={onClose}
+      ></div>
       <div className="bg-white w-96 p-4 rounded shadow-lg z-10">
         <div className="flex justify-end">
           <span className="cursor-pointer" onClick={onClose}>
@@ -29,8 +31,11 @@ console.log(data)
             </svg>
           </span>
         </div>
-        {data.map((item)=>(
-          <div>{item.albumshort}</div>
+        {data.map((item) => (
+          <div>
+            <div>{item.albumshort}</div>
+            <div>{item.lyrichtml}</div>
+          </div>
         ))}
       </div>
     </div>

@@ -30,7 +30,6 @@ app.get("/getLyrics/:id", (req: any, res: any, next: any) => {
   sql = sql + "where l.wordid = "+id+" order by a.albumid desc";
   var params: any = []
   db.all(sql, params, (err: any, rows: any) => {
-    console.log(rows);
       if (err) {
         res.status(400).json({"error":err.message});
         return;

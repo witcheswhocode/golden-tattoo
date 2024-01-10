@@ -57,7 +57,6 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
             <th className="border-b">word</th>
             <th className="border-b">song count</th>
             <th className="border-b">categories</th>
-            {/* Add more columns as needed */}
           </tr>
         </thead>
         <tbody>
@@ -70,7 +69,6 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
               <td className="border-b">{item.word}</td>
               <td className="border-b">{item.songcount}</td>
               <td className="border-b">{item.categories}</td>
-              {/* Add more columns as needed */}
             </tr>
           ))}
         </tbody>
