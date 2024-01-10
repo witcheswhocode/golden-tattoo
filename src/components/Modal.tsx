@@ -6,6 +6,27 @@ interface ModalProps {
   onClose: () => void;
 }
 const Modal: React.FC<ModalProps> = ({ data, onClose }) => {
+  const createDiv = (albumshort: string) => (
+    <div key={albumshort}>
+      <div className="text-center text-xl">{albumshort}</div>
+      {data
+        .filter((item) => item.albumshort === albumshort)
+        .map((filteredItem) => (
+          <div
+            className="text-m"
+            key={filteredItem.lyric}
+            dangerouslySetInnerHTML={{ __html: filteredItem.lyric }}
+          />
+        ))}
+    </div>
+  );
+
+  // Get unique album values
+  const uniqueAlbumshorts = [...new Set(data.map((item) => item.albumshort))];
+
+  // Render div elements for each unique album
+  const result = uniqueAlbumshorts.map((albumshort) => createDiv(albumshort));
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div
@@ -31,12 +52,7 @@ const Modal: React.FC<ModalProps> = ({ data, onClose }) => {
             </svg>
           </span>
         </div>
-        {data.map((item) => (
-          <div>
-            <div>{item.albumshort}</div>
-            <div>{item.lyrichtml}</div>
-          </div>
-        ))}
+        {result}
       </div>
     </div>
   );
