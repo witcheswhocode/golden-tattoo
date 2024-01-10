@@ -14,13 +14,14 @@ export interface TableRow {
 
 export interface ModalData {
   lyricid: number;
-  wordid: number;
-  songid: number;
-  albumid: number;
   lyric: string;
   subtext: string;
   lyrichtml: string;
-  lyricnum: string;
+  categories: string;
+  album: string;
+  albumshort: string;
+  alb: string;
+  song: string;
 }
 
 interface DataTableProps {

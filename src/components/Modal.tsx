@@ -30,7 +30,7 @@ console.log(data)
           </span>
         </div>
         {data.map((item)=>(
-          <div>{item.lyric}</div>
+          <div>{item.albumshort}</div>
         ))}
       </div>
     </div>
