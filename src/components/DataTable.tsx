@@ -32,7 +32,7 @@ interface DataTableProps {
 
 const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [itemsPerPage, setItemsPerPage] = useState(20);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -75,7 +75,7 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
           ))}
         </tbody>
       </table>
-      <Pagination pages={Array.from(Array(props.data.length).keys()).map(x => x++)} handlePageChange={handlePageChange} />
+      <Pagination pages={Array.from(Array(props.data.length).keys()).map(x => x++)} totalItems={props.data.length} itemsPerPage={itemsPerPage} handlePageChange={handlePageChange} />
     </>
   );
 };
