@@ -46,19 +46,23 @@ const getConsecutiveMatches = (str: string, searchTerm: string) => {
   return maxCount;
 };
 
+const allCategories = ["parallels", "transportation", "queer"];
+
 const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortColumn, setSortColumn] = useState<string | null>(null);
+  const [sortCategory, setSortCategory] = useState<string | null>(null);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
-
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const filteredData = props.data
-    .filter((item) =>
-      item.otherwords.toLowerCase().includes(searchTerm.toLowerCase())
+    .filter(
+      (item) =>
+        item.otherwords.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        (sortCategory === null || (item.categories && item.categories.split('|').map(cat => cat.trim()).includes(sortCategory)))
     )
     .sort((a, b) => {
       const startsWithSearchTermA = a.otherwords
@@ -85,7 +89,8 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
 
         return consecutiveMatchesB - consecutiveMatchesA; // Sort in descending order of consecutive matches
       }
-    }).sort((a: any, b: any) => {
+    })
+    .sort((a: any, b: any) => {
       if (sortColumn) {
         const valueA = a[sortColumn];
         const valueB = b[sortColumn];
@@ -96,12 +101,14 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
           const stringA = String(valueA).toLowerCase();
           const stringB = String(valueB).toLowerCase();
 
-          return sortOrder === "asc" ? stringA.localeCompare(stringB) : stringB.localeCompare(stringA);
+          return sortOrder === "asc"
+            ? stringA.localeCompare(stringB)
+            : stringB.localeCompare(stringA);
         }
       }
 
       return 0; // No sorting column specified
-    });;
+    });
 
   const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
 
@@ -115,7 +122,6 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
     props.openModal(item);
   };
 
-
   const handleHeaderClick = (column: string) => {
     if (sortColumn === column) {
       // Toggle the sort order if clicking on the same column
@@ -127,6 +133,15 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
     }
   };
 
+  const handleCategoryClick = (category: string) => {
+    console.log(category);
+    if (category === sortCategory) {
+      setSortCategory(null);
+    } else {
+      setSortCategory(category);
+    }
+  };
+
   return (
     <>
       <input
@@ -135,13 +150,30 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
+      {allCategories.map((category) => (
+        <div
+          className="cursor-pointer"
+          key={category}
+          onClick={() => handleCategoryClick(category)}
+        >
+          {category}
+        </div>
+      ))}
       <table className="min-w-full border border-gray-300">
         <thead>
           <tr>
-            <th className="border-b cursor-pointer"
-              onClick={() => handleHeaderClick("word")}>word</th>
-            <th className="border-b cursor-pointer"
-              onClick={() => handleHeaderClick("songcount")}>song count</th>
+            <th
+              className="border-b cursor-pointer"
+              onClick={() => handleHeaderClick("word")}
+            >
+              word
+            </th>
+            <th
+              className="border-b cursor-pointer"
+              onClick={() => handleHeaderClick("songcount")}
+            >
+              song count
+            </th>
             <th className="border-b">categories</th>
           </tr>
         </thead>
