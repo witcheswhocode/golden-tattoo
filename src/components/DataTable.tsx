@@ -50,6 +50,9 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const [searchTerm, setSearchTerm] = useState("");
+  const [sortColumn, setSortColumn] = useState<string | null>(null);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -82,7 +85,23 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
 
         return consecutiveMatchesB - consecutiveMatchesA; // Sort in descending order of consecutive matches
       }
-    });
+    }).sort((a: any, b: any) => {
+      if (sortColumn) {
+        const valueA = a[sortColumn];
+        const valueB = b[sortColumn];
+
+        if (typeof valueA === "number" && typeof valueB === "number") {
+          return sortOrder === "asc" ? valueA - valueB : valueB - valueA;
+        } else {
+          const stringA = String(valueA).toLowerCase();
+          const stringB = String(valueB).toLowerCase();
+
+          return sortOrder === "asc" ? stringA.localeCompare(stringB) : stringB.localeCompare(stringA);
+        }
+      }
+
+      return 0; // No sorting column specified
+    });;
 
   const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
 
@@ -96,6 +115,18 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
     props.openModal(item);
   };
 
+
+  const handleHeaderClick = (column: string) => {
+    if (sortColumn === column) {
+      // Toggle the sort order if clicking on the same column
+      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    } else {
+      // Set the new sorting column and default to ascending order
+      setSortColumn(column);
+      setSortOrder("asc");
+    }
+  };
+
   return (
     <>
       <input
@@ -107,8 +138,10 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
       <table className="min-w-full border border-gray-300">
         <thead>
           <tr>
-            <th className="border-b">word</th>
-            <th className="border-b">song count</th>
+            <th className="border-b cursor-pointer"
+              onClick={() => handleHeaderClick("word")}>word</th>
+            <th className="border-b cursor-pointer"
+              onClick={() => handleHeaderClick("songcount")}>song count</th>
             <th className="border-b">categories</th>
           </tr>
         </thead>
