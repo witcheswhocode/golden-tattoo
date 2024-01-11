@@ -17,7 +17,7 @@ const Modal: React.FC<ModalProps> = ({ data, onClose }) => {
         .map((filteredItem) => (
           <div
             className="text-m"
-            key={filteredItem.lyric}
+            key={`${filteredItem.lyric}-${filteredItem.lyricid}`}
             dangerouslySetInnerHTML={{ __html: filteredItem.lyric }}
           />
         ))}
