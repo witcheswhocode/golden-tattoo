@@ -6,6 +6,9 @@ interface ModalProps {
   onClose: () => void;
 }
 const Modal: React.FC<ModalProps> = ({ data, onClose }) => {
+  const addCategoryNote = data[0].categories && (
+    data[0].categories.includes("parallels") ||
+    data[0].categories.includes("queer"));
   const createDiv = (albumshort: string, song: string) => (
     <div key={`${albumshort}-${song}`}>
       <div className="text-center text-xl">{`${albumshort} - ${song}`}</div>
@@ -20,13 +23,15 @@ const Modal: React.FC<ModalProps> = ({ data, onClose }) => {
         ))}
     </div>
   );
-  
+
   // Get unique album and song combinations
-  const uniqueAlbumsAndSongs = [...new Set(data.map((item) => `${item.albumshort}-${item.song}`))];
-  
+  const uniqueAlbumsAndSongs = [
+    ...new Set(data.map((item) => `${item.albumshort}-${item.song}`)),
+  ];
+
   // Render div elements for each unique album and song combination
   const result = uniqueAlbumsAndSongs.map((combination) => {
-    const [albumshort, song] = combination.split('-');
+    const [albumshort, song] = combination.split("-");
     return createDiv(albumshort, song);
   });
 
@@ -56,6 +61,11 @@ const Modal: React.FC<ModalProps> = ({ data, onClose }) => {
           </span>
         </div>
         {result}
+        {addCategoryNote && (
+          <div>
+            <p>Check out these awesome people for more indepth analysis.</p>
+          </div>
+        )}
       </div>
     </div>
   );
