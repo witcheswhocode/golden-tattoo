@@ -1,3 +1,4 @@
+import { release } from "os";
 import React, { useEffect, useState } from "react";
 
 export interface WritersProps {
@@ -28,8 +29,9 @@ export interface WritersData {
 
 function Jukebox(props: WritersData) {
   const [writerData, setWriterData] = useState<WritersProps[] | null>(null);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc"); // Track sorting order
 
-  const createDiv = (albumshort: string) => (
+  const createDiv = (albumshort: string, released: number) => (
     <div key={`${albumshort}`}>
       <div className="text-center text-xl">{`${albumshort}`}</div>
       {props.data
@@ -54,13 +56,37 @@ function Jukebox(props: WritersData) {
 
   // Get unique album and song combinations
   const uniqueAlbums = [
-    ...new Set(props.data.map((item) => `${item.albumshort}`)),
+    ...new Set(props.data.map((item) => `${item.albumshort}_${item.released}`)),
   ];
 
+  // Sorting function based on release date
+  const sortFunction = (a: string, b: string) => {
+    console.log(a,b);
+    let [albumshortA, releasedA] = a.split("_");
+    let [albumshortB, releasedB] = b.split("_");
+    releasedA = releasedA === "null" ? "5000" : releasedA;
+    releasedB = releasedB === "null" ? "5000" : releasedB;
+    console.log(releasedA,releasedB)
+    const releasedNumberA = parseInt(releasedA, 10);
+    const releasedNumberB = parseInt(releasedB, 10);
+
+    if (sortOrder === "asc") {
+      return releasedNumberA - releasedNumberB;
+    } else {
+      return releasedNumberB - releasedNumberA;
+    }
+  };
+
+  // Sort uniqueAlbums based on release date
+  const sortedUniqueAlbums = uniqueAlbums.sort(sortFunction);
+
   // Render div elements for each unique album and song combination
-  const result = uniqueAlbums.map((combination) => {
-    const [albumshort] = combination.split("-");
-    return createDiv(albumshort);
+  const result = sortedUniqueAlbums.map((combination) => {
+    const [albumshort, released] = combination.split("_");
+    const releasedNumber = released === 'NaN' ? parseInt(released, 10) : 5000;
+
+
+    return createDiv(albumshort, releasedNumber);
   });
 
   useEffect(() => {
@@ -70,7 +96,17 @@ function Jukebox(props: WritersData) {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-  return <main className="p-4">{result}</main>;
+  // Toggle sorting order when the button is clicked
+  const toggleSortOrder = () => {
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+  };
+
+  return (
+    <main className="p-4">
+      <button onClick={toggleSortOrder}>Toggle Sort Order</button>
+      {result}
+    </main>
+  );
 }
 
 export default Jukebox;
