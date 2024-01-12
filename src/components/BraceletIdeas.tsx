@@ -24,6 +24,9 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
   const [braceletSelection, setBraceletSelection] = useState<{
     [key: string]: number;
   }>();
+  const [availableLetters, setAvailableLetters] = useState<{
+    [key: string]: number;
+  }>(letters);
 
   const handleIncrement = (id: string) => {
     setBraceletQuantities((prevQuantities) => ({
@@ -35,6 +38,16 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
       ...(prevSelection || {}), // Use an empty object as a default if prevQuantities is null
       [id]: prevSelection && prevSelection[id] ? prevSelection[id] + 1 : 1,
     }));
+
+    for (const c of id.replace(/[^A-Z0-9]/ig, "")) {
+      setAvailableLetters((prevAvailableLetters) => ({
+        ...(prevAvailableLetters || {}), // Use an empty object as a default if prevQuantities is null
+        [c]:
+          prevAvailableLetters && prevAvailableLetters[c]
+            ? prevAvailableLetters[c] - 1
+            : 0,
+      }));
+    }
   };
 
   const handleDecrement = (id: string) => {
@@ -48,33 +61,48 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
       [id]: prevSelection && prevSelection[id] ? prevSelection[id] - 1 : 0,
     }));
 
-    console.log(braceletSelection)
+    for (const c of id.replace(/[^A-Z0-9]/ig, "")) {
+      setAvailableLetters((prevAvailableLetters) => ({
+        ...(prevAvailableLetters || {}), // Use an empty object as a default if prevQuantities is null
+        [c]:
+          prevAvailableLetters && prevAvailableLetters[c]
+            ? prevAvailableLetters[c] + 1
+            : 1,
+      }));
+    }
   };
 
   return (
     <div className="p-4">
-      {braceletSelection && Object.entries(braceletSelection).map(([id, quantity]) => (
-        <div key={`${id}-${quantity}`} className="flex items-center justify-between mb-4">
-          <span className="text-lg">{id}</span>
-          <div className="flex items-center">
-            <button
-              onClick={() => handleDecrement(id)}
-              className="bg-red-500 text-white p-2 rounded-l"
-            >
-              -
-            </button>
-            <span className="px-4">{braceletSelection[id]}</span>
-            <button
-              onClick={() => handleIncrement(id)}
-              className="bg-green-500 text-white p-2 rounded-r"
-            >
-              +
-            </button>
-          </div>
-        </div>
+      {availableLetters && Object.entries(availableLetters).map(([id, quantity]) => (
+        <div>{id} - {quantity}</div>
       ))}
-      <div className="bg-black h-0.5 m-5"></div>
+      {braceletSelection &&
+        Object.entries(braceletSelection).map(([id, quantity]) => (
+          <div
+            key={`${id}-${quantity}`}
+            className="flex items-center justify-between mb-4"
+          >
+            <span className="text-lg">{id}</span>
+            <div className="flex items-center">
+              <button
+                onClick={() => handleDecrement(id)}
+                className="bg-red-500 text-white p-2 rounded-l"
+              >
+                -
+              </button>
+              <span className="px-4">{braceletSelection[id]}</span>
+              <button
+                onClick={() => handleIncrement(id)}
+                className="bg-green-500 text-white p-2 rounded-r"
+              >
+                +
+              </button>
+            </div>
+          </div>
+        ))}
       {!braceletSelection && <>Bracelet selections will go here.</>}
+      <div className="bg-black h-0.5 m-5"></div>
       {bracelets.map((bracelet) => (
         <div key={bracelet} className="flex items-center justify-between mb-4">
           <span className="text-lg">{bracelet}</span>
