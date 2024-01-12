@@ -40,6 +40,23 @@ app.get("/getLyrics/:id", (req: any, res: any, next: any) => {
       })
     });
 });
+app.get("/getWriters", (req: any, res: any, next: any) => {
+  const id = req.params.id;
+
+  const sql = "SELECT * FROM song s JOIN album a ON s.albumid = a.albumid ORDER BY albumid DESC, songid";
+  const params: any[] = [];
+
+  db.all(sql, params, (err: any, rows: any) => {
+      if (err) {
+          res.status(400).json({ "error": err.message });
+          return;
+      }
+      res.json({
+          "message": "success",
+          "data": rows
+      });
+  });
+});
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);

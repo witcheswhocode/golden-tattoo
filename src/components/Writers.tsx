@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
+import Jukebox from "./Jukebox";
+import { WritersProps } from "./Jukebox";
 
-interface WritersProps {
-  // Define your prop types here
-}
+function Writers() {
+  const [writerData, setWriterData] = useState<WritersProps[] | null>(null);
 
-function Writers(props: WritersProps) {
+  useEffect(() => {
+    fetch("http://localhost:3001/getWriters")
+      .then((response) => response.json())
+      .then((data) => setWriterData(data.data))
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+
   return (
-    <main className="p-4">
-      <h2 className="text-2xl mb-2">Welcome to My Website</h2>
-      <p>This is the home page of our website.</p>
-    </main>
+    <main className="p-4">{writerData && <Jukebox data={writerData} />}</main>
   );
 }
 
