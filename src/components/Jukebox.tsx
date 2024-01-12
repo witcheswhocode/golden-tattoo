@@ -64,9 +64,10 @@ function Jukebox(props: WritersData) {
     console.log(a,b);
     let [albumshortA, releasedA] = a.split("_");
     let [albumshortB, releasedB] = b.split("_");
+
     releasedA = releasedA === "null" ? "5000" : releasedA;
     releasedB = releasedB === "null" ? "5000" : releasedB;
-    console.log(releasedA,releasedB)
+
     const releasedNumberA = parseInt(releasedA, 10);
     const releasedNumberB = parseInt(releasedB, 10);
 
