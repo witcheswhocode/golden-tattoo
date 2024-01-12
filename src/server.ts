@@ -67,9 +67,7 @@ app.get("/getAllCombinations", (data: any, res: any, next: any) => {
         return;
       }
       const wordList = rows;
-      //console.log(rows);
       const letterCounts = data.query;
-      console.log(letterCounts);
       const validWords = preprocessWords(wordList, letterCounts);
       const [maxCombinations, combinationsList, finalLetterCounts] = findLongestCombinations(validWords, letterCounts);
   
@@ -109,7 +107,6 @@ function cleanWord(word: string): string {
 
 function canConstruct(word: string, letterDict: any | Map<string, number> | { [key: string]: number }): boolean {
   const wordCount = letterCounter(cleanWord(word.toLowerCase()));
-  console.log(word, wordCount, letterDict);
 
   for (const [letter, value] of wordCount.entries()) {
     let dictValue: number;

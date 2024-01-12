@@ -2,14 +2,20 @@ import React, { useState, useEffect } from "react";
 
 interface AlphabetInputProps {
   handleCombinationPossibilities: (value: string[]) => void;
+  inputValues: { [key: string]: number };
+  setInputValues: (value: { [key: string]: number | any }) => void;
 }
 
-function AlphabetInputs(props: AlphabetInputProps) {
-  const [inputValues, setInputValues] = useState<{ [key: string]: string }>({});
+const AlphabetInputs: React.FC<AlphabetInputProps> = ({
+  inputValues,
+  handleCombinationPossibilities,
+  setInputValues,
+}) => {
+  //const [inputValues, setInputValues] = useState<{ [key: string]: string }>({});
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setInputValues((prevInputValues) => ({
+    setInputValues((prevInputValues: any) => ({
       ...prevInputValues,
       [name]: value,
     }));
@@ -21,7 +27,10 @@ function AlphabetInputs(props: AlphabetInputProps) {
     for (const key in inputValues) {
       const value = inputValues[key].toString().toLowerCase();
       const numericValue = parseFloat(value);
-      params.append(key.toString().toLowerCase(), isNaN(numericValue) ? value : numericValue.toString());
+      params.append(
+        key.toString().toLowerCase(),
+        isNaN(numericValue) ? value : numericValue.toString()
+      );
     }
 
     // Append parameters to the URL
@@ -30,7 +39,9 @@ function AlphabetInputs(props: AlphabetInputProps) {
     // Perform the fetch with the updated URL
     fetch(urlWithParams)
       .then((response) => response.json())
-      .then((data) => props.handleCombinationPossibilities(data.data.combinationList))
+      .then((data) =>
+        handleCombinationPossibilities(data.data.combinationList)
+      )
       .catch((error) => console.error("Error fetching modal data:", error));
   };
 
@@ -99,6 +110,6 @@ function AlphabetInputs(props: AlphabetInputProps) {
       </div>
     </div>
   );
-}
+};
 
 export default AlphabetInputs;

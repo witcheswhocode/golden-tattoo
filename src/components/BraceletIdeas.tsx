@@ -6,9 +6,10 @@ interface Bracelet {
 
 interface BraceletIdeasProps {
   bracelets: string[];
+  letters: any;
 }
 
-const BraceletIdeas: React.FC<BraceletIdeasProps> = ({ bracelets }) => {
+const BraceletIdeas: React.FC<BraceletIdeasProps> = ({ bracelets, letters }) => {
   const [braceletQuantities, setBraceletQuantities] = useState<{ [key: string]: number }>(
     bracelets.reduce((acc: any, bracelet) => {
       acc[bracelet] = 0;

@@ -8,13 +8,7 @@ const Bracelets = () => {
   const [combinationPossibilities, setCombinationPossibilities] = useState<
     string[] | null
   >(null);
-
-  const bracelets = [
-    { id: 1, name: "Carrot" },
-    { id: 2, name: "Broccoli" },
-    { id: 3, name: "Tomato" },
-    // Add more bracelet objects as needed
-  ];
+  const [inputValues, setInputValues] = useState<{ [key: string]: number }>({});
 
   function decrementLetterCounts(
     word: string,
@@ -40,23 +34,16 @@ const Bracelets = () => {
     return updatedLetterCounts;
   }
 
-  // Example usage:
-  const initialLetterCounts: LetterCount = {
-    A: 2,
-    B: 3,
-    C: 1,
-  };
-
-  const updatedCounts = decrementLetterCounts("ABC", initialLetterCounts);
-
-  console.log(updatedCounts);
-
   return (
     <div className="container mx-auto mt-8">
       <h1 className="text-2xl font-bold mb-4">bracelet Tally</h1>
-      
-      <AlphabetInputs handleCombinationPossibilities={setCombinationPossibilities} />
-      {combinationPossibilities && <BraceletIdeas bracelets={combinationPossibilities} />}
+
+      <AlphabetInputs
+        handleCombinationPossibilities={setCombinationPossibilities} inputValues={inputValues} setInputValues={setInputValues}
+      />
+      {combinationPossibilities && (
+        <BraceletIdeas bracelets={combinationPossibilities} letters={inputValues} />
+      )}
     </div>
   );
 };
