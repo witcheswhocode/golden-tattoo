@@ -1,18 +1,25 @@
-import React from 'react';
-import BraceletIdeas from './BraceletIdeas';
-import AlphabetInputs from './AlphabetInputs';
+import React, { useState } from "react";
+import BraceletIdeas from "./BraceletIdeas";
+import AlphabetInputs from "./AlphabetInputs";
 
 type LetterCount = { [letter: string]: number };
 
 const Bracelets = () => {
+  const [combinationPossibilities, setCombinationPossibilities] = useState<
+    string[] | null
+  >(null);
+
   const bracelets = [
-    { id: 1, name: 'Carrot' },
-    { id: 2, name: 'Broccoli' },
-    { id: 3, name: 'Tomato' },
+    { id: 1, name: "Carrot" },
+    { id: 2, name: "Broccoli" },
+    { id: 3, name: "Tomato" },
     // Add more bracelet objects as needed
   ];
 
-  function decrementLetterCounts(word: string, letterCounts: LetterCount): LetterCount {
+  function decrementLetterCounts(
+    word: string,
+    letterCounts: LetterCount
+  ): LetterCount {
     // Create a copy of the original letterCounts to avoid modifying it directly
     const updatedLetterCounts = { ...letterCounts };
 
@@ -40,16 +47,16 @@ const Bracelets = () => {
     C: 1,
   };
 
-  const updatedCounts = decrementLetterCounts('ABC', initialLetterCounts);
+  const updatedCounts = decrementLetterCounts("ABC", initialLetterCounts);
 
   console.log(updatedCounts);
-
 
   return (
     <div className="container mx-auto mt-8">
       <h1 className="text-2xl font-bold mb-4">bracelet Tally</h1>
-      <AlphabetInputs />
-      <BraceletIdeas bracelets={bracelets} />
+      
+      <AlphabetInputs handleCombinationPossibilities={setCombinationPossibilities} />
+      {combinationPossibilities && <BraceletIdeas bracelets={combinationPossibilities} />}
     </div>
   );
 };

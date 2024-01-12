@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 
-function AlphabetInputs() {
+interface AlphabetInputProps {
+  handleCombinationPossibilities: (value: string[]) => void;
+}
+
+function AlphabetInputs(props: AlphabetInputProps) {
   const [inputValues, setInputValues] = useState<{ [key: string]: string }>({});
-  const [tableRows, setTableRows] = useState<any[] | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -27,7 +30,7 @@ function AlphabetInputs() {
     // Perform the fetch with the updated URL
     fetch(urlWithParams)
       .then((response) => response.json())
-      .then((data) => console.log(data))
+      .then((data) => props.handleCombinationPossibilities(data.data.combinationList))
       .catch((error) => console.error("Error fetching modal data:", error));
   };
 
