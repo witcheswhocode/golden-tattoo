@@ -43,7 +43,10 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
       .replace(/[^A-Z0-9]/gi, "")
       .split("")
       .reduce((acc: any, c) => {
-        acc[c.toLowerCase()] = ((acc[c.toLowerCase()] ? acc[c.toLowerCase()] : availableLetters[c.toLowerCase()]) || 0) - 1;
+        acc[c.toLowerCase()] =
+          ((acc[c.toLowerCase()]
+            ? acc[c.toLowerCase()]
+            : availableLetters[c.toLowerCase()]) || 0) - 1;
         return acc;
       }, {});
 
@@ -53,66 +56,64 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
     }));
   };
 
-  useEffect(() => {
-    setBraceletQuantities((prevBraceletQuantities) => {
-      const bq = { ...prevBraceletQuantities };
-      console.log(prevBraceletQuantities, availableLetters)
-      Object.keys(availableLetters).forEach((letter) => {
-        Object.keys(bq).forEach((key) => {
-          const num = (key.match(letter) || []).length;
-          const countLetters = availableLetters[letter];
-          bq[key].active = num < countLetters;
-          if(!bq[key].active){
-            console.log(false, key, letter, num, countLetters)
-          }
-        });
-      });
-  
-      console.log(bq); // Log the updated bq object
-  
-      return bq; // Return the updated bq object
-    });
-  }, [availableLetters]);
-  
-  
-  useEffect(() => {
-    console.log(braceletQuantities);
-  }, [braceletQuantities]);
-  
-
   const handleDecrement = (id: string) => {
     setBraceletQuantities((prevQuantities) => ({
       ...prevQuantities,
-      [id]:
-        prevQuantities[id].value > 0
-          ? { value: prevQuantities[id].value - 1, active: true }
-          : { value: 0, active: false },
+      [id]: { value: prevQuantities[id].value - 1, active: true }, // Assuming you want to decrement the value
     }));
-
+  
     setBraceletSelection((prevSelection) => ({
-      ...(prevSelection || {}), // Use an empty object as a default if prevQuantities is null
-      [id]: prevSelection && prevSelection[id] ? prevSelection[id] - 1 : 0,
+      ...(prevSelection || {}),
+      [id]: prevSelection && prevSelection[id] ? prevSelection[id] - 1 : 0, // Assuming you want to decrement the value
     }));
-
-    for (const c of id.replace(/[^A-Z0-9]/gi, "")) {
-      setAvailableLetters((prevAvailableLetters) => ({
-        ...(prevAvailableLetters || {}), // Use an empty object as a default if prevQuantities is null
-        [c]:
-          prevAvailableLetters && prevAvailableLetters[c]
-            ? prevAvailableLetters[c] + 1
-            : 1,
-      }));
-    }
+  
+    const updatedLetters = id
+      .replace(/[^A-Z0-9]/gi, "")
+      .split("")
+      .reduce((acc: any, c) => {
+        acc[c.toLowerCase()] =
+          ((acc[c.toLowerCase()]
+            ? acc[c.toLowerCase()]
+            : availableLetters[c.toLowerCase()]) || 0) + 1; // Assuming you want to increment the count
+        return acc;
+      }, {});
+  
+    setAvailableLetters((prevAvailableLetters) => ({
+      ...(prevAvailableLetters || {}),
+      ...updatedLetters,
+    }));
   };
+  
+
+  useEffect(() => {
+    setBraceletQuantities((prevBraceletQuantities) => {
+      let prev = { ...prevBraceletQuantities };
+      Object.keys(prev).forEach((key) => {
+        Object.keys(availableLetters).forEach((letter) => {
+          const num = (key.match(letter) || []).length;
+          const countLetters = availableLetters[letter];
+          prev[key].active = (countLetters === 0 && num !== 0) ? false : num <= countLetters;
+          if (!prev[key].active) {
+            console.log(false, key, letter, num, countLetters);
+          }
+        });
+      });
+      console.log(prev)
+      return prev;
+    });
+  }, [availableLetters]);
 
   return (
     <div className="p-4">
-      {availableLetters &&
-        Object.entries(availableLetters).map(([id, quantity]) => (
-          <div className="flex">
-            {id} - {quantity}
-          </div>
-        ))}
+      <div className="flex">
+        {availableLetters &&
+          Object.entries(availableLetters).map(([id, quantity]) => (
+            <div className="flex">
+              {id} - {quantity}&nbsp;
+            </div>
+          ))}
+      </div>
+
       {braceletSelection &&
         Object.entries(braceletSelection).map(([id, quantity]) => (
           <div
@@ -143,21 +144,27 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
         <div
           key={bracelet}
           className={`flex items-center justify-between mb-4 ${
-            braceletQuantities[bracelet].active ? "" : "bg-red"
+            braceletQuantities[bracelet].active ? "" : "opacity-25"
           }`}
         >
-          <span className="text-lg">{bracelet}-{(braceletQuantities[bracelet].active).toString()}</span>
+          <span className="text-lg">
+            {bracelet}-{braceletQuantities[bracelet].active.toString()}
+          </span>
           <div className="flex items-center">
             <button
               onClick={() => handleDecrement(bracelet)}
-              className="bg-red-500 text-white p-2 rounded-l"
+              className={`bg-red-500 text-white p-2 rounded-l ${
+                braceletQuantities[bracelet].active ? "" : "cursor-not-allowed"
+              }`}
             >
               -
             </button>
             <span className="px-4">{braceletQuantities[bracelet].value}</span>
             <button
               onClick={() => handleIncrement(bracelet)}
-              className="bg-green-500 text-white p-2 rounded-r"
+              className={`bg-green-500 text-white p-2 rounded-r ${
+                braceletQuantities[bracelet].active ? "" : "cursor-not-allowed"
+              }`}
             >
               +
             </button>
