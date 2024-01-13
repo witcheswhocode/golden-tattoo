@@ -124,14 +124,18 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
             <div className="flex items-center">
               <button
                 onClick={() => handleDecrement(id)}
-                className="bg-red-500 text-white p-2 rounded-l"
+                className={`bg-red-500 text-white p-2 rounded-l ${
+                  braceletQuantities[id].active ? "" : ""
+                }`}
               >
                 -
               </button>
               <span className="px-4">{braceletSelection[id]}</span>
               <button
                 onClick={() => handleIncrement(id)}
-                className="bg-green-500 text-white p-2 rounded-r"
+                className={`bg-green-500 text-white p-2 rounded-r ${
+                  braceletQuantities[id].active ? "" : "opacity-25 cursor-not-allowed"
+                }`}
               >
                 +
               </button>
