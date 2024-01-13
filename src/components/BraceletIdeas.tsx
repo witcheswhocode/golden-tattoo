@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface Bracelet {
   name: string;
@@ -6,7 +6,7 @@ interface Bracelet {
 
 interface BraceletIdeasProps {
   bracelets: string[];
-  letters: any;
+  letters: { [key: string]: number };
 }
 
 const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
@@ -14,10 +14,10 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
   letters,
 }) => {
   const [braceletQuantities, setBraceletQuantities] = useState<{
-    [key: string]: number;
+    [key: string]: { value: number; active: Boolean };
   }>(
     bracelets.reduce((acc: any, bracelet) => {
-      acc[bracelet] = 0;
+      acc[bracelet] = { value: 0, active: true };
       return acc;
     }, {})
   );
@@ -31,7 +31,7 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
   const handleIncrement = (id: string) => {
     setBraceletQuantities((prevQuantities) => ({
       ...prevQuantities,
-      [id]: prevQuantities[id] + 1,
+      [id]: { value: prevQuantities[id].value + 1, active: true },
     }));
 
     setBraceletSelection((prevSelection) => ({
@@ -39,21 +39,54 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
       [id]: prevSelection && prevSelection[id] ? prevSelection[id] + 1 : 1,
     }));
 
-    for (const c of id.replace(/[^A-Z0-9]/ig, "")) {
-      setAvailableLetters((prevAvailableLetters) => ({
-        ...(prevAvailableLetters || {}), // Use an empty object as a default if prevQuantities is null
-        [c]:
-          prevAvailableLetters && prevAvailableLetters[c]
-            ? prevAvailableLetters[c] - 1
-            : 0,
-      }));
-    }
+    const updatedLetters = id
+      .replace(/[^A-Z0-9]/gi, "")
+      .split("")
+      .reduce((acc: any, c) => {
+        acc[c.toLowerCase()] = ((acc[c.toLowerCase()] ? acc[c.toLowerCase()] : availableLetters[c.toLowerCase()]) || 0) - 1;
+        return acc;
+      }, {});
+
+    setAvailableLetters((prevAvailableLetters) => ({
+      ...(prevAvailableLetters || {}),
+      ...updatedLetters,
+    }));
   };
+
+  useEffect(() => {
+    setBraceletQuantities((prevBraceletQuantities) => {
+      const bq = { ...prevBraceletQuantities };
+      console.log(prevBraceletQuantities, availableLetters)
+      Object.keys(availableLetters).forEach((letter) => {
+        Object.keys(bq).forEach((key) => {
+          const num = (key.match(letter) || []).length;
+          const countLetters = availableLetters[letter];
+          bq[key].active = num < countLetters;
+          if(!bq[key].active){
+            console.log(false, key, letter, num, countLetters)
+          }
+        });
+      });
+  
+      console.log(bq); // Log the updated bq object
+  
+      return bq; // Return the updated bq object
+    });
+  }, [availableLetters]);
+  
+  
+  useEffect(() => {
+    console.log(braceletQuantities);
+  }, [braceletQuantities]);
+  
 
   const handleDecrement = (id: string) => {
     setBraceletQuantities((prevQuantities) => ({
       ...prevQuantities,
-      [id]: prevQuantities[id] > 0 ? prevQuantities[id] - 1 : 0,
+      [id]:
+        prevQuantities[id].value > 0
+          ? { value: prevQuantities[id].value - 1, active: true }
+          : { value: 0, active: false },
     }));
 
     setBraceletSelection((prevSelection) => ({
@@ -61,7 +94,7 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
       [id]: prevSelection && prevSelection[id] ? prevSelection[id] - 1 : 0,
     }));
 
-    for (const c of id.replace(/[^A-Z0-9]/ig, "")) {
+    for (const c of id.replace(/[^A-Z0-9]/gi, "")) {
       setAvailableLetters((prevAvailableLetters) => ({
         ...(prevAvailableLetters || {}), // Use an empty object as a default if prevQuantities is null
         [c]:
@@ -74,9 +107,12 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
 
   return (
     <div className="p-4">
-      {availableLetters && Object.entries(availableLetters).map(([id, quantity]) => (
-        <div>{id} - {quantity}</div>
-      ))}
+      {availableLetters &&
+        Object.entries(availableLetters).map(([id, quantity]) => (
+          <div className="flex">
+            {id} - {quantity}
+          </div>
+        ))}
       {braceletSelection &&
         Object.entries(braceletSelection).map(([id, quantity]) => (
           <div
@@ -104,8 +140,13 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
       {!braceletSelection && <>Bracelet selections will go here.</>}
       <div className="bg-black h-0.5 m-5"></div>
       {bracelets.map((bracelet) => (
-        <div key={bracelet} className="flex items-center justify-between mb-4">
-          <span className="text-lg">{bracelet}</span>
+        <div
+          key={bracelet}
+          className={`flex items-center justify-between mb-4 ${
+            braceletQuantities[bracelet].active ? "" : "bg-red"
+          }`}
+        >
+          <span className="text-lg">{bracelet}-{(braceletQuantities[bracelet].active).toString()}</span>
           <div className="flex items-center">
             <button
               onClick={() => handleDecrement(bracelet)}
@@ -113,7 +154,7 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
             >
               -
             </button>
-            <span className="px-4">{braceletQuantities[bracelet]}</span>
+            <span className="px-4">{braceletQuantities[bracelet].value}</span>
             <button
               onClick={() => handleIncrement(bracelet)}
               className="bg-green-500 text-white p-2 rounded-r"
