@@ -167,7 +167,7 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
             <button
               onClick={() => handleDecrement(bracelet)}
               className={`bg-red-500 text-white p-2 rounded-l ${
-                braceletQuantities[bracelet].active && braceletQuantities[bracelet].value !== 0 ? "" : "opacity-25 cursor-not-allowed"
+                braceletQuantities[bracelet].active && braceletQuantities[bracelet].value !== 0 ? "" : "cursor-not-allowed"
               }`}
             >
               -
