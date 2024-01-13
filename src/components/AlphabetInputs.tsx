@@ -24,9 +24,11 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
   const handleSubmit = () => {
     // Convert inputValues object to URLSearchParams
     const params = new URLSearchParams();
+    console.log(inputValues)
     for (const key in inputValues) {
       const value = inputValues[key].toString().toLowerCase();
       const numericValue = parseFloat(value);
+
       params.append(
         key.toString().toLowerCase(),
         isNaN(numericValue) ? value : numericValue.toString()
@@ -46,7 +48,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
   };
 
   useEffect(() => {
-    setInputValues({
+    /*setInputValues({
       a: 10,
       b: 20,
       d: 20,
@@ -56,7 +58,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
       p: 2,
       r: 10,
       s: 2,
-    });
+    });*/
   }, []);
 
   return (
@@ -71,10 +73,10 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
               </label>
               <input
                 type="text"
-                id={letter}
-                name={letter}
+                id={letter.toLowerCase()}
+                name={letter.toLowerCase()}
                 onChange={handleInputChange}
-                value={inputValues[letter] || ""}
+                value={inputValues[letter.toLowerCase()] || ""}
                 className="border rounded w-12 p-2 text-center focus:ring focus:ring-blue-200 focus:outline-none"
               />
             </div>
