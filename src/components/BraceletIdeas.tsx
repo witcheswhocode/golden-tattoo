@@ -62,10 +62,19 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
       [id]: { value: prevQuantities[id].value - 1, active: true }, // Assuming you want to decrement the value
     }));
   
-    setBraceletSelection((prevSelection) => ({
-      ...(prevSelection || {}),
-      [id]: prevSelection && prevSelection[id] ? prevSelection[id] - 1 : 0, // Assuming you want to decrement the value
-    }));
+    setBraceletSelection((prevSelection) => {
+      const updatedSelection = {
+        ...(prevSelection || {}),
+        [id]: (prevSelection && prevSelection[id] ? prevSelection[id] - 1 : 0)
+      };
+    
+      // Remove entry if value is 0
+      if (updatedSelection[id] === 0) {
+        delete updatedSelection[id];
+      }
+    
+      return updatedSelection;
+    });
   
     const updatedLetters = id
       .replace(/[^A-Z0-9]/gi, "")
@@ -125,7 +134,7 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
               <button
                 onClick={() => handleDecrement(id)}
                 className={`bg-red-500 text-white p-2 rounded-l ${
-                  braceletQuantities[id].active && braceletQuantities[id].value !== 0 ? "" : "opacity-25 cursor-not-allowed"
+                  braceletQuantities[id].value !== 0 ? "" : "opacity-25 cursor-not-allowed"
                 }`}
               >
                 -
