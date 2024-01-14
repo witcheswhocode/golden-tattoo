@@ -14,7 +14,7 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
   letters,
 }) => {
   const [braceletQuantities, setBraceletQuantities] = useState<{
-    [key: string]: { value: number; active: Boolean };
+    [key: string]: { value: number; active: boolean };
   }>(
     bracelets.reduce((acc: any, bracelet) => {
       acc[bracelet] = { value: 0, active: true };
@@ -57,25 +57,29 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
   };
 
   const handleDecrement = (id: string) => {
+    if (braceletQuantities[id].value === 0) {
+      return;
+    }
+
     setBraceletQuantities((prevQuantities) => ({
       ...prevQuantities,
       [id]: { value: prevQuantities[id].value - 1, active: true }, // Assuming you want to decrement the value
     }));
-  
+
     setBraceletSelection((prevSelection) => {
       const updatedSelection = {
         ...(prevSelection || {}),
-        [id]: (prevSelection && prevSelection[id] ? prevSelection[id] - 1 : 0)
+        [id]: prevSelection && prevSelection[id] ? prevSelection[id] - 1 : 0,
       };
-    
+
       // Remove entry if value is 0
       if (updatedSelection[id] === 0) {
         delete updatedSelection[id];
       }
-    
+
       return updatedSelection;
     });
-  
+
     const updatedLetters = id
       .replace(/[^A-Z0-9]/gi, "")
       .split("")
@@ -86,13 +90,12 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
             : availableLetters[c.toLowerCase()]) || 0) + 1; // Assuming you want to increment the count
         return acc;
       }, {});
-  
+
     setAvailableLetters((prevAvailableLetters) => ({
       ...(prevAvailableLetters || {}),
       ...updatedLetters,
     }));
   };
-  
 
   useEffect(() => {
     setBraceletQuantities((prevBraceletQuantities) => {
@@ -101,13 +104,13 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
         Object.keys(availableLetters).forEach((letter) => {
           const num = (key.match(letter) || []).length;
           const countLetters = availableLetters[letter];
-          prev[key].active = (countLetters === 0 && num !== 0) ? false : num <= countLetters;
-          if (!prev[key].active) {
-            console.log(false, key, letter, num, countLetters);
+          if (num !== 0 && countLetters === 0) {
+            prev[key].active = false;
+          } else if (num > countLetters) {
+            prev[key].active = false;
           }
         });
       });
-      console.log(prev)
       return prev;
     });
   }, [availableLetters]);
@@ -133,8 +136,11 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
             <div className="flex items-center">
               <button
                 onClick={() => handleDecrement(id)}
+                disabled={braceletQuantities[id].value === 0}
                 className={`bg-red-500 text-white p-2 rounded-l ${
-                  braceletQuantities[id].value !== 0 ? "" : "opacity-25 cursor-not-allowed"
+                  braceletQuantities[id].value >= 0
+                    ? ""
+                    : "opacity-25 cursor-not-allowed"
                 }`}
               >
                 -
@@ -142,8 +148,11 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
               <span className="px-4">{braceletSelection[id]}</span>
               <button
                 onClick={() => handleIncrement(id)}
+                disabled={!braceletQuantities[id].active}
                 className={`bg-green-500 text-white p-2 rounded-r ${
-                  braceletQuantities[id].active ? "" : "opacity-25 cursor-not-allowed"
+                  braceletQuantities[id].active
+                    ? ""
+                    : "opacity-25 cursor-not-allowed"
                 }`}
               >
                 +
@@ -166,8 +175,12 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
           <div className="flex items-center">
             <button
               onClick={() => handleDecrement(bracelet)}
+              disabled={braceletQuantities[bracelet].value === 0}
               className={`bg-red-500 text-white p-2 rounded-l ${
-                braceletQuantities[bracelet].active && braceletQuantities[bracelet].value !== 0 ? "" : "cursor-not-allowed"
+                braceletQuantities[bracelet].active &&
+                braceletQuantities[bracelet].value !== 0
+                  ? ""
+                  : "cursor-not-allowed"
               }`}
             >
               -
@@ -175,6 +188,7 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
             <span className="px-4">{braceletQuantities[bracelet].value}</span>
             <button
               onClick={() => handleIncrement(bracelet)}
+              disabled={!braceletQuantities[bracelet].active}
               className={`bg-green-500 text-white p-2 rounded-r ${
                 braceletQuantities[bracelet].active ? "" : "cursor-not-allowed"
               }`}
