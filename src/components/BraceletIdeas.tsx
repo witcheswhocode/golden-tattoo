@@ -28,6 +28,11 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
     [key: string]: number;
   }>(letters);
 
+  const letterTotal = Object.keys(letters).reduce((total, letter) => {
+    return total + letters[letter];
+  }, 0);
+  const [lettersLeft, setLettersLeft] = useState<number>(letterTotal);
+
   const handleIncrement = (id: string) => {
     setBraceletQuantities((prevQuantities) => ({
       ...prevQuantities,
@@ -98,21 +103,38 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
   };
 
   useEffect(() => {
+    console.log(availableLetters);
     setBraceletQuantities((prevBraceletQuantities) => {
       let prev = { ...prevBraceletQuantities };
       Object.keys(prev).forEach((key) => {
+        let temp = key.replace(' ', '').length;
         Object.keys(availableLetters).forEach((letter) => {
-          const num = (key.match(letter) || []).length;
+          const num = (key.toLowerCase().match(letter) || []).length;
           const countLetters = availableLetters[letter];
           if (num !== 0 && countLetters === 0) {
             prev[key].active = false;
+            console.log(letter)
           } else if (num > countLetters) {
             prev[key].active = false;
+            console.log(letter)
+          } else if (num > 0 && countLetters >= num) {
+            //console.log('here3', key, letter, num, countLetters)
+            temp = temp - num;
+            console.log(key, key[temp])
+            if (temp === 1) {
+              prev[key].active = true;
+            }
           }
         });
       });
       return prev;
     });
+
+    let newTotalLetter = 0;
+    Object.keys(availableLetters).forEach((letter) => {
+      newTotalLetter = newTotalLetter + availableLetters[letter];
+    });
+    setLettersLeft(newTotalLetter);
   }, [availableLetters]);
 
   return (
@@ -120,10 +142,14 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
       <div className="flex">
         {availableLetters &&
           Object.entries(availableLetters).map(([id, quantity]) => (
-            <div className="flex">
+            <div className="flex" key={`${id}-letter`}>
               {id} - {quantity}&nbsp;
             </div>
           ))}
+        <div>
+          Used letters: {letterTotal - lettersLeft} --- Total letters:{" "}
+          {letterTotal}
+        </div>
       </div>
 
       {braceletSelection &&
