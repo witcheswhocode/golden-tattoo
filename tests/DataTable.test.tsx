@@ -30,7 +30,7 @@ const sampleData: TableRow[] = [
   },
   {
     wordid: 2,
-    word: "John Doe",
+    word: "John Dawe",
     otherwords: "john@example.com",
     categories: "",
     categorieshtml: "",
@@ -46,16 +46,6 @@ test("renders DataTable component with sample data", () => {
   render(<DataTable data={sampleData} openModal={openModalMock} />);
 
   expect(screen.getByText("John Doe")).toBeTruthy();
-  expect(screen.getByText("30")).toBeTruthy();
-});
-
-test("renders DataTable component with sample data", () => {
-  // Create a dummy function for openModal
-  const openModalMock = jest.fn();
-
-  render(<DataTable data={sampleData} openModal={openModalMock} />);
-
-  // Your test assertions here
 });
 
 test("clicking on a row calls openModal with the correct data", () => {

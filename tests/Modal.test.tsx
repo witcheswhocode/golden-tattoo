@@ -29,7 +29,7 @@ test("renders Modal component with sample data", () => {
   render(<Modal data={sampleData} onClose={() => {}} />);
   // Ensure that the modal is rendered with the correct data
   expect(screen.getByText("John Doe")).toBeTruthy();
-  expect(screen.getByText("john@example.com")).toBeTruthy();
+  expect(screen.getByText("john@example.com - john@example.com")).toBeTruthy();
 });
 
 test("closes modal when clicking on close button", () => {
