@@ -43,7 +43,7 @@ const Modal: React.FC<ModalProps> = ({ data, onClose }) => {
       ></div>
       <div className="bg-white w-96 p-4 rounded shadow-lg z-10">
         <div className="flex justify-end">
-          <span className="cursor-pointer" onClick={onClose}>
+          <span data-testid="modal-close" className="cursor-pointer" onClick={onClose}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6 text-gray-600 hover:text-gray-800"
