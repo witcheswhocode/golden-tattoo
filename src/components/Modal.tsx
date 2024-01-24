@@ -1,5 +1,6 @@
 import React from "react";
 import { ModalData } from "./DataTable"; // Update the import path accordingly
+import HtmlReactParser from 'html-react-parser';
 
 interface ModalProps {
   data: ModalData[];
@@ -18,8 +19,7 @@ const Modal: React.FC<ModalProps> = ({ data, onClose }) => {
           <div
             className="text-m"
             key={`${filteredItem.lyric}-${filteredItem.lyricid}`}
-            dangerouslySetInnerHTML={{ __html: filteredItem.lyric }}
-          />
+          >{HtmlReactParser(filteredItem.lyric)}</div>
         ))}
     </div>
   );
