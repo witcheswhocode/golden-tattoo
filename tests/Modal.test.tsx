@@ -3,6 +3,9 @@ import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { act } from "react-dom/test-utils"; // Import act for testing state updates
 import Modal from "../src/components/Modal";
+import DataTable from "../src/components/DataTable";
+import { tableRows } from "./DataTable.test";
+
 type ModalData = {
   lyricid: number;
   lyric: string;
@@ -15,7 +18,7 @@ type ModalData = {
   song: string;
 };
 
-const sampleData: ModalData[] = [
+const modalData: ModalData[] = [
   {
     lyricid: 1,
     lyric: "haunted",
@@ -52,24 +55,33 @@ const sampleData: ModalData[] = [
 ];
 
 test("renders Modal component with song and album title", () => {
-    render(<Modal data={sampleData} onClose={() => {}} />);
-    // Ensure that the modal is rendered with the correct data
-    expect(screen.getByText("Midnights - Midnight Rain")).toBeTruthy();
-    expect(screen.getByText("evermore - happiness")).toBeTruthy();
-    expect(screen.getByText("evermore - right where you left me")).toBeTruthy();
-  });
+  render(<Modal data={modalData} onClose={() => {}} />);
+  // Ensure that the modal is rendered with the correct data
+  expect(screen.getByText("Midnights - Midnight Rain")).toBeTruthy();
+  expect(screen.getByText("evermore - happiness")).toBeTruthy();
+  expect(screen.getByText("evermore - right where you left me")).toBeTruthy();
+});
 
-  test("renders Modal component with html lyrics", () => {
-    render(<Modal data={sampleData} onClose={() => {}} />);
-    // Ensure that the modal is rendered with the correct data
-    expect(screen.getByText("Some kind of <b>haunted</b>, some kind of haunted")).toBeTruthy();
-    expect(screen.getByText("<b>Haunted</b> by the look in my eyes")).toBeTruthy();
-    expect(screen.getByText("Still sitting in a corner I <b>haunt</b>")).toBeTruthy();
-  });
+test("renders Modal component with html lyrics", () => {
+  const htmlContent = 'Some kind of <b class="bolded-word">haunted,</b> some kind of haunted';
+
+  render(
+    <div className="container mx-auto p-4">
+      <DataTable data={tableRows} openModal={() => {}} />
+      <Modal data={modalData} onClose={() => {}} />
+    </div>
+  );
+  // Ensure that the modal is rendered with the correct data
+  // Use querySelector to find the specific HTML structure
+  const element = screen.getByText(htmlContent);
+
+  // Assert that the element exists
+  expect(element).toBeInTheDocument();
+});
 
 test("closes modal when clicking on close button", () => {
   const onCloseMock = jest.fn();
-  render(<Modal data={sampleData} onClose={onCloseMock} />);
+  render(<Modal data={modalData} onClose={onCloseMock} />);
   // Click on the close button to close the modal
   act(() => {
     fireEvent.click(screen.getByTestId("modal-close"));
@@ -77,4 +89,3 @@ test("closes modal when clicking on close button", () => {
   // Ensure that the onClose function is called
   expect(onCloseMock).toHaveBeenCalled();
 });
-

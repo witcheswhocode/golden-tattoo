@@ -16,7 +16,7 @@ type TableRow = {
   totalcount: number;
   active: number;
 }
-const sampleData: TableRow[] = [
+export const tableRows: TableRow[] = [
   {
     wordid: 1,
     word: "John Doe",
@@ -43,7 +43,7 @@ const sampleData: TableRow[] = [
 test("renders DataTable component with sample data", () => {
   const openModalMock = jest.fn();
 
-  render(<DataTable data={sampleData} openModal={openModalMock} />);
+  render(<DataTable data={tableRows} openModal={openModalMock} />);
 
   expect(screen.getByText("John Doe")).toBeTruthy();
 });
@@ -52,11 +52,11 @@ test("clicking on a row calls openModal with the correct data", () => {
   // Create a dummy function for openModal
   const openModalMock = jest.fn();
 
-  render(<DataTable data={sampleData} openModal={openModalMock} />);
+  render(<DataTable data={tableRows} openModal={openModalMock} />);
 
   // Click on the first row
   fireEvent.click(screen.getByText("John Doe"));
 
   // Check that openModal was called with the correct data
-  expect(openModalMock).toHaveBeenCalledWith(sampleData[0]);
+  expect(openModalMock).toHaveBeenCalledWith(tableRows[0]);
 });
