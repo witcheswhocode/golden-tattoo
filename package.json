@@ -21,7 +21,7 @@
   "scripts": {
     "build-css": "tailwindcss-cli build -i ./src/styles.css -o ./src/output.css",
     "start": "react-scripts --openssl-legacy-provider start",
-    "start-server": "ts-node ./src/server.ts",
+    "start-server": "ts-node ./src/server.mjs",
     "build": "react-scripts build",
     "test": "jest",
     "eject": "react-scripts eject"
