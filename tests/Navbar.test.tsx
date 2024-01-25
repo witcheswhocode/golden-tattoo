@@ -1,10 +1,6 @@
 import React from "react";
-import {
-  render,
-  screen
-} from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import Navbar from "../src/components/Navbar";
-
 
 describe("Navbar Component", () => {
   it("renders Navbar component with links", () => {
