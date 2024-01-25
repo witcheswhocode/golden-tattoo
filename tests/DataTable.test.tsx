@@ -3,6 +3,11 @@ import { render, screen, fireEvent, act } from "@testing-library/react";
 import DataTable from "../src/components/DataTable";
 import { tableRows } from "./data/DataTable";
 
+const isAlphabeticalOrder = (array: any) =>
+  array.every(
+    (value: any, index: any, array: any) =>
+      index === 0 || value.localeCompare(array[index - 1]) >= 0
+  );
 describe("DataTable component", () => {
   test("renders DataTable component with sample data", () => {
     const openModalMock = jest.fn();
@@ -85,5 +90,39 @@ describe("DataTable component", () => {
 
     // Fail the test if it's neither ascending nor descending
     expect(isAscending).toBe(true);
+  });
+
+  test("clicking on a column header word will sort data", () => {
+    const openModalMock = jest.fn();
+    render(<DataTable data={tableRows} openModal={openModalMock} />);
+
+    // Click on the word column
+    act(() => {
+      fireEvent.click(screen.getByText("word"));
+    });
+
+    const songCountElements = screen.getAllByRole("row");
+
+    // Extract data-word values
+    const songCountValues = songCountElements
+      .filter((song) => song.dataset.word !== undefined)
+      .map((song) => song.dataset.word);
+
+    // Check if the values are in ascending order
+    expect(isAlphabeticalOrder(songCountValues.reverse())).toBe(true);
+
+    // Click on the word column again to reverse the order
+    act(() => {
+      fireEvent.click(screen.getByText("word"));
+    });
+
+    // Extract data-word values after reversing the order
+    const reversedSongCountValues = screen
+      .getAllByRole("row")
+      .filter((song) => song.dataset.word !== undefined)
+      .map((song) => song.dataset.word);
+
+    // Check if the values are in descending order
+    expect(isAlphabeticalOrder(reversedSongCountValues)).toBe(true);
   });
 });

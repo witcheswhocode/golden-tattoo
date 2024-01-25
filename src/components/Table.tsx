@@ -39,6 +39,7 @@ const Table: React.FC<TableProps> = (props: TableProps) => {
           <tr
             key={item.wordid}
             data-songcount={item.songcount}
+            data-word={item.word}
             onClick={() => handleOpenModal(item)}
             className="cursor-pointer"
           >
