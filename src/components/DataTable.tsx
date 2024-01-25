@@ -55,7 +55,7 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortColumn, setSortColumn] = useState<string | null>(null);
   const [sortCategory, setSortCategory] = useState<string | null>(null);
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -128,7 +128,7 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
     } else {
       // Set the new sorting column and default to ascending order
       setSortColumn(column);
-      setSortOrder("asc");
+      setSortOrder("desc");
     }
   };
 

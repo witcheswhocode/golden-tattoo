@@ -27,7 +27,7 @@ export const tableRows: TableRow[] = [
     otherwords: "john@example.com",
     categories: "",
     categorieshtml: "",
-    songcount: 1,
+    songcount: 2,
     wordcount: 1,
     totalcount: 1,
     active: 1,

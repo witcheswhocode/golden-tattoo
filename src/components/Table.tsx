@@ -7,9 +7,6 @@ interface TableProps {
   headerClick: (value: string) => void;
 }
 const Table: React.FC<TableProps> = (props: TableProps) => {
-  const [sortColumn, setSortColumn] = useState<string | null>(null);
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
-
   const handleOpenModal = (item: TableRow) => {
     props.openModal(item);
   };
@@ -41,6 +38,7 @@ const Table: React.FC<TableProps> = (props: TableProps) => {
         {props.data.map((item) => (
           <tr
             key={item.wordid}
+            data-songcount={item.songcount}
             onClick={() => handleOpenModal(item)}
             className="cursor-pointer"
           >
