@@ -3,55 +3,8 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { act } from "react-dom/test-utils"; // Import act for testing state updates
 import Modal from "../src/components/Modal";
 import DataTable from "../src/components/DataTable";
-import { tableRows } from "./DataTable.test";
-
-type ModalData = {
-  lyricid: number;
-  lyric: string;
-  subtext: string;
-  lyrichtml: string;
-  categories: string;
-  album: string;
-  albumshort: string;
-  alb: string;
-  song: string;
-};
-
-const modalData: ModalData[] = [
-  {
-    lyricid: 1,
-    lyrichtml: "haunted",
-    subtext: "",
-    lyric: "Some kind of <b>haunted</b>, some kind of haunted",
-    categories: "parallels|ghosts",
-    album: "Midnights",
-    albumshort: "Midnights",
-    alb: "midnight",
-    song: "Midnight Rain",
-  },
-  {
-    lyricid: 2,
-    lyrichtml: "haunted",
-    subtext: "",
-    lyric: "<b>Haunted</b> by the look in my eyes",
-    categories: "parallels|ghosts",
-    album: "evermore",
-    albumshort: "evermore",
-    alb: "evermore",
-    song: "happiness",
-  },
-  {
-    lyricid: 3,
-    lyrichtml: "haunted",
-    subtext: "",
-    lyric: "Still sitting in a corner I <b>haunt</b>",
-    categories: "parallels|ghosts",
-    album: "evermore",
-    albumshort: "evermore",
-    alb: "evermore",
-    song: "right where you left me",
-  },
-];
+import { tableRows } from "./data/DataTable";
+import { modalData } from "./data/Modal";
 
 test("renders Modal component with song and album title", () => {
   render(<Modal data={modalData} onClose={() => {}} />);
