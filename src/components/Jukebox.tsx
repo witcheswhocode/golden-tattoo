@@ -28,31 +28,38 @@ export interface WritersData {
 }
 
 function Jukebox(props: WritersData) {
-  const [writerData, setWriterData] = useState<WritersProps[] | null>(null);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc"); // Track sorting order
 
-  const createDiv = (albumshort: string, released: number) => (
-    <div key={`${albumshort}`}>
-      <div className="text-center text-xl">{`${albumshort}`}</div>
-      {props.data
-        .filter((item) => item.albumshort === albumshort)
-        .map((filteredItem) => (
-          <div className="flex">
-            <div className="text-m" key={`${filteredItem.song}`}>
-              {filteredItem.song}
+  const createDiv = (
+    albumshort: string,
+    released: number | null,
+    count: string | null
+  ) => {
+    const keySuffix =
+      (released !== null ? `-${released}` : "") +
+      (count !== null ? `-${count}` : "");
+
+    return (
+      <div key={`${albumshort}${keySuffix}`}>
+        <div className="text-center text-xl">{`${albumshort}`}</div>
+        {props.data
+          .filter((item) => item.albumshort === albumshort)
+          .map((filteredItem) => (
+            <div className="flex" key={`${filteredItem.song}${keySuffix}`}>
+              <div className="text-m">{filteredItem.song}</div>
+              <div className="flex">
+                {filteredItem.writers
+                  .split(",")
+                  .reverse()
+                  .map((writer, index) => (
+                    <div key={`${writer}-${index}`}>{writer}</div>
+                  ))}
+              </div>
             </div>
-            <div className="flex">
-              {filteredItem.writers
-                .split(",")
-                .reverse()
-                .map((writer) => (
-                  <div key={writer}>{writer}</div>
-                ))}
-            </div>
-          </div>
-        ))}
-    </div>
-  );
+          ))}
+      </div>
+    );
+  };
 
   // Get unique album and song combinations
   const uniqueAlbums = [
@@ -61,7 +68,6 @@ function Jukebox(props: WritersData) {
 
   // Sorting function based on release date
   const sortFunction = (a: string, b: string) => {
-    console.log(a,b);
     let [albumshortA, releasedA] = a.split("_");
     let [albumshortB, releasedB] = b.split("_");
 
@@ -80,22 +86,13 @@ function Jukebox(props: WritersData) {
 
   // Sort uniqueAlbums based on release date
   const sortedUniqueAlbums = uniqueAlbums.sort(sortFunction);
-
   // Render div elements for each unique album and song combination
   const result = sortedUniqueAlbums.map((combination) => {
-    const [albumshort, released] = combination.split("_");
-    const releasedNumber = released === 'NaN' ? parseInt(released, 10) : 5000;
+    const [albumshort, released, count] = combination.split("_");
+    const releasedNumber = released === "NaN" ? parseInt(released, 10) : 5000;
 
-
-    return createDiv(albumshort, releasedNumber);
+    return createDiv(albumshort, releasedNumber, count);
   });
-
-  useEffect(() => {
-    fetch("http://localhost:3001/getWriters")
-      .then((response) => response.json())
-      .then((data) => setWriterData(data.data))
-      .catch((error) => console.error("Error fetching data:", error));
-  }, []);
 
   // Toggle sorting order when the button is clicked
   const toggleSortOrder = () => {
