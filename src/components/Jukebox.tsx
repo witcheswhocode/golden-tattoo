@@ -1,5 +1,4 @@
-import { release } from "os";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 export interface WritersProps {
   alb: string;
@@ -11,7 +10,7 @@ export interface WritersProps {
   countwriters: number;
   other: string;
   producers: string;
-  released: number;
+  released: string;
   song: string;
   songid: number;
   spotify: string;
