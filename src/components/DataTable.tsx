@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Pagination from "./Pagination";
+import Table from "./Table";
 
 export interface TableRow {
   wordid: number;
@@ -112,8 +113,6 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
 
   const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
 
-  const totalPages = Math.ceil(props.data.length / itemsPerPage);
-
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
@@ -159,38 +158,7 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
           {category}
         </div>
       ))}
-      <table className="min-w-full border border-gray-300">
-        <thead>
-          <tr>
-            <th
-              className="border-b cursor-pointer"
-              onClick={() => handleHeaderClick("word")}
-            >
-              word
-            </th>
-            <th
-              className="border-b cursor-pointer"
-              onClick={() => handleHeaderClick("songcount")}
-            >
-              song count
-            </th>
-            <th className="border-b">categories</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentItems.map((item) => (
-            <tr
-              key={item.wordid}
-              onClick={() => handleOpenModal(item)}
-              className="cursor-pointer"
-            >
-              <td className="border-b">{item.word}</td>
-              <td className="border-b">{item.songcount}</td>
-              <td className="border-b">{item.categories}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <Table openModal={handleOpenModal} headerClick={handleHeaderClick} data={currentItems} />
       <Pagination
         pages={Array.from(Array(props.data.length).keys()).map((x) => x++)}
         totalItems={props.data.length}
