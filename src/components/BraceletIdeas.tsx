@@ -95,7 +95,7 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
           acc[c.toLowerCase()] =
             ((acc[c.toLowerCase()]
               ? acc[c.toLowerCase()]
-              : availableLetters[c.toLowerCase()]) || 0) - 1;
+              : availableLetters[c.toLowerCase()]) || 0) + 1;
         }
         return acc;
       }, {});
@@ -108,30 +108,32 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
   };
 
   useEffect(() => {
-    console.log("availableLetters");
+    console.log(availableLetters);
     setBraceletQuantities((prevBraceletQuantities) => {
       let prev = { ...prevBraceletQuantities };
       Object.keys(prev).forEach((key) => {
         let temp = key.replace(" ", "").length;
         Object.keys(availableLetters).forEach((letter) => {
-          const num = (key.toLowerCase().match(letter) || []).length;
-          const countLetters = availableLetters[letter];
-          if (num !== 0 && countLetters === 0) {
+          const num = (key.toLowerCase().match(letter) || []).length; // number of times the letter shows up in the word
+          const countLetters = availableLetters[letter]; // number of available letter
+          if (num !== 0 && countLetters === 0) { // word had the letter, letter count does not have any
             prev[key].active = false;
             //console.log(letter)
-          } else if (num > countLetters) {
+          } else if (num > countLetters) { // word has more letters than the letter count
             prev[key].active = false;
             //console.log(letter);
-          } else if (num > 0 && countLetters >= num) {
+          } else if (num > 0 && countLetters >= num) { // word has more than one of the letters, the letter count has more than the word needs
             //console.log('here3', key, letter, num, countLetters)
             temp = temp - num;
-            //console.log(key, key[temp])
-            if (temp === 1) {
+            console.log(key, temp, num)
+            if (temp === 0) {
+              console.log(key, temp)
               prev[key].active = true;
             }
           }
         });
       });
+      console.log(prev)
       return prev;
     });
 

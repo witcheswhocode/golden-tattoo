@@ -18,7 +18,7 @@ const Bracelets = () => {
         handleCombinationPossibilities={setCombinationPossibilities} inputValues={inputValues} setInputValues={setInputValues}
       />
       {combinationPossibilities && (
-        <BraceletIdeas bracelets={combinationPossibilities} letters={inputValues} />
+        <BraceletIdeas bracelets={combinationPossibilities.slice(0, 3)} letters={inputValues} />
       )}
     </div>
   );
