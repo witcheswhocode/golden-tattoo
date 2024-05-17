@@ -55,6 +55,7 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
         return acc;
       }, {});
 
+    console.log('setting avail letters')
     setAvailableLetters((prevAvailableLetters) => ({
       ...(prevAvailableLetters || {}),
       ...updatedLetters,
@@ -80,6 +81,7 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
       // Remove entry if value is 0
       if (updatedSelection[id] === 0) {
         delete updatedSelection[id];
+        console.log("delete");
       }
 
       return updatedSelection;
@@ -89,13 +91,16 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
       .replace(/[^A-Z0-9]/gi, "")
       .split("")
       .reduce((acc: any, c) => {
-        acc[c.toLowerCase()] =
-          ((acc[c.toLowerCase()]
-            ? acc[c.toLowerCase()]
-            : availableLetters[c.toLowerCase()]) || 0) + 1; // Assuming you want to increment the count
+        if (availableLetters.hasOwnProperty(c.toLowerCase())) {
+          acc[c.toLowerCase()] =
+            ((acc[c.toLowerCase()]
+              ? acc[c.toLowerCase()]
+              : availableLetters[c.toLowerCase()]) || 0) - 1;
+        }
         return acc;
       }, {});
 
+      console.log('setting avail letters dec')
     setAvailableLetters((prevAvailableLetters) => ({
       ...(prevAvailableLetters || {}),
       ...updatedLetters,
@@ -103,24 +108,24 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
   };
 
   useEffect(() => {
-    console.log(availableLetters);
+    console.log("availableLetters");
     setBraceletQuantities((prevBraceletQuantities) => {
       let prev = { ...prevBraceletQuantities };
       Object.keys(prev).forEach((key) => {
-        let temp = key.replace(' ', '').length;
+        let temp = key.replace(" ", "").length;
         Object.keys(availableLetters).forEach((letter) => {
           const num = (key.toLowerCase().match(letter) || []).length;
           const countLetters = availableLetters[letter];
           if (num !== 0 && countLetters === 0) {
             prev[key].active = false;
-            console.log(letter)
+            //console.log(letter)
           } else if (num > countLetters) {
             prev[key].active = false;
-            console.log(letter)
+            //console.log(letter);
           } else if (num > 0 && countLetters >= num) {
             //console.log('here3', key, letter, num, countLetters)
             temp = temp - num;
-            console.log(key, key[temp])
+            //console.log(key, key[temp])
             if (temp === 1) {
               prev[key].active = true;
             }
