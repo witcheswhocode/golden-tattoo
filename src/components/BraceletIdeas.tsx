@@ -211,7 +211,7 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
           }`}
         >
           <span className="text-lg">
-            {bracelet}-{braceletQuantities[bracelet].active.toString()}
+            {bracelet}
           </span>
           <div className="flex items-center">
             <button
