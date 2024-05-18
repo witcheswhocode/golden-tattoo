@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import LetterCount from "../LetterCount";
+import BraceletSelection from "../BraceletSelection";
 
 interface Bracelet {
   name: string;
@@ -163,42 +164,17 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
 
   return (
     <div className="p-4">
-      <LetterCount availableLetters={availableLetters} letterTotal={letterTotal} lettersLeft={lettersLeft} />
-      {braceletSelection &&
-        Object.entries(braceletSelection).map(([id, quantity]) => (
-          <div
-            key={`${id}-${quantity}`}
-            className="flex items-center justify-between mb-4"
-          >
-            <span className="text-lg">{id}</span>
-            <div className="flex items-center">
-              <button
-                onClick={() => handleDecrement(id)}
-                disabled={braceletQuantities[id].value === 0}
-                className={`bg-red-500 text-white p-2 rounded-l ${
-                  braceletQuantities[id].value >= 0
-                    ? ""
-                    : "opacity-25 cursor-not-allowed"
-                }`}
-              >
-                -
-              </button>
-              <span className="px-4">{braceletSelection[id]}</span>
-              <button
-                onClick={() => handleIncrement(id)}
-                disabled={!braceletQuantities[id].active}
-                className={`bg-green-500 text-white p-2 rounded-r ${
-                  braceletQuantities[id].active
-                    ? ""
-                    : "opacity-25 cursor-not-allowed"
-                }`}
-              >
-                +
-              </button>
-            </div>
-          </div>
-        ))}
-      {!braceletSelection && <>Bracelet selections will go here.</>}
+      <LetterCount
+        availableLetters={availableLetters}
+        letterTotal={letterTotal}
+        lettersLeft={lettersLeft}
+      />
+      <BraceletSelection
+        braceletSelection={braceletSelection || {}}
+        braceletQuantities={braceletQuantities}
+        handleDecrement={handleDecrement}
+        handleIncrement={handleIncrement}
+      />
       <div className="bg-black h-0.5 m-5"></div>
       {Object.keys(braceletQuantities).map((key) => (
         <div
