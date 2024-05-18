@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import LetterCount from "../LetterCount";
 
 interface Bracelet {
   name: string;
@@ -162,19 +163,7 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
 
   return (
     <div className="p-4">
-      <div className="flex">
-        {availableLetters &&
-          Object.entries(availableLetters).map(([id, quantity]) => (
-            <div className="flex" key={`${id}-letter`}>
-              {id} - {quantity}&nbsp;
-            </div>
-          ))}
-        <div>
-          Used letters: {letterTotal - lettersLeft} --- Total letters:{" "}
-          {letterTotal}
-        </div>
-      </div>
-
+      <LetterCount availableLetters={availableLetters} letterTotal={letterTotal} lettersLeft={lettersLeft} />
       {braceletSelection &&
         Object.entries(braceletSelection).map(([id, quantity]) => (
           <div
