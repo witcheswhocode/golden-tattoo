@@ -92,7 +92,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
 
   return (
     <div className="container mx-auto mt-8 p-4 bg-red">
-      <div className="grid grid-cols-5 gap-4">
+      <div className="grid grid-cols-10 gap-2">
         {Array.from({ length: 26 }, (_, i) => {
           const letter = String.fromCharCode(65 + i);
           return (
@@ -106,14 +106,12 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
                 name={letter.toLowerCase()}
                 onChange={handleInputChange}
                 value={inputValues[letter.toLowerCase()] || ""}
-                className="border rounded w-12 p-2 text-center focus:ring focus:ring-blue-200 focus:outline-none"
+                className="border rounded w-8 h-8 p-2 text-center focus:ring focus:ring-blue-200 focus:outline-none"
               />
             </div>
           );
         })}
-      </div>
-
-      <div className="mt-4">
+      <div className="mt-4 w-full">
         <button
           type="button"
           onClick={handleSubmit}
@@ -122,6 +120,8 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
           Submit
         </button>
       </div>
+      </div>
+
     </div>
   );
 };
