@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import LetterCount from "../LetterCount";
 import BraceletSelection from "../BraceletSelection";
+import ListOfBraceletIdeas from "../ListOfBraceletIdeas";
 
 interface Bracelet {
   name: string;
@@ -175,41 +176,11 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
         handleDecrement={handleDecrement}
         handleIncrement={handleIncrement}
       />
-      <div className="bg-black h-0.5 m-5"></div>
-      {Object.keys(braceletQuantities).map((key) => (
-        <div
-          key={key}
-          className={`flex items-center justify-between mb-4 ${
-            braceletQuantities[key].active ? "" : "opacity-25"
-          }`}
-        >
-          <span className="text-lg">{key}</span>
-          <div className="flex items-center">
-            <button
-              onClick={() => handleDecrement(key)}
-              disabled={braceletQuantities[key].value === 0}
-              className={`bg-red-500 text-white p-2 rounded-l ${
-                braceletQuantities[key].active &&
-                braceletQuantities[key].value !== 0
-                  ? ""
-                  : "cursor-not-allowed"
-              }`}
-            >
-              -
-            </button>
-            <span className="px-4">{braceletQuantities[key].value}</span>
-            <button
-              onClick={() => handleIncrement(key)}
-              disabled={!braceletQuantities[key].active}
-              className={`bg-green-500 text-white p-2 rounded-r ${
-                braceletQuantities[key].active ? "" : "cursor-not-allowed"
-              }`}
-            >
-              +
-            </button>
-          </div>
-        </div>
-      ))}
+      <ListOfBraceletIdeas
+        braceletQuantities={braceletQuantities}
+        handleDecrement={handleDecrement}
+        handleIncrement={handleIncrement}
+      />
     </div>
   );
 };
