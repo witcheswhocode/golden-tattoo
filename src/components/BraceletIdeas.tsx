@@ -55,7 +55,6 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
         return acc;
       }, {});
 
-    console.log('setting avail letters')
     setAvailableLetters((prevAvailableLetters) => ({
       ...(prevAvailableLetters || {}),
       ...updatedLetters,
@@ -81,7 +80,6 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
       // Remove entry if value is 0
       if (updatedSelection[id] === 0) {
         delete updatedSelection[id];
-        console.log("delete");
       }
 
       return updatedSelection;
@@ -100,40 +98,50 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
         return acc;
       }, {});
 
-      console.log('setting avail letters dec')
     setAvailableLetters((prevAvailableLetters) => ({
       ...(prevAvailableLetters || {}),
       ...updatedLetters,
     }));
   };
 
+  function countOccurrences(str: string, letter: string): number {
+    let count: number = 0;
+    for (let i: number = 0; i < str.length; i++) {
+      if (str[i].toLowerCase() === letter.toLowerCase()) {
+        count++;
+      }
+    }
+    return count;
+  }
+
   useEffect(() => {
-    console.log(availableLetters);
     setBraceletQuantities((prevBraceletQuantities) => {
       let prev = { ...prevBraceletQuantities };
       Object.keys(prev).forEach((key) => {
-        let temp = key.replace(" ", "").length;
+        // loop through bracelet options
+        let temp = key.replaceAll(" ", "").length; // count of letters that are needed left
         Object.keys(availableLetters).forEach((letter) => {
-          const num = (key.toLowerCase().match(letter) || []).length; // number of times the letter shows up in the word
+          // loop through available letter counts
+          const num = countOccurrences(key.toLowerCase(), letter.toLowerCase()); // number of times the letter shows up in the word
           const countLetters = availableLetters[letter]; // number of available letter
-          if (num !== 0 && countLetters === 0) { // word had the letter, letter count does not have any
+          if (num !== 0 && countLetters === 0) {
+            // word had the letter, letter count does not have any
             prev[key].active = false;
-            //console.log(letter)
-          } else if (num > countLetters) { // word has more letters than the letter count
+            return;
+          } else if (num > countLetters) {
+            // word has more letters than the letter count
             prev[key].active = false;
-            //console.log(letter);
-          } else if (num > 0 && countLetters >= num) { // word has more than one of the letters, the letter count has more than the word needs
-            //console.log('here3', key, letter, num, countLetters)
+            return;
+          } else if (num > 0 && countLetters >= num) {
+            // word has more than one of the letters, the letter count has more than the word needs
             temp = temp - num;
-            console.log(key, temp, num)
             if (temp === 0) {
-              console.log(key, temp)
               prev[key].active = true;
             }
           }
         });
       });
-      console.log(prev)
+
       return prev;
     });
 
