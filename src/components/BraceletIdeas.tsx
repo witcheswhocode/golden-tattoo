@@ -142,7 +142,15 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
         });
       });
 
-      return prev;
+      // Sorting by the 'active' field
+      const sortedBraceletQuantities = Object.entries(prev)
+        .sort(([, a], [, b]) => (a.active === b.active ? 0 : a.active ? -1 : 1)) // Changed to -1, 0, 1
+        .reduce((acc: any, [key, value]) => {
+          acc[key] = value;
+          return acc;
+        }, {});
+
+      return sortedBraceletQuantities;
     });
 
     let newTotalLetter = 0;
@@ -203,35 +211,33 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
         ))}
       {!braceletSelection && <>Bracelet selections will go here.</>}
       <div className="bg-black h-0.5 m-5"></div>
-      {bracelets.map((bracelet) => (
+      {Object.keys(braceletQuantities).map((key) => (
         <div
-          key={bracelet}
+          key={key}
           className={`flex items-center justify-between mb-4 ${
-            braceletQuantities[bracelet].active ? "" : "opacity-25"
+            braceletQuantities[key].active ? "" : "opacity-25"
           }`}
         >
-          <span className="text-lg">
-            {bracelet}
-          </span>
+          <span className="text-lg">{key}</span>
           <div className="flex items-center">
             <button
-              onClick={() => handleDecrement(bracelet)}
-              disabled={braceletQuantities[bracelet].value === 0}
+              onClick={() => handleDecrement(key)}
+              disabled={braceletQuantities[key].value === 0}
               className={`bg-red-500 text-white p-2 rounded-l ${
-                braceletQuantities[bracelet].active &&
-                braceletQuantities[bracelet].value !== 0
+                braceletQuantities[key].active &&
+                braceletQuantities[key].value !== 0
                   ? ""
                   : "cursor-not-allowed"
               }`}
             >
               -
             </button>
-            <span className="px-4">{braceletQuantities[bracelet].value}</span>
+            <span className="px-4">{braceletQuantities[key].value}</span>
             <button
-              onClick={() => handleIncrement(bracelet)}
-              disabled={!braceletQuantities[bracelet].active}
+              onClick={() => handleIncrement(key)}
+              disabled={!braceletQuantities[key].active}
               className={`bg-green-500 text-white p-2 rounded-r ${
-                braceletQuantities[bracelet].active ? "" : "cursor-not-allowed"
+                braceletQuantities[key].active ? "" : "cursor-not-allowed"
               }`}
             >
               +
