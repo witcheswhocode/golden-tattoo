@@ -1,5 +1,5 @@
 import React from "react";
-import { ModalData } from "./DataTable"; // Update the import path accordingly
+import { ModalData } from "../DataTable"; // Update the import path accordingly
 import HtmlReactParser from 'html-react-parser';
 
 interface ModalProps {

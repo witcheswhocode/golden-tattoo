@@ -2,11 +2,11 @@ import React, {useState} from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Writers from "./components/Writers";
-import Bracelets from "./components/Bracelets";
-import LyricsTable from "./components/LyricsTable";
+import Writers from "./pages/Writers";
+import Bracelets from "./pages/Bracelets";
+import LyricsTable from "./pages/Lyrics";
 import Navbar from "./components/Navbar";
-import Dropdown from "./components/Dropdown";
+import Dropdown from "./components/Dropdown/Dropdown";
 
 function App() {
   const dropdownItems = [

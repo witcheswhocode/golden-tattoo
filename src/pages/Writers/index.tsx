@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Jukebox from "./Jukebox";
-import { WritersProps } from "./Jukebox";
+import Jukebox from "./components/Jukebox";
+import { WritersProps } from "./components/Jukebox";
 
 function Writers() {
   const [writerData, setWriterData] = useState<WritersProps[] | null>(null);

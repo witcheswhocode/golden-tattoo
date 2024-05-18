@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { TableRow } from "./DataTable";
+import { TableRow } from "../DataTable";
 
 interface TableProps {
   data: TableRow[];

@@ -1,8 +1,8 @@
 import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { act } from "react-dom/test-utils"; // Import act for testing state updates
-import Modal from "../src/components/Modal";
-import DataTable from "../src/components/DataTable";
+import Modal from "../src/pages/Lyrics/components/Modal";
+import DataTable from "../src/pages/Lyrics/components/DataTable";
 import { tableRows } from "./data/DataTable";
 import { modalData } from "./data/Modal";
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import BraceletIdeas from "./BraceletIdeas";
-import AlphabetInputs from "./AlphabetInputs";
+import BraceletIdeas from "./components/BraceletIdeas";
+import AlphabetInputs from "./components/AlphabetInputs";
 
 type LetterCount = { [letter: string]: number };
 

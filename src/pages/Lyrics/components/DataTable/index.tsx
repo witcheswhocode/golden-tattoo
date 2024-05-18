@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Pagination from "./Pagination";
-import Table from "./Table";
+import Pagination from "../Pagination";
+import Table from "../Table";
 
 export interface TableRow {
   wordid: number;

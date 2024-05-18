@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import DataTable, { ModalData } from "./DataTable";
-import Modal from "./Modal";
-import { TableRow } from "./DataTable";
+import DataTable, { ModalData } from "./components/DataTable";
+import Modal from "./components/Modal";
+import { TableRow } from "./components/DataTable";
 
 const LyricsTable: React.FC = () => {
   const [selectedItem, setSelectedItem] = useState<ModalData[] | null>(null);

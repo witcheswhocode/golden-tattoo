@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
-import Jukebox from "../src/components/Jukebox";
+import Jukebox from "../src/pages/Writers/components/Jukebox";
 import { writersData } from "./data/Jukebox";
 
 describe("Jukebox component", () => {

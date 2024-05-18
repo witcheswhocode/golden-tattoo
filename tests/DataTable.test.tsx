@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { render, screen, fireEvent, act } from "@testing-library/react";
-import DataTable from "../src/components/DataTable";
+import DataTable from "../src/pages/Lyrics/components/DataTable";
 import { tableRows } from "./data/DataTable";
 
 const isAlphabeticalOrder = (array: any) =>
