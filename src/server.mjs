@@ -78,16 +78,18 @@ app.get("/getAllCombinations", (data, res, next) => {
     const [maxCombinations, combinationsList, finalLetterCounts] =
       findLongestCombinations(validWords, letterCounts);
 
-    //console.log("Longest list of words that can be made:");
-    //console.log(combinationsList);
-    //console.log("Number of combinations:", maxCombinations);
-    //console.log("Final Letter Count:", finalLetterCounts);
-    const combinationsListBest = findBestCombination(validWords, letterCounts);
-    console.log(combinationsListBest);
+    const { mostLettersUsed, mostBraceletOptions } = findBestCombination(
+      validWords,
+      letterCounts
+    );
 
     res.json({
       message: "success",
-      data: { combinationList: combinationsList }, //, 'maxCombinations': maxCombinations}
+      data: {
+        combinationList: combinationsList,
+        mostLettersUsed: mostLettersUsed,
+        mostBraceletOptions: mostBraceletOptions,
+      },
     });
   });
 });
@@ -256,32 +258,53 @@ export default function findBestCombination(words, letterCounts) {
 
   // Initialize the function with index 0
   backtrack(0, [], letterCounts, words);
-  console.log("new");
-  // Calculate the total number of characters in each array
-  const arrayTotals = allSolutions.map((array) => array.join("").length);
 
-  // Sort the array of arrays based on the totals
-  allSolutions.sort((a, b) => {
-    const totalA = a.join("").length;
-    const totalB = b.join("").length;
-    return totalB - totalA; // Sort in descending order
-  });
-  return allSolutions
+  return findTheBests(allSolutions);
   //return allSolutions.sort((a, b) => b.length - a.length);
   function findTheBests(allSolutions) {
-    let currentItem = "";
-    let currentItemMax = 0;
-    let tempCount = 0;
-    allSolutions.forEach((element) => {
-      if (currentItem !== element[0]) {
-        currentItem = element[0]; // start with the first element
-      }
-      element.forEach((item) => {
-        tempCount = tempCount + item.length;
-      });
+    // find most letters used in combinations
+    // Calculate the total number of characters in each array
+    const arrayTotals = allSolutions.map((array) => array.join("").length);
 
-      console.log(element);
+    // Sort the array of arrays based on the totals and lengths
+    allSolutions.sort((a, b) => {
+      const totalA = a.join("").length;
+      const totalB = b.join("").length;
+
+      // If totals are equal, sort by the number of elements (length of the array)
+      if (totalA === totalB) {
+        return a.length - b.length;
+      }
+
+      // Otherwise, sort by the totals in descending order
+      return totalB - totalA;
     });
+
+    // Retrieve the first item (and multiple if there is a tie)
+    const firstItems = [allSolutions[0]];
+    const totalCharacters = allSolutions[0].join("").length;
+
+    for (let i = 1; i < allSolutions.length; i++) {
+      if (arrayTotals[i] === totalCharacters) {
+        firstItems.push(allSolutions[i]);
+      } else {
+        break; // Stop when encountering the first non-tie
+      }
+    }
+
+    let mostBracelets = [];
+
+    // Find the maximum number of items in any solution
+    const maxItems = Math.max(
+      ...allSolutions.map((solution) => solution.length)
+    );
+
+    // Retrieve the solutions with the maximum number of items
+    const maxItemsSolutions = allSolutions.filter(
+      (solution) => solution.length === maxItems
+    );
+
+    return [firstItems, maxItemsSolutions];
   }
 
   function canFormWord(word, letterCounts) {
