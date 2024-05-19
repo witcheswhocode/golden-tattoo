@@ -3,6 +3,8 @@ import LetterCount from "../LetterCount";
 import BraceletSelection from "../BraceletSelection";
 import ListOfBraceletIdeas from "../ListOfBraceletIdeas";
 import ListOfBestCombinations from "../ListOfBestCombinations";
+import Tabs from "src/components/Tabs";
+import Tab from "src/components/Tabs/components/Tab";
 
 interface Bracelet {
   name: string;
@@ -181,9 +183,27 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
         handleDecrement={handleDecrement}
         handleIncrement={handleIncrement}
       />
-      <ListOfBestCombinations combinations={mostLettersUsed} title={'Most Letters'} />
 
-      <ListOfBestCombinations combinations={mostBraceletOptions} title={'Most Bracelets'} />
+      <Tabs>
+        <Tab label="label">
+          <ListOfBestCombinations
+            combinations={mostLettersUsed}
+            title={"Most Letters"}
+          />
+
+          <ListOfBestCombinations
+            combinations={mostBraceletOptions}
+            title={"Most Bracelets"}
+          />
+        </Tab>
+        <Tab label="label1">
+          <ListOfBraceletIdeas
+            braceletQuantities={braceletQuantities}
+            handleDecrement={handleDecrement}
+            handleIncrement={handleIncrement}
+          />
+        </Tab>
+      </Tabs>
 
       <ListOfBraceletIdeas
         braceletQuantities={braceletQuantities}
