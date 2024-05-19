@@ -65,27 +65,30 @@ app.get("/getWriters", (req, res, next) => {
 });
 
 app.get("/getAllCombinations", (data, res, next) => {
-  var sql = "select * from bracelets"
-  var params = []
+  var sql = "select * from bracelets";
+  var params = [];
   db.all(sql, params, (err, rows) => {
-      if (err) {
-        res.status(400).json({"error":err.message});
-        return;
-      }
-      const wordList = rows;
-      const letterCounts = data.query;
-      const validWords = preprocessWords(wordList, letterCounts);
-      const [maxCombinations, combinationsList, finalLetterCounts] = findLongestCombinations(validWords, letterCounts);
-  
-      //console.log("Longest list of words that can be made:");
-      //console.log(combinationsList);
-      //console.log("Number of combinations:", maxCombinations);
-      //console.log("Final Letter Count:", finalLetterCounts);
-      res.json({
-          "message":"success",
-          "data":{'combinationList': combinationsList, 'maxCombinations': maxCombinations}
-      })
+    if (err) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
+    const wordList = rows;
+    const letterCounts = data.query;
+    const validWords = preprocessWords(wordList, letterCounts);
+    const [maxCombinations, combinationsList, finalLetterCounts] = findLongestCombinations(validWords, letterCounts);
+
+    //console.log("Longest list of words that can be made:");
+    //console.log(combinationsList);
+    //console.log("Number of combinations:", maxCombinations);
+    //console.log("Final Letter Count:", finalLetterCounts);
+    const combinationsListBest = findBestCombination(validWords, letterCounts);
+    console.log(combinationsListBest);
+
+    res.json({
+      message: "success",
+      data: { combinationList: combinationsList }, //, 'maxCombinations': maxCombinations}
     });
+  });
 });
 app.get("/api/getMostCombinations", (data, res, next) => {
   var sql = "select * from bracelets order by length";
@@ -103,7 +106,6 @@ app.get("/api/getMostCombinations", (data, res, next) => {
       findLongestCombinations(validWords, letterCounts);
 
     const result = findBestCombination(validWords, letterCounts);
-    console.log(result);
     //console.log("Longest list of words that can be made:");
     //console.log(combinationsList);
     //console.log("Number of combinations:", maxCombinations);
@@ -180,7 +182,7 @@ function findLongestCombinations(words, letterDict) {
   return [maxCombinations, combinationsList, letterCounts];
 }
 
-function findBestCombination(dictionary, letterCounts) {
+function findBestCombinationOld(dictionary, letterCounts) {
   let bestCombination = [];
   let bestScore = 0;
 
@@ -240,4 +242,85 @@ function findBestCombination(dictionary, letterCounts) {
 
   exploreCombination([], 0, 0);
   return bestCombination;
+}
+
+export default function findBestCombination(words, letterCounts) {
+  let bestSolution = [];
+  let bestCount = 0;
+
+  function backtrack(index, solution = [], letterCounts, words) {
+    //console.log(letterCounter, words)
+    if (index === words.length) {
+      const count = countLettersUsed(solution);
+      if (count > bestCount) {
+        bestCount = count;
+        bestSolution = solution.slice(); // Make a copy of the solution
+      }
+      return;
+    }
+
+    const word = words[index];
+    if (canFormWord(word, letterCounts)) {
+      // Update letter counts
+      const newLetterCounts = updateLetterCounts(word, { ...letterCounts });
+      const newSolution = [...solution, word];
+      console.log(newSolution)
+      // Recursive call
+      backtrack(index + 1, newSolution, newLetterCounts, words);
+    }
+
+    // Recursive call without using the current word
+    backtrack(index + 1, solution, letterCounts, words);
+  }
+
+  // Initialize the function with index 0
+  backtrack(0, [], letterCounts, words);
+
+  function canFormWord(word, letterCounts) {
+    const wordLetters = word.replace(/\s/g, "").toLowerCase(); // Remove spaces and convert to lowercase
+    const countsCopy = { ...letterCounts }; // Make a copy of the letter counts
+
+    for (let char of wordLetters) {
+      if (!countsCopy[char] || countsCopy[char] === "0") {
+        return false; // If a required letter is not available or its count is zero, return false
+      }
+      countsCopy[char] = String(Number(countsCopy[char]) - 1); // Decrease the count of the letter
+    }
+
+    return true;
+  }
+
+  function updateLetterCounts(word, letterCounts) {
+    const countsCopy = { ...letterCounts }; // Make a copy of the letter counts
+
+    for (let char of word.replace(/\s/g, "").toLowerCase()) {
+      if (countsCopy[char] && countsCopy[char] !== "0") {
+        countsCopy[char] = String(Number(countsCopy[char]) - 1); // Decrease the count of the letter
+      }
+    }
+
+    return countsCopy;
+  }
+
+  function countLettersUsed(solution) {
+    // Initialize an empty object to store the counts of each letter
+    const letterCounts = {};
+
+    // Iterate over each word in the solution
+    for (let word of solution) {
+      // Iterate over each character in the word
+      for (let char of word) {
+        // Increment the count for each letter in the letterCounts object
+        letterCounts[char] = (letterCounts[char] || 0) + 1;
+      }
+    }
+
+    // Calculate the total count of letters used
+    let totalCount = 0;
+    for (let count of Object.values(letterCounts)) {
+      totalCount += count;
+    }
+
+    return bestSolution;
+  }
 }
