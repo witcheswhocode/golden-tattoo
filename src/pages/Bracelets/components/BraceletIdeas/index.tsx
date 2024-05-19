@@ -9,11 +9,15 @@ interface Bracelet {
 
 interface BraceletIdeasProps {
   bracelets: string[];
+  mostLettersUsed: string[][] | null;
+  mostBraceletOptions: string[][] | null;
   letters: { [key: string]: number };
 }
 
 const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
   bracelets,
+  mostLettersUsed,
+  mostBraceletOptions,
   letters,
 }) => {
   const [braceletQuantities, setBraceletQuantities] = useState<{
@@ -172,6 +176,17 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
       />
       <BraceletSelection
         braceletSelection={braceletSelection || {}}
+        braceletQuantities={braceletQuantities}
+        handleDecrement={handleDecrement}
+        handleIncrement={handleIncrement}
+      />
+      <div>
+        {mostLettersUsed?.map((item, index) => (
+          <div key={index}>{item}</div>
+        ))}
+      </div>
+
+      <ListOfBraceletIdeas
         braceletQuantities={braceletQuantities}
         handleDecrement={handleDecrement}
         handleIncrement={handleIncrement}

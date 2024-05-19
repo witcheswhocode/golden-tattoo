@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 
 interface AlphabetInputProps {
   handleCombinationPossibilities: (value: string[]) => void;
+  handleMostLetterCombinationPossibilities: (value: string[][]) => void;
+  handleMostBraceletCombinationPossibilities: (value: string[][]) => void;
   inputValues: { [key: string]: number };
   setInputValues: (value: { [key: string]: number | any }) => void;
 }
@@ -9,6 +11,8 @@ interface AlphabetInputProps {
 const AlphabetInputs: React.FC<AlphabetInputProps> = ({
   inputValues,
   handleCombinationPossibilities,
+  handleMostLetterCombinationPossibilities,
+  handleMostBraceletCombinationPossibilities,
   setInputValues,
 }) => {
   //const [inputValues, setInputValues] = useState<{ [key: string]: string }>({});
@@ -24,7 +28,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
   const handleSubmit = () => {
     // Convert inputValues object to URLSearchParams
     const params = new URLSearchParams();
-    console.log(inputValues)
+
     for (const key in inputValues) {
       const value = inputValues[key].toString().toLowerCase();
       const numericValue = parseFloat(value);
@@ -41,9 +45,13 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
     // Perform the fetch with the updated URL
     fetch(urlWithParams)
       .then((response) => response.json())
-      .then((data) =>
-        handleCombinationPossibilities(data.data.combinationList)
-      )
+      .then((data: any) => {
+        handleCombinationPossibilities(data.data.combinationList);
+        handleMostLetterCombinationPossibilities(data.data.mostLettersUsed);
+        handleMostBraceletCombinationPossibilities(
+          data.data.mostBraceletOptions
+        );
+      })
       .catch((error) => console.error("Error fetching modal data:", error));
   };
 
@@ -111,17 +119,16 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
             </div>
           );
         })}
-      <div className="mt-4 w-full">
-        <button
-          type="button"
-          onClick={handleSubmit}
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-        >
-          Submit
-        </button>
+        <div className="mt-4 w-full">
+          <button
+            type="button"
+            onClick={handleSubmit}
+            className="bg-blue-500 text-white px-4 py-2 rounded"
+          >
+            Submit
+          </button>
+        </div>
       </div>
-      </div>
-
     </div>
   );
 };

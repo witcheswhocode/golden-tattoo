@@ -8,6 +8,16 @@ const Bracelets = () => {
   const [combinationPossibilities, setCombinationPossibilities] = useState<
     string[] | null
   >(null);
+  const [
+    mostLetterCombinationPossibilities,
+    setMostLetterCombinationPossibilities,
+  ] = useState<string[][] | null>(null);
+
+  const [
+    mostBraceletCombinationPossibilities,
+    setMostBraceletCombinationPossibilities,
+  ] = useState<string[][] | null>(null);
+  
   const [inputValues, setInputValues] = useState<{ [key: string]: number }>({});
 
   return (
@@ -15,10 +25,23 @@ const Bracelets = () => {
       <h1 className="text-2xl font-bold mb-4">bracelet Tally</h1>
 
       <AlphabetInputs
-        handleCombinationPossibilities={setCombinationPossibilities} inputValues={inputValues} setInputValues={setInputValues}
+        handleCombinationPossibilities={setCombinationPossibilities}
+        handleMostLetterCombinationPossibilities={
+          setMostLetterCombinationPossibilities
+        }
+        handleMostBraceletCombinationPossibilities={
+          setMostBraceletCombinationPossibilities
+        }
+        inputValues={inputValues}
+        setInputValues={setInputValues}
       />
       {combinationPossibilities && (
-        <BraceletIdeas bracelets={combinationPossibilities} letters={inputValues} />
+        <BraceletIdeas
+          bracelets={combinationPossibilities}
+          mostLettersUsed={mostLetterCombinationPossibilities}
+          mostBraceletOptions={mostBraceletCombinationPossibilities}
+          letters={inputValues}
+        />
       )}
     </div>
   );

@@ -78,7 +78,7 @@ app.get("/getAllCombinations", (data, res, next) => {
     const [maxCombinations, combinationsList, finalLetterCounts] =
       findLongestCombinations(validWords, letterCounts);
 
-    const { mostLettersUsed, mostBraceletOptions } = findBestCombination(
+    const [ mostLettersUsed, mostBraceletOptions ] = findBestCombination(
       validWords,
       letterCounts
     );
@@ -242,7 +242,7 @@ export default function findBestCombination(words, letterCounts) {
       (solution) => solution.length === maxItems
     );
 
-    return [firstItems, maxItemsSolutions];
+    return firstItems, maxItemsSolutions;
   }
 
   function canFormWord(word, letterCounts) {
