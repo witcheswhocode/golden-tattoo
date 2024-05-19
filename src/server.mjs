@@ -78,17 +78,17 @@ app.get("/getAllCombinations", (data, res, next) => {
     const [maxCombinations, combinationsList, finalLetterCounts] =
       findLongestCombinations(validWords, letterCounts);
 
-    const [ mostLettersUsed, mostBraceletOptions ] = findBestCombination(
+    const bestOf = findBestCombination(
       validWords,
       letterCounts
     );
-
+    
     res.json({
       message: "success",
       data: {
         combinationList: combinationsList,
-        mostLettersUsed: mostLettersUsed,
-        mostBraceletOptions: mostBraceletOptions,
+        mostLettersUsed: bestOf.firstItems,
+        mostBraceletOptions: bestOf.mostBraceletOptions,
       },
     });
   });
@@ -196,8 +196,15 @@ export default function findBestCombination(words, letterCounts) {
 
   // Initialize the function with index 0
   backtrack(0, [], letterCounts, words);
-
-  return findTheBests(allSolutions);
+  const temp  = [
+    ["apple", "banana", "cherry"],
+    ["apple", "banana", "chrrry"],
+    ["orange", "pear"],
+    ["grape", "kiwi", "plum"],
+    ["strawberry"],
+    ["watermelon"]
+];
+  return findTheBests(temp);
   //return allSolutions.sort((a, b) => b.length - a.length);
   function findTheBests(allSolutions) {
     // find most letters used in combinations
@@ -219,19 +226,18 @@ export default function findBestCombination(words, letterCounts) {
     });
 
     // Retrieve the first item (and multiple if there is a tie)
-    const firstItems = [allSolutions[0]];
+    const firstItems = [];
+    firstItems.push(allSolutions[0]);
     const totalCharacters = allSolutions[0].join("").length;
-
     for (let i = 1; i < allSolutions.length; i++) {
       if (arrayTotals[i] === totalCharacters) {
         firstItems.push(allSolutions[i]);
       } else {
         break; // Stop when encountering the first non-tie
       }
+    
     }
-
-    let mostBracelets = [];
-
+    
     // Find the maximum number of items in any solution
     const maxItems = Math.max(
       ...allSolutions.map((solution) => solution.length)
@@ -242,7 +248,7 @@ export default function findBestCombination(words, letterCounts) {
       (solution) => solution.length === maxItems
     );
 
-    return firstItems, maxItemsSolutions;
+    return { firstItems: firstItems, mostBraceletOptions: maxItemsSolutions };
   }
 
   function canFormWord(word, letterCounts) {

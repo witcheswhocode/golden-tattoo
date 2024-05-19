@@ -20,6 +20,8 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
   mostBraceletOptions,
   letters,
 }) => {
+  console.log(mostLettersUsed)
+  console.log(mostBraceletOptions)
   const [braceletQuantities, setBraceletQuantities] = useState<{
     [key: string]: { value: number; active: boolean };
   }>(
@@ -181,16 +183,18 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
         handleIncrement={handleIncrement}
       />
       <div>
+        <h2>Most beads used:</h2>
         {mostLettersUsed?.map((item, index) => (
           <div key={index}>{item}</div>
         ))}
       </div>
-
-      <ListOfBraceletIdeas
-        braceletQuantities={braceletQuantities}
-        handleDecrement={handleDecrement}
-        handleIncrement={handleIncrement}
-      />
+      <div>
+        <h2>Most bracelet made:</h2>
+        {mostBraceletOptions?.map((item, index) => (
+          <div key={index}>{item}</div>
+        ))}
+      </div>
+      <div>Build your own:</div>
       <ListOfBraceletIdeas
         braceletQuantities={braceletQuantities}
         handleDecrement={handleDecrement}
