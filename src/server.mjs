@@ -75,7 +75,8 @@ app.get("/getAllCombinations", (data, res, next) => {
     const wordList = rows;
     const letterCounts = data.query;
     const validWords = preprocessWords(wordList, letterCounts);
-    const [maxCombinations, combinationsList, finalLetterCounts] = findLongestCombinations(validWords, letterCounts);
+    const [maxCombinations, combinationsList, finalLetterCounts] =
+      findLongestCombinations(validWords, letterCounts);
 
     //console.log("Longest list of words that can be made:");
     //console.log(combinationsList);
@@ -87,33 +88,6 @@ app.get("/getAllCombinations", (data, res, next) => {
     res.json({
       message: "success",
       data: { combinationList: combinationsList }, //, 'maxCombinations': maxCombinations}
-    });
-  });
-});
-app.get("/api/getMostCombinations", (data, res, next) => {
-  var sql = "select * from bracelets order by length";
-  var params = [];
-  db.all(sql, params, (err, rows) => {
-    if (err) {
-      res.status(400).json({ error: err.message });
-      return;
-    }
-    const wordList = rows;
-    //console.log(rows);
-    const letterCounts = data.query.param;
-    const validWords = preprocessWords(wordList, letterCounts);
-    const [maxCombinations, combinationsList, finalLetterCounts] =
-      findLongestCombinations(validWords, letterCounts);
-
-    const result = findBestCombination(validWords, letterCounts);
-    //console.log("Longest list of words that can be made:");
-    //console.log(combinationsList);
-    //console.log("Number of combinations:", maxCombinations);
-    //console.log("Final Letter Count:", finalLetterCounts);
-
-    res.json({
-      message: "success",
-      data: { combinationList: validWords, maxCombinations: maxCombinations },
     });
   });
 });
@@ -264,7 +238,7 @@ export default function findBestCombination(words, letterCounts) {
       // Update letter counts
       const newLetterCounts = updateLetterCounts(word, { ...letterCounts });
       const newSolution = [...solution, word];
-      console.log(newSolution)
+      console.log(newSolution);
       // Recursive call
       backtrack(index + 1, newSolution, newLetterCounts, words);
     }
