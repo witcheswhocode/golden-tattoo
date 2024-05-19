@@ -196,16 +196,10 @@ export default function findBestCombination(words, letterCounts) {
 
   // Initialize the function with index 0
   backtrack(0, [], letterCounts, words);
-  const temp  = [
-    ["apple", "banana", "cherry"],
-    ["apple", "banana", "chrrry"],
-    ["orange", "pear"],
-    ["grape", "kiwi", "plum"],
-    ["strawberry"],
-    ["watermelon"]
-];
-  return findTheBests(temp);
+
+  return findTheBests(allSolutions);
   //return allSolutions.sort((a, b) => b.length - a.length);
+
   function findTheBests(allSolutions) {
     // find most letters used in combinations
     // Calculate the total number of characters in each array
