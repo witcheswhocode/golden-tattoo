@@ -158,68 +158,6 @@ function findLongestCombinations(words, letterDict) {
   return [maxCombinations, combinationsList, letterCounts];
 }
 
-function findBestCombinationOld(dictionary, letterCounts) {
-  let bestCombination = [];
-  let bestScore = 0;
-
-  function calculateScore(words) {
-    let score = 0;
-    for (const word of words) {
-      for (const letter of word) {
-        if (letterCounts[letter]) {
-          score += 1;
-        }
-      }
-    }
-    return score;
-  }
-
-  function exploreCombination(words, currentScore, currentIndex) {
-    if (currentIndex >= dictionary.length) {
-      if (currentScore > bestScore) {
-        bestScore = currentScore;
-        bestCombination = [...words];
-      }
-      return;
-    }
-
-    exploreCombination(words, currentScore, currentIndex + 1);
-
-    const newWord = dictionary[currentIndex];
-    let canUseWord = true;
-    const wordCounts = {};
-
-    for (const letter of newWord) {
-      if (!letterCounts[letter]) {
-        canUseWord = false;
-        break;
-      }
-      wordCounts[letter] = (wordCounts[letter] || 0) + 1;
-      if (wordCounts[letter] > letterCounts[letter]) {
-        canUseWord = false;
-        break;
-      }
-    }
-
-    if (canUseWord) {
-      for (const letter in wordCounts) {
-        letterCounts[letter] -= wordCounts[letter];
-      }
-      exploreCombination(
-        [...words, newWord],
-        currentScore + 1,
-        currentIndex + 1
-      );
-      for (const letter in wordCounts) {
-        letterCounts[letter] += wordCounts[letter];
-      }
-    }
-  }
-
-  exploreCombination([], 0, 0);
-  return bestCombination;
-}
-
 export default function findBestCombination(words, letterCounts) {
   let bestSolution = [];
   let bestCount = 0;
