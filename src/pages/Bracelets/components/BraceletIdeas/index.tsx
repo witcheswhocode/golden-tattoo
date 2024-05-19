@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import LetterCount from "../LetterCount";
 import BraceletSelection from "../BraceletSelection";
 import ListOfBraceletIdeas from "../ListOfBraceletIdeas";
+import ListOfBestCombinations from "../ListOfBestCombinations";
 
 interface Bracelet {
   name: string;
@@ -20,8 +21,6 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
   mostBraceletOptions,
   letters,
 }) => {
-  console.log(mostLettersUsed)
-  console.log(mostBraceletOptions)
   const [braceletQuantities, setBraceletQuantities] = useState<{
     [key: string]: { value: number; active: boolean };
   }>(
@@ -182,19 +181,10 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
         handleDecrement={handleDecrement}
         handleIncrement={handleIncrement}
       />
-      <div>
-        <h2>Most beads used:</h2>
-        {mostLettersUsed?.map((item, index) => (
-          <div key={index}>{item}</div>
-        ))}
-      </div>
-      <div>
-        <h2>Most bracelet made:</h2>
-        {mostBraceletOptions?.map((item, index) => (
-          <div key={index}>{item}</div>
-        ))}
-      </div>
-      <div>Build your own:</div>
+      <ListOfBestCombinations combinations={mostLettersUsed} title={'Most Letters'} />
+
+      <ListOfBestCombinations combinations={mostBraceletOptions} title={'Most Bracelets'} />
+
       <ListOfBraceletIdeas
         braceletQuantities={braceletQuantities}
         handleDecrement={handleDecrement}
