@@ -221,6 +221,10 @@ function findBestCombinationOld(dictionary, letterCounts) {
 export default function findBestCombination(words, letterCounts) {
   let bestSolution = [];
   let bestCount = 0;
+  let allSolutions = [];
+  let mostOptions = "";
+  let mostUsedLetters = "";
+  let currentWord = "";
 
   function backtrack(index, solution = [], letterCounts, words) {
     //console.log(letterCounter, words)
@@ -238,7 +242,10 @@ export default function findBestCombination(words, letterCounts) {
       // Update letter counts
       const newLetterCounts = updateLetterCounts(word, { ...letterCounts });
       const newSolution = [...solution, word];
-      console.log(newSolution);
+
+      if (newSolution.length > 1) {
+        allSolutions.push(newSolution);
+      }
       // Recursive call
       backtrack(index + 1, newSolution, newLetterCounts, words);
     }
@@ -249,6 +256,33 @@ export default function findBestCombination(words, letterCounts) {
 
   // Initialize the function with index 0
   backtrack(0, [], letterCounts, words);
+  console.log("new");
+  // Calculate the total number of characters in each array
+  const arrayTotals = allSolutions.map((array) => array.join("").length);
+
+  // Sort the array of arrays based on the totals
+  allSolutions.sort((a, b) => {
+    const totalA = a.join("").length;
+    const totalB = b.join("").length;
+    return totalB - totalA; // Sort in descending order
+  });
+  return allSolutions
+  //return allSolutions.sort((a, b) => b.length - a.length);
+  function findTheBests(allSolutions) {
+    let currentItem = "";
+    let currentItemMax = 0;
+    let tempCount = 0;
+    allSolutions.forEach((element) => {
+      if (currentItem !== element[0]) {
+        currentItem = element[0]; // start with the first element
+      }
+      element.forEach((item) => {
+        tempCount = tempCount + item.length;
+      });
+
+      console.log(element);
+    });
+  }
 
   function canFormWord(word, letterCounts) {
     const wordLetters = word.replace(/\s/g, "").toLowerCase(); // Remove spaces and convert to lowercase
