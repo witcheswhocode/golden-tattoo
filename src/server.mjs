@@ -8,7 +8,7 @@ const port = 3001;
 app.use(cors());
 
 const db = new sqlite3.Database(
-  "/Users/liz/Documents/GitHub/taylor-lyrics/public/data/TS_liz.db"
+  "src/TS_liz.db"
 );
 
 app.get("/words", (req, res) => {
