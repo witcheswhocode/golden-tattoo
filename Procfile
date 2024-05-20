@@ -1,2 +1,2 @@
-web: yarn server-start
+web: yarn start-server
 worker: yarn start
