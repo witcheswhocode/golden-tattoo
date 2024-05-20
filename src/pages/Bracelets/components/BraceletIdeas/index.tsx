@@ -196,7 +196,7 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
             title={"Most Bracelets"}
           />
         </Tab>
-        <Tab label="label1">
+        <Tab label="label12">
           <ListOfBraceletIdeas
             braceletQuantities={braceletQuantities}
             handleDecrement={handleDecrement}
