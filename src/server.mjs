@@ -3,7 +3,8 @@ import cors from "cors";
 import sqlite3 from "sqlite3";
 
 const app = express();
-const port = 3001;
+const port = process.env.PORT || 3001; // Use 3001 as fallback
+;
 
 app.use(cors());
 
