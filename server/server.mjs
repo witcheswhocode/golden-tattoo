@@ -15,6 +15,16 @@ const port = process.env.PORT || 3001; // Use 3001 as fallback
 
 app.use(cors());
 
+const apiUrl =
+      process.env.NODE_ENV === "production"
+        ? "https://golden-tattoo-a7c279f70d6d.herokuapp.com/"
+        : "http://localhost:3000";
+
+app.use(cors({
+  origin: apiUrl, // Replace with your frontend URL
+  optionsSuccessStatus: 200 // Some legacy browsers choke on 204
+}));
+
 // Serve the built frontend files
 app.use(express.static(path.join(__dirname, "../frontend/build")));
 
