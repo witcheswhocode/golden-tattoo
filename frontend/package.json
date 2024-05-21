@@ -22,11 +22,10 @@
   },
   "scripts": {
     "build-css": "tailwindcss-cli build -i ./src/styles.css -o ./src/output.css",
-    "start-local": "react-scripts --openssl-legacy-provider start",
+    "start": "react-scripts --openssl-legacy-provider start",
     "start-server": "ts-node ./server/server.mjs",
     "test": "jest",
     "eject": "react-scripts eject",
-    "start": "ts-node ./server/server.js",
     "build": "react-scripts build"
   },
   "eslintConfig": {
