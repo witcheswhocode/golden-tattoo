@@ -26,9 +26,8 @@
     "start-server": "ts-node ./server/server.mjs",
     "test": "jest",
     "eject": "react-scripts eject",
-    "start": "ts-node ./server/server.js", 
+    "start": "ts-node ./server/server.js",
     "build": "react-scripts build"
-
   },
   "eslintConfig": {
     "extends": [
