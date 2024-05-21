@@ -18,7 +18,7 @@ app.use(cors());
 const apiUrl =
       process.env.NODE_ENV === "production"
         ? "https://golden-tattoo-a7c279f70d6d.herokuapp.com/"
-        : "http://localhost:3000";
+        : "http://localhost:3001";
 
 app.use(cors({
   origin: apiUrl, // Replace with your frontend URL
