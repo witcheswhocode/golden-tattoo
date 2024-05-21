@@ -39,8 +39,12 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
       );
     }
 
-    // Append parameters to the URL
-    const urlWithParams = `getAllCombinations?${params.toString()}`;
+    const apiUrl =
+      process.env.NODE_ENV === "production"
+        ? "https://golden-tattoo-a7c279f70d6d.herokuapp.com/"
+        : "http://localhost:3001/";
+
+    const urlWithParams = `${apiUrl}getAllCombinations?${params.toString()}`;
 
     // Perform the fetch with the updated URL
     fetch(urlWithParams)
