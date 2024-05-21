@@ -6,7 +6,7 @@ import Writers from "./pages/Writers";
 import Bracelets from "./pages/Bracelets";
 import LyricsTable from "./pages/Lyrics";
 import Navbar from "./components/Navbar";
-import Dropdown from "./components/Dropdown";
+import Dropdown from "./components/Dropdown/Dropdown";
 
 function App() {
   const dropdownItems = [
