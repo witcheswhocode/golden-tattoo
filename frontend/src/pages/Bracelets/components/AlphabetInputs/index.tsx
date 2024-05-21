@@ -40,7 +40,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
     }
 
     // Append parameters to the URL
-    const urlWithParams = `/getAllCombinations?${params.toString()}`;
+    const urlWithParams = `getAllCombinations?${params.toString()}`;
 
     // Perform the fetch with the updated URL
     fetch(urlWithParams)
