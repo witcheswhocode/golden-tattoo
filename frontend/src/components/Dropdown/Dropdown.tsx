@@ -7,17 +7,19 @@ interface DropdownProps {
 }
 
 // Define the dropdown item type
-type DropdownItem = {
+export type DropdownItem = {
   value: string;
-  label: string;
 };
+type DropdownItemArray = DropdownItem[];
 
 // Dropdown component
 export default function Dropdown(props: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
-
+  const [dropdownItems, setDropdownItems] = useState<DropdownItemArray>(
+    props.items
+  );
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
@@ -57,18 +59,18 @@ export default function Dropdown(props: DropdownProps) {
 
       {isOpen && (
         <div className="inline-flex mt-2 w-56">
-          {props.items.map((item) => (
+          {dropdownItems.map((item, index) => (
             <a
               key={item.value}
               href="#"
               className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
               onClick={() => handleItemClick(item.value)}
             >
-              {item.label}
+              {item.value}
             </a>
           ))}
         </div>
       )}
     </div>
   );
-};
+}

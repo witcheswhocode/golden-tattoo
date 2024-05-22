@@ -1,3 +1,25 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+/* styles.css */
+:root {
+    --color-primary-folklore: #ffffff;
+    --color-secondary-folklore: #f0f0f0;
+    --color-primary-midnights: #000000;
+    --color-secondary-midnights: #333333;
+  
+    --color-primary: var(--color-primary-folklore);
+    --color-secondary: var(--color-secondary-folklore);
+  }
+  
+  [data-theme="folklore"] {
+    --color-primary: var(--color-primary-folklore);
+    --color-secondary: var(--color-secondary-folklore);
+  }
+  
+  [data-theme="midnights"] {
+    --color-primary: var(--color-primary-midnights);
+    --color-secondary: var(--color-secondary-midnights);
+  }
+  

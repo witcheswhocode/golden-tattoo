@@ -4,6 +4,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        primary: 'var(--color-primary)',
+        secondary: 'var(--color-secondary)',
         bloodmoon: {
           1: "black",
           2: "transparent",
@@ -28,7 +30,6 @@ module.exports = {
         mommyAlbumBg: "#d5592b", // Using direct color value
         mommyAlbumBorder: "#d39a1e", // Using direct color value
         mommyHeaderText: "#e0dbc0", // Using direct color value
-
         theme: {
           backgroundColor: "#000000",
           main: "#FFA500",

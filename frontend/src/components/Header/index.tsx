@@ -1,14 +1,19 @@
 import React from 'react';
+import { useTheme } from '../ThemeContext';
 
 interface HeaderProps {
-  theme: string
+  // Define any props you want to pass to the Header component
 }
 
 function Header(props: HeaderProps) {
-  console.log(`bg-${props.theme}Background`)
+  const { theme } = useTheme();
+  const themeClass = `data-theme="${theme}"`;
+
+  console.log(theme, themeClass)
+
   return (
-    <header className={`bg-${props.theme}-backgroundColor text-white p-4`}>
-      <h1 className={`text-${props.theme}-main text-2xl`}>My Website</h1>
+    <header className={`bg-primary text-secondary p-4 ${themeClass}`}>
+      <h1 className="text-2xl">My Website</h1>
     </header>
   );
 }
