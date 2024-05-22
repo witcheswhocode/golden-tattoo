@@ -10,14 +10,14 @@ module.exports = {
     extend: {
       colors: {
         // writers
-        'TaylorSwift': 'rgb(28, 136, 199)',
-        'Default': 'rgb(240, 239, 235)',
-        'LizRose': 'rgb(187, 162, 81)',
-        'JackAntonoff': 'rgb(75, 143, 76)',
-        'MaxMartin': 'rgb(202, 15, 46)',
-        'Shellback': 'rgb(56, 163, 165)',
-        'AaronDessner': 'rgb(241, 101, 41)',
-        'JoeAlwyn': 'rgb(213, 198, 255)',
+        'TaylorSwift': 'rgb(28, 136, 199, 0.5)',
+        'Default': 'rgb(240, 239, 235, 0.5)',
+        'LizRose': 'rgb(187, 162, 81, 0.5)',
+        'JackAntonoff': 'rgb(75, 143, 76, 0.5)',
+        'MaxMartin': 'rgb(202, 15, 46, 0.5)',
+        'Shellback': 'rgb(56, 163, 165, 0.5)',
+        'AaronDessner': 'rgb(241, 101, 41, 0.5)',
+        'JoeAlwyn': 'rgb(213, 198, 255, 0.5)',
         // themes
         bloodmoon: {
           1: "black",

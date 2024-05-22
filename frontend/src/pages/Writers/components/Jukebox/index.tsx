@@ -59,15 +59,17 @@ function Jukebox(props: WritersData) {
         {props.data
           .filter((item) => item.albumshort === albumshort)
           .map((filteredItem) => (
-            <div className="flex" key={`${filteredItem.song}${keySuffix}`}>
-              <div className="text-m">{filteredItem.song}</div>
-              <div className="flex tooltip-container">
+            <div className="mb-1 flex bg-white rounded-full transition-height duration-600 ease-in pb-1 overflow-hidden" key={`${filteredItem.song}${keySuffix}`}>
+              <div className="flex items-center justify-center h-auto w-1/3 min-w-1/3 px-4">
+                <div className="text-center">{filteredItem.song}</div>
+              </div>
+              <div className="flex w-2/3 px-2 overflow-x-auto">
                 {filteredItem.writers
                   .split(",")
                   .reverse()
                   .map((writer, index) => (
-                    <div className="w-24 h-8 hover:h-48 transition-height duration-300 ease-in-out">
-                      <div className={`bg-${getColor(writer)}`}>
+                    <div className="w-auto h-8 hover:h-48 focus:h-48 transition-height duration-300 ease-in-out">
+                      <div className={`bg-${getColor(writer)} min-w-max inline-block mr-2 px-2 py-1 text-center text-black bg-transparent border border-transparent rounded-full text-xs`}>
                         {writer}
                       </div>
                     </div>
