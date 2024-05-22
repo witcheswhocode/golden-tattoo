@@ -28,7 +28,22 @@ export interface WritersData {
 
 function Jukebox(props: WritersData) {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc"); // Track sorting order
+  const listOfPromeninetWriters = [
+    "Taylor Swift",
+    "Liz Rose",
+    "Jack Antonoff",
+    "Max Martin",
+    "Shellback",
+    "Aaron Dessner",
+    "Joe Alwyn",
+  ];
 
+  function getColor(writer: string){
+    if (listOfPromeninetWriters.includes(writer)){
+      return writer.replaceAll(" ", "");
+    }
+    else return 'Default';
+  }
   const createDiv = (
     albumshort: string,
     released: number | null,
@@ -52,7 +67,9 @@ function Jukebox(props: WritersData) {
                   .reverse()
                   .map((writer, index) => (
                     <div className="w-24 h-8 hover:h-48 transition-height duration-300 ease-in-out">
-                      {writer}
+                      <div className={`bg-${getColor(writer)}`}>
+                        {writer}
+                      </div>
                     </div>
                   ))}
               </div>

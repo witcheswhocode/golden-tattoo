@@ -9,6 +9,16 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        // writers
+        'TaylorSwift': 'rgb(28, 136, 199)',
+        'Default': 'rgb(240, 239, 235)',
+        'LizRose': 'rgb(187, 162, 81)',
+        'JackAntonoff': 'rgb(75, 143, 76)',
+        'MaxMartin': 'rgb(202, 15, 46)',
+        'Shellback': 'rgb(56, 163, 165)',
+        'AaronDessner': 'rgb(241, 101, 41)',
+        'JoeAlwyn': 'rgb(213, 198, 255)',
+        // themes
         bloodmoon: {
           1: "black",
           2: "transparent",
