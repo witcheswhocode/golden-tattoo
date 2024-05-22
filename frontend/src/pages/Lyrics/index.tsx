@@ -22,9 +22,9 @@ const LyricsTable: React.FC = () => {
     const apiUrl =
       process.env.NODE_ENV === "production"
         ? "https://golden-tattoo-a7c279f70d6d.herokuapp.com/"
-        : "http://localhost:3001/";
+        : "http://localhost:3001";
 
-    fetch(`${apiUrl}words`)
+    fetch(`${apiUrl}/words`)
       .then((response) => response.json())
       .then((data) => setTableRows(data))
       .catch((error) => console.error("Error fetching data:", error));

@@ -11,31 +11,23 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const port = process.env.PORT || 3001; // Use 3001 as fallback
-
-app.use(cors());
-
 const apiUrl =
       process.env.NODE_ENV === "production"
         ? "https://golden-tattoo-a7c279f70d6d.herokuapp.com/"
-        : "http://localhost:3001";
+        : "http://localhost:3000";
+const port = process.env.PORT || 3001; // Use 3001 as fallback
 
+app.use(cors());
 app.use(cors({
   origin: apiUrl, // Replace with your frontend URL
   optionsSuccessStatus: 200 // Some legacy browsers choke on 204
 }));
 
-// Serve the built frontend files
-app.use(express.static(path.join(__dirname, "../frontend/build")));
+app.use(express.json())
 
-// Serve index.html for any other routes to enable SPA behavior
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
-});
+const db = new sqlite3.Database("./server/TS_liz.db");
 
-const db = new sqlite3.Database("./TS_liz.db");
-
-app.get("/words", (req, res) => {
+app.get('/words', (req, res) => {
   db.all("select * from word", (err, rows) => {
     if (err) {
       res.status(500).json({ error: err.message });
@@ -70,6 +62,7 @@ app.get("/getLyrics/:id", (req, res, next) => {
   });
 });
 app.get("/getWriters", (req, res, next) => {
+  console.log('getwriters')
   const id = req.params.id;
 
   const sql =
@@ -113,6 +106,14 @@ app.get("/getAllCombinations", (data, res, next) => {
       },
     });
   });
+});
+
+// Serve the built frontend files
+app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+// Serve index.html for any other routes to enable SPA behavior
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
 });
 
 app.listen(port, () => {
