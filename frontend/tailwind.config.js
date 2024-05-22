@@ -1,11 +1,14 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{html,js,jsx,tsx,ts}", './public/index.html'],
+  content: ["./src/**/*.{html,js,jsx,tsx,ts}", "./public/index.html"],
+  variants: {
+    extend: {
+      height: ["responsive", "hover"], // Enable the hover variant for height utilities
+    },
+  },
   theme: {
     extend: {
       colors: {
-        primary: 'var(--color-primary)',
-        secondary: 'var(--color-secondary)',
         bloodmoon: {
           1: "black",
           2: "transparent",
@@ -16,7 +19,7 @@ module.exports = {
             2: "#fff",
           },
         },
-        
+
         lightpurple: "#a99daf",
         moonstone: "#3AA8c1",
         midnightsBackground: "#09071a",

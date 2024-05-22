@@ -46,12 +46,14 @@ function Jukebox(props: WritersData) {
           .map((filteredItem) => (
             <div className="flex" key={`${filteredItem.song}${keySuffix}`}>
               <div className="text-m">{filteredItem.song}</div>
-              <div className="flex">
+              <div className="flex tooltip-container">
                 {filteredItem.writers
                   .split(",")
                   .reverse()
                   .map((writer, index) => (
-                    <div key={`${writer}-${index}`}>{writer}</div>
+                    <div className="w-24 h-8 hover:h-48 transition-height duration-300 ease-in-out">
+                      {writer}
+                    </div>
                   ))}
               </div>
             </div>
