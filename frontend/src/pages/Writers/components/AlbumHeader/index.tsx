@@ -12,7 +12,7 @@ export interface AlbumHeaderProps {
 
 function AlbumHeader(props: AlbumHeaderProps) {
   return (
-    <div className="w-full flex mb-10 px-4 border-2 border-solid border-black border-b-10">
+    <div className="w-full h-[150px] flex mb-10 px-4 border-2 border-solid border-black border-b-10">
       <AlbumArt alb={props.alb} />
       <AlbumInfo
         alb={props.alb}
