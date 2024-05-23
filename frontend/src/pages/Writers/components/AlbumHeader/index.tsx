@@ -6,17 +6,21 @@ export interface AlbumHeaderProps {
   albumshort: string;
   album: string;
   released: string;
+  totalwriters: string;
+  totalselfwritten: string;
 }
 
 function AlbumHeader(props: AlbumHeaderProps) {
   return (
-    <div className="mb-10 px-4 pt-8 border-2 border-solid border-black border-b-10">
+    <div className="w-full flex mb-10 px-4 border-2 border-solid border-black border-b-10">
       <AlbumArt alb={props.alb} />
       <AlbumInfo
         alb={props.alb}
         albumshort={props.albumshort}
         album={props.album}
         released={props.released}
+        totalwriters={props.totalwriters}
+        totalselfwritten={props.totalselfwritten}
       />
     </div>
   );

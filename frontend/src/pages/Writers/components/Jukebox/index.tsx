@@ -51,6 +51,8 @@ function Jukebox(props: WritersData) {
     count: string | null,
     alb: string | null,
     album: string,
+    totalwriters: string,
+    totalselfwritten: string
   ) => {
     const keySuffix =
       (released !== null ? `-${released}` : "") +
@@ -58,7 +60,14 @@ function Jukebox(props: WritersData) {
 
     return (
       <section aria-label={`${albumshort}`} key={`${albumshort}${keySuffix}`}>
-        <AlbumHeader alb={alb} albumshort={albumshort} album={album} released={released} />
+        <AlbumHeader
+          alb={alb}
+          albumshort={albumshort}
+          album={album}
+          released={released}
+          totalwriters={totalwriters}
+          totalselfwritten={totalselfwritten}
+        />
         {props.data
           .filter((item) => item.albumshort === albumshort)
           .map((filteredItem) => (
@@ -96,7 +105,7 @@ function Jukebox(props: WritersData) {
     ...new Set(
       props.data.map(
         (item) =>
-          `${item.albumshort}_${item.released}_${item.totalwriters}_${item.alb}_${item.album}`
+          `${item.albumshort}_${item.released}_${item.totalwriters}_${item.alb}_${item.album}_${item.totalwriters}_${item.totalselfwritten}`
       )
     ),
   ];
@@ -106,8 +115,8 @@ function Jukebox(props: WritersData) {
     let [albumshortA, releasedAString] = a.split("_");
     let [albumshortB, releasedBString] = b.split("_");
 
-    let releasedA = releasedAString.split(',')[0]
-    let releasedB = releasedBString.split(',')[0]
+    let releasedA = releasedAString.split(",")[0];
+    let releasedB = releasedBString.split(",")[0];
 
     releasedA = releasedA === "null" ? "5000" : releasedA;
     releasedB = releasedB === "null" ? "5000" : releasedB;
@@ -126,9 +135,25 @@ function Jukebox(props: WritersData) {
   const sortedUniqueAlbums = uniqueAlbums.sort(sortFunction);
   // Render div elements for each unique album and song combination
   const result = sortedUniqueAlbums.map((combination) => {
-    const [albumshort, released, count, alb, album] = combination.split("_");
+    const [
+      albumshort,
+      released,
+      count,
+      alb,
+      album,
+      totalwriters,
+      totalselfwritten,
+    ] = combination.split("_");
 
-    return createDiv(albumshort, released, count, alb, album);
+    return createDiv(
+      albumshort,
+      released,
+      count,
+      alb,
+      album,
+      totalwriters,
+      totalselfwritten
+    );
   });
 
   // Toggle sorting order when the button is clicked

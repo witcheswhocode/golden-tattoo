@@ -6,12 +6,14 @@ export interface AlbumArtProps {
 
 function AlbumArt(props: AlbumArtProps) {
   return (
+    <div className="flex justify-left items-center m-1 w-1/3 h-full relative">
       <img
-        className="m-1"
+        className="w-1/3 h-1/3 object-cover"
         loading="lazy"
         src={`assets/albums/${props.alb}.png`}
         alt="Album Image"
       />
+    </div>
   );
 }
 

@@ -5,16 +5,17 @@ export interface AlbumInfoProps {
   albumshort: string;
   album: string;
   released: string;
+  totalwriters: string;
+  totalselfwritten: string;
 }
 
 function AlbumInfo(props: AlbumInfoProps) {
   return (
-    <div className="album-text">
+    <div className="flex flex-col justify-center items-center overflow-hidden w-2/3">
       <p className="album">{props.album.replace("Taylor's Version", "TV")}</p>
       <p className="p-small">Released {props.released}</p>
       <p className="p-small">
-        ' + totalwriters + " Total Writers | " + totalselfwritten + ' Taylor
-        self wrote
+        {props.totalwriters} Total Writers | {props.totalselfwritten} Taylor self wrote
       </p>
       <div id="album-links">
         <span>
