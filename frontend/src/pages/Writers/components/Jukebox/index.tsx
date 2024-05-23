@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import internal from "stream";
+import AlbumHeader from "../AlbumHeader";
 
 export interface WritersProps {
-  alb: string;
+  alb: string | null;
   album: string;
   albumid: number;
   albumshort: string;
@@ -47,9 +47,10 @@ function Jukebox(props: WritersData) {
 
   const createDiv = (
     albumshort: string,
-    released: number | null,
+    released: string,
     count: string | null,
-    alb: string | null
+    alb: string | null,
+    album: string,
   ) => {
     const keySuffix =
       (released !== null ? `-${released}` : "") +
@@ -57,15 +58,7 @@ function Jukebox(props: WritersData) {
 
     return (
       <section aria-label={`${albumshort}`} key={`${albumshort}${keySuffix}`}>
-        <div className="mb-10 px-4 pt-8 border-2 border-solid border-black border-b-10">
-          <img
-            className="m-1"
-            loading="lazy"
-            src={`assets/albums/${alb}.png`}
-            alt="Album Image"
-          />
-          <div className="text-center text-xl">{`${albumshort}`}</div>
-        </div>
+        <AlbumHeader alb={alb} albumshort={albumshort} album={album} released={released} />
         {props.data
           .filter((item) => item.albumshort === albumshort)
           .map((filteredItem) => (
@@ -103,15 +96,18 @@ function Jukebox(props: WritersData) {
     ...new Set(
       props.data.map(
         (item) =>
-          `${item.albumshort}_${item.released}_${item.totalwriters}_${item.alb}`
+          `${item.albumshort}_${item.released}_${item.totalwriters}_${item.alb}_${item.album}`
       )
     ),
   ];
 
   // Sorting function based on release date
   const sortFunction = (a: string, b: string) => {
-    let [albumshortA, releasedA] = a.split("_");
-    let [albumshortB, releasedB] = b.split("_");
+    let [albumshortA, releasedAString] = a.split("_");
+    let [albumshortB, releasedBString] = b.split("_");
+
+    let releasedA = releasedAString.split(',')[0]
+    let releasedB = releasedBString.split(',')[0]
 
     releasedA = releasedA === "null" ? "5000" : releasedA;
     releasedB = releasedB === "null" ? "5000" : releasedB;
@@ -130,11 +126,9 @@ function Jukebox(props: WritersData) {
   const sortedUniqueAlbums = uniqueAlbums.sort(sortFunction);
   // Render div elements for each unique album and song combination
   const result = sortedUniqueAlbums.map((combination) => {
-    const [albumshort, released, count, alb] = combination.split("_");
-    console.log(combination);
-    const releasedNumber = released === "NaN" ? parseInt(released, 10) : 5000;
+    const [albumshort, released, count, alb, album] = combination.split("_");
 
-    return createDiv(albumshort, releasedNumber, count, alb);
+    return createDiv(albumshort, released, count, alb, album);
   });
 
   // Toggle sorting order when the button is clicked
