@@ -162,10 +162,10 @@ function Jukebox(props: WritersData) {
   };
 
   return (
-    <main className="p-4">
+    <div className="p-4 w-full m-auto lg:w-2/3">
       <button onClick={toggleSortOrder}>Toggle Sort Order</button>
       {result}
-    </main>
+    </div>
   );
 }
 
