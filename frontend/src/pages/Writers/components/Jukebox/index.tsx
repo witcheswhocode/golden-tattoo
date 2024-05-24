@@ -76,10 +76,10 @@ function Jukebox(props: WritersData) {
               className="mb-1 flex bg-white rounded-lg hover:rounded-none transition-all duration-600 ease-in pb-1 overflow-hidden"
               key={`${filteredItem.song}${keySuffix}`}
             >
-              <div className="flex items-center justify-center h-auto w-1/3 min-w-1/3 px-4 text-base">
+              <div className="w-32 overflow-hidden whitespace-nowrap hover:w-64 focus:w-64 transition-width duration-300 ease-in-out">
                 <div className="text-center">{filteredItem.song}</div>
               </div>
-              <div className="writers flex w-2/3 px-2 overflow-x-auto overflow-y-hidden">
+              <div className="writers flex w-full px-2 overflow-x-auto overflow-y-hidden">
                 {filteredItem.writers
                   .split(",")
                   .reverse()

@@ -35,3 +35,8 @@
 .writers {
   scrollbar-width: none; /* For Firefox */
 }
+
+/* custom.css */
+.transition-width {
+  transition-property: width;
+}
