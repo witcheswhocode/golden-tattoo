@@ -79,7 +79,7 @@ function Jukebox(props: WritersData) {
               <div className="flex items-center justify-center h-auto w-1/3 min-w-1/3 px-4 text-base">
                 <div className="text-center">{filteredItem.song}</div>
               </div>
-              <div className="flex w-2/3 px-2 overflow-x-auto overflow-y-hidden">
+              <div className="writers flex w-2/3 px-2 overflow-x-auto overflow-y-hidden">
                 {filteredItem.writers
                   .split(",")
                   .reverse()

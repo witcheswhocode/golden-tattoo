@@ -23,3 +23,15 @@
     --color-secondary: var(--color-secondary-midnights);
   }
   
+/* Hide scrollbar for specific element */
+.writers {
+  overflow: auto;
+}
+
+.writers::-webkit-scrollbar {
+  display: none;
+}
+
+.writers {
+  scrollbar-width: none; /* For Firefox */
+}
