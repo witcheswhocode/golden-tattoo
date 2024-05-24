@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AlbumHeader from "../AlbumHeader";
+import { writerDetails } from "./constants";
 
 export interface WritersProps {
   alb: string | null;
@@ -38,7 +39,7 @@ function Jukebox(props: WritersData) {
     "Aaron Dessner",
     "Joe Alwyn",
   ];
-
+  console.log(writerDetails["Taylor Swift"].imgurl);
   function getColor(writer: string) {
     if (listOfPromeninetWriters.includes(writer)) {
       return writer.replaceAll(" ", "");
@@ -72,27 +73,50 @@ function Jukebox(props: WritersData) {
           .filter((item) => item.albumshort === albumshort)
           .map((filteredItem) => (
             <div
-              className="mb-1 flex bg-white rounded-full transition-height duration-600 ease-in pb-1 overflow-hidden"
+              className="mb-1 flex bg-white rounded-lg hover:rounded-none transition-all duration-600 ease-in pb-1 overflow-hidden"
               key={`${filteredItem.song}${keySuffix}`}
             >
-              <div className="flex items-center justify-center h-auto w-1/3 min-w-1/3 px-4">
+              <div className="flex items-center justify-center h-auto w-1/3 min-w-1/3 px-4 text-base">
                 <div className="text-center">{filteredItem.song}</div>
               </div>
-              <div className="flex w-2/3 px-2 overflow-x-auto">
+              <div className="flex w-2/3 px-2 overflow-x-auto overflow-y-hidden">
                 {filteredItem.writers
                   .split(",")
                   .reverse()
-                  .map((writer, index) => (
-                    <div className="w-auto h-8 hover:h-48 focus:h-48 transition-height duration-300 ease-in-out">
+                  .map((writer, index) => {
+                    const writerDetail = writerDetails[writer.trim()]; // Use trim to handle any extra spaces around the writer names
+                    const imgUrl =
+                      writerDetail?.imgurl ||
+                      "https://i.pinimg.com/736x/2a/77/a6/2a77a6fb864f2b974952c30270ccf001.jpg"; // Use optional chaining to handle cases where writerDetail might be undefined
+                    return (
                       <div
-                        className={`bg-${getColor(
-                          writer
-                        )} min-w-max inline-block mr-2 px-2 py-1 text-center text-black bg-transparent border border-transparent rounded-full text-xs`}
+                        key={index}
+                        className="w-auto h-8 flex flex-col items-center hover:h-48 focus:h-48 transition-height duration-300 ease-in-out"
                       >
-                        {writer}
+                        <div
+                          className={`bg-${getColor(
+                            writer
+                          )} min-w-max inline-block mr-2 mb-4 px-2 py-1 text-center text-black bg-transparent border border-transparent rounded-full text-base`}
+                        >
+                          {writer}
+                        </div>
+                        <div className="w-24 h-24 bg-gray-200">
+                          {imgUrl ? (
+                            <img
+                              className="w-24 h-24 object-cover"
+                              loading="lazy"
+                              src={imgUrl}
+                              alt={writer}
+                            />
+                          ) : (
+                            <span className="text-gray-500">
+                              No Image Available
+                            </span>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
               </div>
             </div>
           ))}

@@ -4,10 +4,14 @@ module.exports = {
   variants: {
     extend: {
       height: ["responsive", "hover"], // Enable the hover variant for height utilities
+      rounded: ["responsive", "hover"], // Enable the hover variant for height utilities
     },
   },
   theme: {
     extend: {
+      transitionProperty: {
+        'border-radius': 'border-radius',
+      },
       colors: {
         // writers
         'TaylorSwift': 'rgb(28, 136, 199, 0.5)',
