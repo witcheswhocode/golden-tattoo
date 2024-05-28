@@ -8,6 +8,9 @@ export interface AlbumHeaderProps {
   released: string;
   totalwriters: string;
   totalselfwritten: string;
+  apple: string;
+  spotify: string;
+  other: string;
 }
 
 function AlbumHeader(props: AlbumHeaderProps) {
@@ -21,6 +24,9 @@ function AlbumHeader(props: AlbumHeaderProps) {
         released={props.released}
         totalwriters={props.totalwriters}
         totalselfwritten={props.totalselfwritten}
+        apple={props.apple}
+        spotify={props.spotify}
+        other={props.other}
       />
     </div>
   );

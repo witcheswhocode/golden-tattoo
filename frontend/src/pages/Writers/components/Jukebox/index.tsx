@@ -39,7 +39,7 @@ function Jukebox(props: WritersData) {
     "Aaron Dessner",
     "Joe Alwyn",
   ];
-  console.log(writerDetails["Taylor Swift"].imgurl);
+
   function getColor(writer: string) {
     if (listOfPromeninetWriters.includes(writer)) {
       return writer.replaceAll(" ", "");
@@ -53,7 +53,10 @@ function Jukebox(props: WritersData) {
     alb: string | null,
     album: string,
     totalwriters: string,
-    totalselfwritten: string
+    totalselfwritten: string,
+    apple: string,
+    spotify: string,
+    other: string
   ) => {
     const keySuffix =
       (released !== null ? `-${released}` : "") +
@@ -68,6 +71,9 @@ function Jukebox(props: WritersData) {
           released={released}
           totalwriters={totalwriters}
           totalselfwritten={totalselfwritten}
+          apple={apple}
+          spotify={spotify}
+          other={other}
         />
         {props.data
           .filter((item) => item.albumshort === albumshort)
@@ -129,7 +135,7 @@ function Jukebox(props: WritersData) {
     ...new Set(
       props.data.map(
         (item) =>
-          `${item.albumshort}_${item.released}_${item.totalwriters}_${item.alb}_${item.album}_${item.totalwriters}_${item.totalselfwritten}`
+          `${item.albumshort}_${item.released}_${item.totalwriters}_${item.alb}_${item.album}_${item.totalwriters}_${item.totalselfwritten}_${item.apple}_${item.spotify}_${item.other}`
       )
     ),
   ];
@@ -167,6 +173,9 @@ function Jukebox(props: WritersData) {
       album,
       totalwriters,
       totalselfwritten,
+      apple,
+      spotify,
+      other
     ] = combination.split("_");
 
     return createDiv(
@@ -176,7 +185,10 @@ function Jukebox(props: WritersData) {
       alb,
       album,
       totalwriters,
-      totalselfwritten
+      totalselfwritten,
+      apple,
+      spotify,
+      other
     );
   });
 

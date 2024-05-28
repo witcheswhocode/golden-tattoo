@@ -62,7 +62,6 @@ app.get("/getLyrics/:id", (req, res, next) => {
   });
 });
 app.get("/getWriters", (req, res, next) => {
-  console.log('getwriters')
   const id = req.params.id;
 
   const sql =

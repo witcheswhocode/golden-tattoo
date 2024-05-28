@@ -19,7 +19,6 @@ function App() {
     const dropdownItems: DropdownItem[] = items.map(item => ({ value: item }));
     
     function handleThemeChange(theme: any) {
-      console.log(theme);
       toggleTheme(theme);
     }
     return (
