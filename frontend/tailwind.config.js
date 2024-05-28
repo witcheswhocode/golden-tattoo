@@ -33,32 +33,22 @@ module.exports = {
       aspectRatio: {
         '1/1': '1 / 1',
       },
-
-
+      gradients: {
+        blood: ['var(--blood-moon-light-1)', 'var(--blood-moon-light-2)'],
+      },
       fontFamily: {
         'monoton': ['Monoton', 'cursive'],
-      },
-      colors: {
-        'custom-gray': '#a99daf',
       },
       fontSize: {
         '2.5xl': '2.5rem',
       },
-
-      fontFamily: {
-        'monoton': ['Monoton', 'cursive'],
-      },
-      fontSize: {
-        '2.5xl': '1.75rem', // example size
-      },
       backgroundImage: {
-        'midnights-moon': "url('https://i0.wp.com/lunasociety.org/wp-content/uploads/2015/11/cropped-Full-Moon-Flat.png')", // correct the path
-        'custom-gradient': 'linear-gradient(to right, #6a11cb, #2575fc)', // example gradient
+        'midnights-moon': "url('https://i0.wp.com/lunasociety.org/wp-content/uploads/2015/11/cropped-Full-Moon-Flat.png')",
+        'bloodmoon-gradient': 'linear-gradient(300deg, var(--blood-moon-1) 10%, var(--blood-moon-2), var(--blood-moon-3), var(--blood-moon-4), transparent)',
       },
       boxShadow: {
-        'custom-light': '0 4px 6px rgba(0, 0, 0, 0.1)', // example shadow
+        'custom-light': '0 4px 6px rgba(0, 0, 0, 0.1)',
       },
-
       keyframes: {
         'animating-multiple-properties': {
           '0%': {
@@ -73,9 +63,8 @@ module.exports = {
         },
       },
       animation: {
-        'animating-multiple-properties': 'animating-multiple-properties 2s  ease-in-out forwards', // Example duration and timing function
+        'animating-multiple-properties': 'animating-multiple-properties 2s  ease-in-out forwards',
       },
-
       colors: {
         // writers
         TaylorSwift: "rgb(28, 136, 199, 0.5)",
@@ -97,7 +86,6 @@ module.exports = {
             2: "#fff",
           },
         },
-
         lightpurple: "#a99daf",
         moonstone: "#3AA8c1",
         midnightsBackground: "#09071a",

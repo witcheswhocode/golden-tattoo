@@ -21,8 +21,12 @@ function Header(props: HeaderProps) {
           <span className="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
           <span className="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> tattoo
         </span>
-        <div className="absolute h-24 w-24 rounded-full z-[-2] bg-center bg-cover midnights-moon animate-animating-multiple-properties">
-          <div className="h-full w-full rounded-full opacity-75 z-[-1] bg-cover shadow-custom-light custom-gradient custom-animation"></div>
+        <div className="relative flex justify-center items-center">
+          {/* Moon image */}
+          <div className="absolute h-24 w-24 shadow-custom-light rounded-full z-[-2] bg-center bg-cover midnights-moon animate-animating-multiple-properties">
+            {/* Background with gradient */}
+            <div className="absolute inset-0 rounded-full bg-bloodmoon-gradient"></div>
+          </div>
         </div>
       </div>
     </header>

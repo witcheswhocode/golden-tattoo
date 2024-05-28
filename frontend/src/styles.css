@@ -8,6 +8,13 @@
     --color-secondary-folklore: #f0f0f0;
     --color-primary-midnights: #000000;
     --color-secondary-midnights: #333333;
+    
+    --blood-moon-1: black;
+    --blood-moon-2: transparent;
+    --blood-moon-3: #6E0A05;
+    --blood-moon-4: #9C1304; 
+    --blood-moon-light-1: #f5814e; 
+    --blood-moon-light-2: #fff; 
   
     --color-primary: var(--color-primary-folklore);
     --color-secondary: var(--color-secondary-folklore);
