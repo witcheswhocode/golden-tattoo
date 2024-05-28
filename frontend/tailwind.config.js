@@ -14,6 +14,68 @@ module.exports = {
         "border-radius": "border-radius",
         width: "width",
       },
+
+      opacity: {
+        '75': '0.75',
+      },
+      zIndex: {
+        '-1': '-1',
+      },
+      boxShadow: {
+        'custom-light': '0 0 30px 0px var(--blood-moon-light-1), 0 0 100px 0 var(--blood-moon-light-2)',
+      },
+      animation: {
+        'custom-animation': 'Animation 5s ease',
+      },
+      backgroundSize: {
+        '200%': '200% 200%',
+      },
+      aspectRatio: {
+        '1/1': '1 / 1',
+      },
+
+
+      fontFamily: {
+        'monoton': ['Monoton', 'cursive'],
+      },
+      colors: {
+        'custom-gray': '#a99daf',
+      },
+      fontSize: {
+        '2.5xl': '2.5rem',
+      },
+
+      fontFamily: {
+        'monoton': ['Monoton', 'cursive'],
+      },
+      fontSize: {
+        '2.5xl': '1.75rem', // example size
+      },
+      backgroundImage: {
+        'midnights-moon': "url('https://i0.wp.com/lunasociety.org/wp-content/uploads/2015/11/cropped-Full-Moon-Flat.png')", // correct the path
+        'custom-gradient': 'linear-gradient(to right, #6a11cb, #2575fc)', // example gradient
+      },
+      boxShadow: {
+        'custom-light': '0 4px 6px rgba(0, 0, 0, 0.1)', // example shadow
+      },
+
+      keyframes: {
+        'animating-multiple-properties': {
+          '0%': {
+            transform: 'translateY(40vh)',
+            filter: 'brightness(75%)',
+            opacity: '20%',
+          },
+          '100%': {
+            transform: 'translateY(10px)', // Corrected unit for consistency
+            opacity: '100%',
+          },
+        },
+      },
+      animation: {
+        'animating-multiple-properties': 'animating-multiple-properties 2s  ease-in-out forwards', // Example duration and timing function
+      },
+
       colors: {
         // writers
         TaylorSwift: "rgb(28, 136, 199, 0.5)",
@@ -76,5 +138,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/aspect-ratio")],
 };
