@@ -1,5 +1,6 @@
 import React from "react";
 import { writerDetails } from "../../constants";
+import SongName from "./components/SongName";
 
 export interface SongItemProps {
   song: string;
@@ -27,9 +28,7 @@ function SongItem(props: SongItemProps) {
       className="mb-1 flex bg-white rounded-lg hover:rounded-none transition-all duration-600 ease-in pb-1 overflow-hidden"
       key={`${props.song}`}
     >
-      <div className="w-32 overflow-hidden whitespace-nowrap hover:w-64 focus:w-64 transition-width duration-300 ease-in-out">
-        <div className="text-center">{props.song}</div>
-      </div>
+      <SongName song={props.song} />
       <div className="writers flex w-full px-2 overflow-x-auto overflow-y-hidden">
         {props.writers
           .split(",")
@@ -42,7 +41,7 @@ function SongItem(props: SongItemProps) {
             return (
               <div
                 key={index}
-                className="w-auto h-8 flex flex-col items-center hover:h-48 focus:h-48 transition-height duration-300 ease-in-out"
+                className="w-auto h-10 flex flex-col items-center hover:h-40 focus:h-40 transition-height duration-300 ease-in-out"
               >
                 <div
                   className={`bg-${getColor(

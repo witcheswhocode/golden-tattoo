@@ -49,7 +49,7 @@ function Jukebox(props: WritersData) {
       (count !== null ? `-${count}` : "");
 
     return (
-      <section aria-label={`${albumshort}`} key={`${albumshort}${keySuffix}`}>
+      <section id="writers-section" aria-label={`${albumshort}`} key={`${albumshort}${keySuffix}`}>
         <AlbumHeader
           alb={alb}
           albumshort={albumshort}
