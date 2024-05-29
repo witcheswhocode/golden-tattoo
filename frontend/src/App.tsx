@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Writers from "./pages/Writers";
@@ -9,9 +9,10 @@ import Navbar from "./components/Navbar";
 import Dropdown from "./components/Dropdown/Dropdown";
 import { ThemeProvider, useTheme } from "./components/ThemeContext";
 import { DropdownItem } from "./components/Dropdown/Dropdown";
+import ShimmeringStars from "./components/ShimmeringStars";
 
 function App() {
-  const ThemeToggle: React.FC = () => {
+  const ThemeToggle = () => {
     const { theme, toggleTheme } = useTheme();
 
     const items = ["theme", "lover", "folklore", "reputation", "midnights"];
@@ -19,8 +20,14 @@ function App() {
     const dropdownItems: DropdownItem[] = items.map(item => ({ value: item }));
     
     function handleThemeChange(theme: any) {
+    const dropdownItems = items.map((item) => ({
+      value: item,
+    }));
+
+    function handleThemeChange(theme:any) {
       toggleTheme(theme);
     }
+
     return (
       <Dropdown
         items={dropdownItems}
@@ -32,18 +39,35 @@ function App() {
 
   return (
     <ThemeProvider>
+      <ThemeWrapper />
+    </ThemeProvider>
+  );
+}
+
+function ThemeWrapper() {
+  const { theme } = useTheme();
+
+  return (
+    <div className={`bg-${theme}-background min-h-screen`}>
       <Router>
         <Header />
         <Navbar />
-        <ThemeToggle />
-        <Routes>
-          <Route path="/writers" element={<Writers />} />
-          <Route path="/bracelets" element={<Bracelets />} />
-          <Route path="/lyrics" element={<LyricsTable />} />
-        </Routes>
+        <AppContent />
         <Footer />
       </Router>
-    </ThemeProvider>
+
+      <ShimmeringStars />
+    </div>
+  );
+}
+
+function AppContent() {
+  return (
+    <Routes>
+      <Route path="/writers" element={<Writers />} />
+      <Route path="/bracelets" element={<Bracelets />} />
+      <Route path="/lyrics" element={<LyricsTable />} />
+    </Routes>
   );
 }
 

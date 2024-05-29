@@ -13,6 +13,10 @@ module.exports = {
       transitionProperty: {
         "border-radius": "border-radius",
         width: "width",
+
+      animationDelay: {
+        '0.1s': '0.1s',
+        '0.2s': '0.2s',
       },
 
       opacity: {
@@ -88,7 +92,7 @@ module.exports = {
         },
         lightpurple: "#a99daf",
         moonstone: "#3AA8c1",
-        midnightsBackground: "#09071a",
+        midnights: "#09071a",
         midnightsButton: "grey",
         midnightsBlbum: "#a99daf", // Using direct color value
         mommyYellow: "#d39a1e",
@@ -100,13 +104,13 @@ module.exports = {
         mommyAlbumBorder: "#d39a1e", // Using direct color value
         mommyHeaderText: "#e0dbc0", // Using direct color value
         theme: {
-          backgroundColor: "#000000",
+          background: "#09071a",
           main: "#FFA500",
           secondary: "#FFA500",
           third: "#FFA500",
         },
         folklore: {
-          backgroundColor: "#000000",
+          backgroundColor: "#09071a",
           main: "#FFFFFF",
           secondary: "forestgreen",
           third: "yellow",
