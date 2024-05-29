@@ -54,9 +54,9 @@ function ThemeWrapper() {
         <Navbar />
         <AppContent />
         <Footer />
+      <ShimmeringStars />
       </Router>
 
-      <ShimmeringStars />
     </div>
   );
 }
