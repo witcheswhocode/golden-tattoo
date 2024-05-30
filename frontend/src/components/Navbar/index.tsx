@@ -2,7 +2,7 @@ import React from 'react';
 
 const Navbar: React.FC = () => {
   return (
-    <nav className="bg-blue-500 p-4 text-white">
+    <nav className="p-4 text-white">
       <div className="container mx-auto flex justify-center">
         <ul className="flex space-x-4">
           <li>
