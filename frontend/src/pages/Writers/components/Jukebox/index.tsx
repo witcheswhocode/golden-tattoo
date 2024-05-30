@@ -31,7 +31,6 @@ export interface WritersData {
 
 function Jukebox(props: WritersData) {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc"); // Track sorting order
-  
 
   const createDiv = (
     albumshort: string,
@@ -49,27 +48,36 @@ function Jukebox(props: WritersData) {
       (released !== null ? `-${released}` : "") +
       (count !== null ? `-${count}` : "");
 
-    return (
-      <section id="writers-section" aria-label={`${albumshort}`} key={`${albumshort}${keySuffix}`}>
-        <AlbumHeader
-          alb={alb}
-          albumshort={albumshort}
-          album={album}
-          released={released}
-          totalwriters={totalwriters}
-          totalselfwritten={totalselfwritten}
-          apple={apple}
-          spotify={spotify}
-          other={other}
-        />
-        {props.data
-          .filter((item) => item.albumshort === albumshort)
-          .map((filteredItem) => (
-            <SongItem song={filteredItem.song} writers={filteredItem.writers} />
-          ))}
+    if (released && released !== 'null') {
+      return (
+        <section
+          id="writers-section"
+          aria-label={`${albumshort}`}
+          key={`${albumshort}${keySuffix}`}
+        >
+          <AlbumHeader
+            alb={alb}
+            albumshort={albumshort}
+            album={album}
+            released={released}
+            totalwriters={totalwriters}
+            totalselfwritten={totalselfwritten}
+            apple={apple}
+            spotify={spotify}
+            other={other}
+          />
+          {props.data
+            .filter((item) => item.albumshort === albumshort)
+            .map((filteredItem) => (
+              <SongItem
+                song={filteredItem.song}
+                writers={filteredItem.writers}
+              />
+            ))}
           <RowOfEmojis />
-      </section>
-    );
+        </section>
+      );
+    }
   };
 
   // Get unique album and song combinations
@@ -117,7 +125,7 @@ function Jukebox(props: WritersData) {
       totalselfwritten,
       apple,
       spotify,
-      other
+      other,
     ] = combination.split("_");
 
     return createDiv(
