@@ -5,6 +5,7 @@ import ListOfBraceletIdeas from "../ListOfBraceletIdeas";
 import ListOfBestCombinations from "../ListOfBestCombinations";
 import Tabs from "src/components/Tabs";
 import Tab from "src/components/Tabs/components/Tab";
+import ExpandableDiv from "../ExpandableDiv";
 
 interface Bracelet {
   name: string;
@@ -177,12 +178,14 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
         letterTotal={letterTotal}
         lettersLeft={lettersLeft}
       />
-      <BraceletSelection
-        braceletSelection={braceletSelection || {}}
-        braceletQuantities={braceletQuantities}
-        handleDecrement={handleDecrement}
-        handleIncrement={handleIncrement}
-      />
+      <ExpandableDiv>
+        <BraceletSelection
+          braceletSelection={braceletSelection || {}}
+          braceletQuantities={braceletQuantities}
+          handleDecrement={handleDecrement}
+          handleIncrement={handleIncrement}
+        />
+      </ExpandableDiv>
 
       <Tabs>
         <Tab label="label">
