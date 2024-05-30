@@ -2,7 +2,7 @@ import { useState } from "react";
 import { writerDetails } from "../../../../constants";
 
 export default function WriterItems(props: any) {
-  const listOfPromeninetWriters = [
+  const listOfProminentWriters = [
     "Taylor Swift",
     "Liz Rose",
     "Jack Antonoff",
@@ -13,23 +13,20 @@ export default function WriterItems(props: any) {
   ];
 
   function getColor(writer: string) {
-    if (listOfPromeninetWriters.includes(writer)) {
+    if (listOfProminentWriters.includes(writer)) {
       return writer.replaceAll(" ", "");
     } else return "Default";
   }
-  const [revealedImages, setRevealedImages] = useState(
-    new Array(props.writers.split(",").length).fill(false)
-  );
 
-  const handleToggleImage = (index: number) => {
-    const newRevealedImages = [...revealedImages];
-    newRevealedImages[index] = !newRevealedImages[index];
-    setRevealedImages(newRevealedImages);
-    console.log(`Toggled image at index ${index}, new state:`, newRevealedImages);
+  const [revealeImages, setRevealeImages] = useState(false);
+
+  const handleToggleImage = () => {
+    setRevealeImages(!revealeImages);
+    console.log(`Toggled images, new state: ${revealeImages}`);
   };
 
   return (
-    <div className="writers flex w-full px-2 overflow-hidden">
+    <div className="writers flex w-full px-2 overflow-hidden" onClick={() => handleToggleImage()}>
       {props.writers
         .split(",")
         .reverse()
@@ -41,8 +38,7 @@ export default function WriterItems(props: any) {
           return (
             <div
               key={index}
-              className="w-auto h-10 flex flex-col items-center transition-height duration-300 ease-in-out cursor-pointer"
-              onClick={() => handleToggleImage(index)}
+              className={`w-auto flex flex-col items-center transition-all duration-300 ease-in-out cursor-pointer ${revealeImages ? "h-40" : "h-10"}`}
             >
               <div
                 className={`bg-${getColor(
@@ -51,11 +47,9 @@ export default function WriterItems(props: any) {
               >
                 {writer}
               </div>
-              <div className="w-24 h-24 bg-gray-200 overflow-hidden">
+              <div className={`w-24 h-24 overflow-hidden`}>
                 <img
-                  className={`w-24 h-24 object-cover transition-opacity duration-300 ease-in-out ${
-                    revealedImages[index] ? "opacity-100" : "opacity-0"
-                  }`}
+                  className="w-24 h-24 object-cover"
                   loading="lazy"
                   src={imgUrl}
                   alt={writer}
