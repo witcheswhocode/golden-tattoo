@@ -23,14 +23,18 @@ const ExpandableDiv: React.FC<ExpandableDivProps> = ({ children, count }) => {
         onClick={toggleExpansion}
       >
         <h2 className="text-lg font-semibold bg-white">Selected Bracelets</h2>
-        <span>{count !== undefined ? count : 0}</span>
+        <span>{count !== undefined ? `${count} selected` : `0 selected`}</span>
       </div>
       <div
         className={`overflow-hidden transition-all duration-300 ${
           isExpanded ? "max-h-screen" : "max-h-0"
         } bg-white`}
       >
-        <div className="p-4 bg-white opacity-100">{children}</div>
+        {count ? (
+          <div className="py-4 bg-white opacity-100">{children}</div>
+        ) : (
+          <div className="py-4">No bracelets selected.</div>
+        )}
       </div>
     </div>
   );
