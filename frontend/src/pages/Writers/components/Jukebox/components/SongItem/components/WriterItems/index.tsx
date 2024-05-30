@@ -43,13 +43,13 @@ export default function WriterItems(props: any) {
               <div
                 key={index}
                 className={`w-auto flex flex-col items-center transition-all duration-300 ease-in-out cursor-pointer ${
-                  revealeImages ? "h-40" : "h-10"
+                  revealeImages ? "h-40" : "h-8"
                 }`}
               >
                 <div
                   className={`bg-${getColor(
                     writer
-                  )} min-w-max inline-block mr-2 mb-4 px-2 py-1 text-center text-black bg-transparent border border-transparent rounded-full text-base`}
+                  )} min-w-max inline-block mr-2 mb-4 px-2 py-1 text-center text-black bg-transparent border border-transparent rounded-full text-sm`}
                 >
                   {writer}
                 </div>
