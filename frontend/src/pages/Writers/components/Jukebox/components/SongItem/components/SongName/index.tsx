@@ -32,18 +32,18 @@ export default function SongName(props: any) {
       const innerDivWidth = innerDivRef.current.offsetWidth; // Get width of the inner div in pixels
       const containerDiv = innerDivRef.current.parentElement;
 
-      console.log(`innerDivWidth: ${innerDivWidth}px`);
-      console.log(`screenWidth: ${window.innerWidth}px`);
+      //console.log(`innerDivWidth: ${innerDivWidth}px`);
+      //console.log(`screenWidth: ${window.innerWidth}px`);
 
       if (containerDiv) {
         const screenWidth = window.innerWidth;
         if (isExpanded) {
           const newWidth = (innerDivWidth / screenWidth) < 0.23 ? '33%' : `${innerDivWidth*1.5}px`;
           containerDiv.style.width = `${newWidth}`; // Add !important to the style
-          console.log(`Setting container width to ${newWidth}`);
+          //console.log(`Setting container width to ${newWidth}`);
         } else {
           containerDiv.style.width = '33%';
-          console.log('Setting container width to else 33');
+          //console.log('Setting container width to else 33');
         }
       }
     }
