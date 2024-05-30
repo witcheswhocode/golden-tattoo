@@ -16,7 +16,7 @@ const ListOfBestCombinations: React.FC<ListOfBestCombinationsProps> = ({
       <div className="text-xs my-1 mb-2">{desc}</div>
       <div>
         {combinations?.map((item, index) => (
-          <div className="my-4 border-bottom" key={index}>
+          <div className="my-4" key={index}>
             {item.map((word, wordIndex) => (
               <div key={wordIndex}>{word}</div>
             ))}
