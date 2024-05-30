@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AlbumHeader from "../AlbumHeader";
+import AlbumHeader from "./components/AlbumHeader";
 import SongItem from "./components/SongItem";
 
 export interface WritersProps {
