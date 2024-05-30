@@ -23,3 +23,35 @@
     --color-secondary: var(--color-secondary-midnights);
   }
   
+
+/* Custom scrollbar styles for horizontal scrolling */
+.scroll-horizontal {
+  overflow-x: auto; /* Enable horizontal scrolling */
+  white-space: nowrap; /* Prevent line breaks */
+}
+
+/* Hide scrollbar */
+.scroll-horizontal::-webkit-scrollbar {
+  height: 0; /* Set height to 0 */
+}
+
+/* Optionally, hide scrollbar track */
+.scroll-horizontal::-webkit-scrollbar-track {
+  background: transparent; /* Hide scrollbar track */
+}
+
+.theme-single-emoji:before{
+  content: "🌃";
+}
+
+.theme-rowof-emoji:before {
+  content: " \00a0 ☎️ \00a0 🕯  \00a0 ❤️‍🔥  \00a0 🌕 \00a0 🔥 ";
+}
+
+.midnights-single-emoji:before{
+  content: "🌃";
+}
+
+.midnights-rowof-emoji:before {
+  content: " \00a0 ☎️ \00a0 🕯  \00a0 ❤️‍🔥  \00a0 🌕 \00a0 🔥 ";
+}

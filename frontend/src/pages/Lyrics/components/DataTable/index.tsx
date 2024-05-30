@@ -133,7 +133,6 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
   };
 
   const handleCategoryClick = (category: string) => {
-    console.log(category);
     if (category === sortCategory) {
       setSortCategory(null);
     } else {

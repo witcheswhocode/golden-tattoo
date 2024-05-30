@@ -9,8 +9,6 @@ function Header(props: HeaderProps) {
   const { theme } = useTheme();
   const themeClass = `data-theme="${theme}"`;
 
-  console.log(theme, themeClass)
-
   return (
     <header className={`bg-primary text-secondary p-4 ${themeClass}`}>
       <h1 className="text-2xl">My Website</h1>

@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import AlbumHeader from "./components/AlbumHeader";
+import SongItem from "./components/SongItem";
+import RowOfEmojis from "../RowOfEmojis";
 
 export interface WritersProps {
-  alb: string;
+  alb: string | null;
   album: string;
   albumid: number;
   albumshort: string;
@@ -31,46 +34,69 @@ function Jukebox(props: WritersData) {
 
   const createDiv = (
     albumshort: string,
-    released: number | null,
-    count: string | null
+    released: string,
+    count: string | null,
+    alb: string | null,
+    album: string,
+    totalwriters: string,
+    totalselfwritten: string,
+    apple: string,
+    spotify: string,
+    other: string
   ) => {
     const keySuffix =
       (released !== null ? `-${released}` : "") +
       (count !== null ? `-${count}` : "");
 
-    return (
-      <div key={`${albumshort}${keySuffix}`}>
-        <div className="text-center text-xl">{`${albumshort}`}</div>
-        {props.data
-          .filter((item) => item.albumshort === albumshort)
-          .map((filteredItem) => (
-            <div className="flex" key={`${filteredItem.song}${keySuffix}`}>
-              <div className="text-m">{filteredItem.song}</div>
-              <div className="flex tooltip-container">
-                {filteredItem.writers
-                  .split(",")
-                  .reverse()
-                  .map((writer, index) => (
-                    <div className="w-24 h-8 hover:h-48 transition-height duration-300 ease-in-out">
-                      {writer}
-                    </div>
-                  ))}
-              </div>
-            </div>
-          ))}
-      </div>
-    );
+    if (released && released !== 'null') {
+      return (
+        <section
+          id="writers-section"
+          aria-label={`${albumshort}`}
+          key={`${albumshort}${keySuffix}`}
+        >
+          <AlbumHeader
+            alb={alb}
+            albumshort={albumshort}
+            album={album}
+            released={released}
+            totalwriters={totalwriters}
+            totalselfwritten={totalselfwritten}
+            apple={apple}
+            spotify={spotify}
+            other={other}
+          />
+          {props.data
+            .filter((item) => item.albumshort === albumshort)
+            .map((filteredItem) => (
+              <SongItem
+                song={filteredItem.song}
+                writers={filteredItem.writers}
+              />
+            ))}
+          <RowOfEmojis />
+        </section>
+      );
+    }
   };
 
   // Get unique album and song combinations
   const uniqueAlbums = [
-    ...new Set(props.data.map((item) => `${item.albumshort}_${item.released}`)),
+    ...new Set(
+      props.data.map(
+        (item) =>
+          `${item.albumshort}_${item.released}_${item.totalwriters}_${item.alb}_${item.album}_${item.totalwriters}_${item.totalselfwritten}_${item.apple}_${item.spotify}_${item.other}`
+      )
+    ),
   ];
 
   // Sorting function based on release date
   const sortFunction = (a: string, b: string) => {
-    let [albumshortA, releasedA] = a.split("_");
-    let [albumshortB, releasedB] = b.split("_");
+    let [albumshortA, releasedAString] = a.split("_");
+    let [albumshortB, releasedBString] = b.split("_");
+
+    let releasedA = releasedAString.split(",")[0];
+    let releasedB = releasedBString.split(",")[0];
 
     releasedA = releasedA === "null" ? "5000" : releasedA;
     releasedB = releasedB === "null" ? "5000" : releasedB;
@@ -89,10 +115,31 @@ function Jukebox(props: WritersData) {
   const sortedUniqueAlbums = uniqueAlbums.sort(sortFunction);
   // Render div elements for each unique album and song combination
   const result = sortedUniqueAlbums.map((combination) => {
-    const [albumshort, released, count] = combination.split("_");
-    const releasedNumber = released === "NaN" ? parseInt(released, 10) : 5000;
+    const [
+      albumshort,
+      released,
+      count,
+      alb,
+      album,
+      totalwriters,
+      totalselfwritten,
+      apple,
+      spotify,
+      other,
+    ] = combination.split("_");
 
-    return createDiv(albumshort, releasedNumber, count);
+    return createDiv(
+      albumshort,
+      released,
+      count,
+      alb,
+      album,
+      totalwriters,
+      totalselfwritten,
+      apple,
+      spotify,
+      other
+    );
   });
 
   // Toggle sorting order when the button is clicked
@@ -101,10 +148,10 @@ function Jukebox(props: WritersData) {
   };
 
   return (
-    <main className="p-4">
-      <button onClick={toggleSortOrder}>Toggle Sort Order</button>
+    <div className="p-3 w-full m-auto lg:w-2/3">
+      <button onClick={toggleSortOrder}>Sort By Date</button>
       {result}
-    </main>
+    </div>
   );
 }
 

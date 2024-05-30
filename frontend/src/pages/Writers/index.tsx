@@ -18,7 +18,7 @@ function Writers() {
   }, []);
 
   return (
-    <main className="p-4">{writerData && <Jukebox data={writerData} />}</main>
+    <div className="">{writerData && <Jukebox data={writerData} />}</div>
   );
 }
 
