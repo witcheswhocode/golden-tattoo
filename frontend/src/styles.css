@@ -40,3 +40,18 @@
   background: transparent; /* Hide scrollbar track */
 }
 
+.theme-single-emoji:before{
+  content: "🌃";
+}
+
+.theme-rowof-emoji:before {
+  content: " \00a0 ☎️ \00a0 🕯  \00a0 ❤️‍🔥  \00a0 🌕 \00a0 🔥 ";
+}
+
+.midnights-single-emoji:before{
+  content: "🌃";
+}
+
+.midnights-rowof-emoji:before {
+  content: " \00a0 ☎️ \00a0 🕯  \00a0 ❤️‍🔥  \00a0 🌕 \00a0 🔥 ";
+}

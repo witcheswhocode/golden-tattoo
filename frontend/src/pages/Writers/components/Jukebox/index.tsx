@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import AlbumHeader from "./components/AlbumHeader";
 import SongItem from "./components/SongItem";
+import RowOfEmojis from "../RowOfEmojis";
 
 export interface WritersProps {
   alb: string | null;
@@ -66,6 +67,7 @@ function Jukebox(props: WritersData) {
           .map((filteredItem) => (
             <SongItem song={filteredItem.song} writers={filteredItem.writers} />
           ))}
+          <RowOfEmojis />
       </section>
     );
   };
