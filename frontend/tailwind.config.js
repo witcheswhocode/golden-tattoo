@@ -119,25 +119,36 @@ module.exports = {
         mommyAlbumBorder: "#d39a1e", // Using direct color value
         mommyHeaderText: "#e0dbc0", // Using direct color value
         theme: {
-          background: "#09071a",
+          background: "white",
+          text: "black",
           main: "#FFA500",
           secondary: "#FFA500",
           third: "#FFA500",
         },
+        lover: {
+          background: "#09071a",
+          text: "white",
+          main: "#FFFFFF",
+          secondary: "forestgreen",
+          third: "yellow",
+        },
         folklore: {
-          backgroundColor: "#09071a",
+          background: "#09071a",
+          text: "black",
           main: "#FFFFFF",
           secondary: "forestgreen",
           third: "yellow",
         },
         reputation: {
-          backgroundColor: "#000000",
+          background: "#000000",
+          text: "white",
           main: "lightblue",
           secondary: "#FFA500",
           third: "#FFA500",
         },
         midnights: {
-          backgroundColor: "#000000",
+          background: "#000000",
+          text: "black",
           main: "#FFA500",
           secondary: "#FFA500",
           third: "#FFA500",

@@ -70,9 +70,26 @@
 .midnights-rowof-emoji:before {
   content: " \00a0 ☎️ \00a0 🕯  \00a0 ❤️‍🔥  \00a0 🌕 \00a0 🔥 ";
 }
-  .midnights-moon {
-    background-image: url(https://i0.wp.com/lunasociety.org/wp-content/uploads/2015/11/cropped-Full-Moon-Flat.png);
-  }
+
+
+.lover-single-emoji:before {
+  content: "💘";
+}
+.lover-rowof-emoji:before {
+  content: " \00a0 🌈  \00a0 🌈  \00a0 🌈  \00a0 🌈  \00a0 🌈 ";
+}
+
+
+.reputation-single-emoji:before {
+  content: "🐍";
+}
+.reputation-rowof-emoji:before {
+  content: " \00a0 🥃  \00a0 💰  \00a0 🧟‍♀️  \00a0 🌼  \00a0 🔥 ";
+}
+
+.midnights-moon {
+  background-image: url(https://i0.wp.com/lunasociety.org/wp-content/uploads/2015/11/cropped-Full-Moon-Flat.png);
+}
 
 .custom-gradient {
   background: linear-gradient(300deg, var(--blood-moon-1) 10%, var(--blood-moon-2), var(--blood-moon-3), var(--blood-moon-4), transparent);

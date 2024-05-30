@@ -10,13 +10,13 @@ function Header(props: HeaderProps) {
   const themeClass = `data-theme="${theme}"`;
 
   return (
-    <header className={`bg-primary text-secondary p-4 ${themeClass}`}>
+    <header className={`p-4 ${themeClass}`}>
       <div
         id="header-box-container"
         className="relative flex justify-center font-monoton text-custom-gray text-2.5xl text-justify mt-4"
       >
         <div id="header-box"></div>
-        <span id="head-text" className="text-white">
+        <span id="head-text" className={`text-${theme}-text`}>
           golden
           <span className={`${theme === 'midnights' ? '' : 'hidden'}`}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
           <span className={`${theme === 'midnights' ? '' : 'hidden'}`}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> tattoo
