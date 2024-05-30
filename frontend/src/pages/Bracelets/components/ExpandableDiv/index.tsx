@@ -15,21 +15,22 @@ const ExpandableDiv: React.FC<ExpandableDivProps> = ({ children, count }) => {
   };
 
   return (
-    <div className={`fixed bottom-0 left-0 w-full bg-gray-200 p-4`}>
+    <div className="z-10 fixed bottom-0 left-0 w-full p-4 bg-white shadow-lg">
       <div
-        className={`space-between cursor-pointer ${
-          isExpanded ? `border-b-2 border-gray-600` : ""
+        className={`flex justify-between items-center cursor-pointer bg-white ${
+          isExpanded ? "border-b-2 border-gray-600" : ""
         }`}
         onClick={toggleExpansion}
       >
-        <h2 className="text-lg font-semibold">Selected Bracelets</h2><span className="">{count ? count : 0}</span>
+        <h2 className="text-lg font-semibold bg-white">Selected Bracelets</h2>
+        <span>{count !== undefined ? count : 0}</span>
       </div>
       <div
-        className={`overflow-hidden transition-max-height ${
+        className={`overflow-hidden transition-all duration-300 ${
           isExpanded ? "max-h-screen" : "max-h-0"
-        }`}
+        } bg-white`}
       >
-        <div className="p-4">{isExpanded && children}</div>
+        <div className="p-4 bg-white opacity-100">{children}</div>
       </div>
     </div>
   );
