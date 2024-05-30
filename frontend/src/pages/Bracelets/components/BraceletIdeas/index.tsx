@@ -178,7 +178,7 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
         letterTotal={letterTotal}
         lettersLeft={lettersLeft}
       />
-      <ExpandableDiv>
+      <ExpandableDiv count={braceletSelection && braceletSelection.length}>
         <BraceletSelection
           braceletSelection={braceletSelection || {}}
           braceletQuantities={braceletQuantities}
