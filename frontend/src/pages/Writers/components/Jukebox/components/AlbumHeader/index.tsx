@@ -1,5 +1,6 @@
 import AlbumArt from "./AlbumArt";
 import AlbumInfo from "./AlbumInfo";
+import { useTheme } from "src/components/ThemeContext";
 
 export interface AlbumHeaderProps {
   alb: string | null;
@@ -14,8 +15,9 @@ export interface AlbumHeaderProps {
 }
 
 function AlbumHeader(props: AlbumHeaderProps) {
+  const {theme} = useTheme();
   return (
-    <div className="w-full h-32 flex mb-3 border-2 border-solid border-black border-b-10">
+    <div className={`w-full h-32 flex mb-3 bg-${theme}-backgroundOther border-2 border-solid border-black border-b-10`}>
       <AlbumArt alb={props.alb} />
       <AlbumInfo
         alb={props.alb}

@@ -1,12 +1,13 @@
-import React from 'react';
+import { useTheme } from "../ThemeContext";
 
 interface FooterProps {
   
 }
 
 function Footer(props: FooterProps) {
+  const {theme} = useTheme();
   return (
-    <footer className="bg-blue-500 text-white p-4">
+    <footer className={`text-${theme}-text p-4`}>
       <p>&copy; 2023 My Website</p>
     </footer>
   );

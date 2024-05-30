@@ -120,6 +120,7 @@ module.exports = {
         mommyHeaderText: "#e0dbc0", // Using direct color value
         theme: {
           background: "white",
+          backgroundOther: "purple",
           text: "black",
           main: "#FFA500",
           secondary: "#FFA500",
@@ -127,6 +128,7 @@ module.exports = {
         },
         lover: {
           background: "#09071a",
+          backgroundOther: "purple",
           text: "white",
           main: "#FFFFFF",
           secondary: "forestgreen",
@@ -134,13 +136,16 @@ module.exports = {
         },
         folklore: {
           background: "#09071a",
+          backgroundOther: "purple",
           text: "black",
           main: "#FFFFFF",
           secondary: "forestgreen",
+          backgroundOther: "purple",
           third: "yellow",
         },
         reputation: {
           background: "#000000",
+          backgroundOther: "purple",
           text: "white",
           main: "lightblue",
           secondary: "#FFA500",
@@ -148,6 +153,7 @@ module.exports = {
         },
         midnights: {
           background: "#000000",
+          backgroundOther: "purple",
           text: "black",
           main: "#FFA500",
           secondary: "#FFA500",
