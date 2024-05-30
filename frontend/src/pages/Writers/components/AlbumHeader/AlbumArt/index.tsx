@@ -6,7 +6,7 @@ export interface AlbumArtProps {
 
 function AlbumArt(props: AlbumArtProps) {
   return (
-    <div className="flex justify-left items-center m-1 w-1/3 relative">
+    <div className="flex m-0.5 justify-left items-center w-1/3 relative">
       <img
         className="h-full w-auto object-fill"
         loading="lazy"

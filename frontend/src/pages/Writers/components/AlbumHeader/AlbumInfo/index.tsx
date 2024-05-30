@@ -19,13 +19,13 @@ function AlbumInfo(props: AlbumInfoProps) {
 
   return (
     <div className="flex flex-col justify-center items-center overflow-hidden w-2/3 bg-mommyOrange">
-      <p className="album">{props.album.replace("Taylor's Version", "TV")}</p>
-      <p className="p-small">Released {props.released}</p>
-      <p className="p-small">
+      <p className="text-lg">{props.album.replace("Taylor's Version", "TV")}</p>
+      <p className="text-xs m-1">Released {props.released}</p>
+      <p className="text-xs m-1">
         {props.totalwriters} Total Writers | {props.totalselfwritten} Taylor
         self wrote
       </p>
-      <div className="flex gap-6">
+      <div className="flex gap-6 my-2">
         <span>
           <a target="_blank" href={props.spotify}>
             <img className="w-6 h-6 object-cover" src={`assets/spotify-${theme}.png`} />
