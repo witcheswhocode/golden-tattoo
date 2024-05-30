@@ -18,8 +18,8 @@ function Header(props: HeaderProps) {
         <div id="header-box"></div>
         <span id="head-text" className="text-white">
           golden
-          <span className="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          <span className="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> tattoo
+          <span className={`${theme === 'midnights' ? '' : 'hidden'}`}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <span className={`${theme === 'midnights' ? '' : 'hidden'}`}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> tattoo
         </span>
         <div className={`relative flex justify-center items-center ${theme === 'midnights' ? '' : 'hidden'}`}>
           {/* Moon image */}
