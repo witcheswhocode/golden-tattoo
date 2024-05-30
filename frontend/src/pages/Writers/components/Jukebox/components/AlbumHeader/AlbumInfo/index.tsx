@@ -18,7 +18,7 @@ function AlbumInfo(props: AlbumInfoProps) {
   console.log(theme)
 
   return (
-    <div className="flex flex-col justify-center items-center overflow-hidden w-2/3 bg-mommyOrange">
+    <div className="flex flex-col justify-center items-center overflow-hidden w-full bg-mommyOrange">
       <p className="text-lg">{props.album.replace("Taylor's Version", "TV")}</p>
       <p className="text-xs m-1">Released {props.released}</p>
       <p className="text-xs m-1">
