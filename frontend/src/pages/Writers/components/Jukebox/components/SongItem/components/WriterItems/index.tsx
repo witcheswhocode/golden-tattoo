@@ -27,7 +27,7 @@ export default function WriterItems(props: any) {
 
   return (
     <div
-      className="writers flex-grow w-full px-2 mb-0"
+      className="scroll-horizontal flex-grow w-full px-2 mb-0"
       onClick={() => handleToggleImage()}
     >
       <div className="flex">

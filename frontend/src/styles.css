@@ -25,18 +25,18 @@
   
 
 /* Custom scrollbar styles for horizontal scrolling */
-.writers {
+.scroll-horizontal {
   overflow-x: auto; /* Enable horizontal scrolling */
   white-space: nowrap; /* Prevent line breaks */
 }
 
 /* Hide scrollbar */
-.writers::-webkit-scrollbar {
+.scroll-horizontal::-webkit-scrollbar {
   height: 0; /* Set height to 0 */
 }
 
 /* Optionally, hide scrollbar track */
-.writers::-webkit-scrollbar-track {
+.scroll-horizontal::-webkit-scrollbar-track {
   background: transparent; /* Hide scrollbar track */
 }
 
