@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { useTheme } from "src/components/ThemeContext";
 
 interface AlphabetInputProps {
-  handleCombinationPossibilities: (value: string[]) => void;
+  handleCombinationPossibilities: (value: string[] | null) => void;
   handleMostLetterCombinationPossibilities: (value: string[][]) => void;
   handleMostBraceletCombinationPossibilities: (value: string[][]) => void;
   inputValues: { [key: string]: number };
@@ -15,7 +16,8 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
   handleMostBraceletCombinationPossibilities,
   setInputValues,
 }) => {
-  //const [inputValues, setInputValues] = useState<{ [key: string]: string }>({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { theme } = useTheme();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -55,23 +57,45 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
         handleMostBraceletCombinationPossibilities(
           data.data.mostBraceletOptions
         );
+        setIsSubmitted(true); // Hide the form after submission
       })
       .catch((error) => console.error("Error fetching modal data:", error));
   };
 
-  useEffect(() => {
-    /*setInputValues({
-      a: 10,
-      b: 20,
-      d: 20,
+  const handleReset = () => {
+    handleCombinationPossibilities(null);
+    setIsSubmitted(false);
+    setInputValues({
+      a: 2,
+      b: 2,
+      c: 2,
+      d: 2,
+      e: 2,
+      f: 2,
+      g: 2,
+      h: 2,
       i: 2,
-      l: 10,
-      o: 20,
+      j: 2,
+      k: 2,
+      l: 2,
+      m: 2,
+      n: 2,
+      o: 2,
       p: 2,
-      r: 10,
+      q: 2,
+      r: 2,
       s: 2,
-    });*/
+      t: 2,
+      u: 2,
+      v: 2,
+      w: 2,
+      x: 2,
+      y: 2,
+      z: 2,
+    });
+  };
 
+  useEffect(() => {
     setInputValues({
       a: 2,
       b: 2,
@@ -104,35 +128,48 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
 
   return (
     <div className="container mx-auto mt-8 p-4 bg-red">
-      <div className="grid grid-cols-10 gap-2">
-        {Array.from({ length: 26 }, (_, i) => {
-          const letter = String.fromCharCode(65 + i);
-          return (
-            <div key={letter} className="flex flex-col items-center">
-              <label htmlFor={letter} className="mb-1">
-                {letter}
-              </label>
-              <input
-                type="text"
-                id={letter.toLowerCase()}
-                name={letter.toLowerCase()}
-                onChange={handleInputChange}
-                value={inputValues[letter.toLowerCase()] || ""}
-                className="border rounded w-8 h-8 p-2 text-center focus:ring focus:ring-blue-200 focus:outline-none"
-              />
-            </div>
-          );
-        })}
-        <div className="mt-4 w-full">
+      {!isSubmitted ? (
+        <div className="grid grid-cols-10 gap-2">
+          {Array.from({ length: 26 }, (_, i) => {
+            const letter = String.fromCharCode(65 + i);
+            return (
+              <div key={letter} className="flex flex-col items-center">
+                <label htmlFor={letter} className="mb-1">
+                  {letter}
+                </label>
+                <input
+                  type="text"
+                  id={letter.toLowerCase()}
+                  name={letter.toLowerCase()}
+                  onChange={handleInputChange}
+                  value={inputValues[letter.toLowerCase()] || ""}
+                  className="border rounded w-8 h-8 p-2 text-center focus:ring focus:ring-blue-200 focus:outline-none"
+                />
+              </div>
+            );
+          })}
+          <div className="mt-4 w-full">
+            <button
+              type="button"
+              onClick={handleSubmit}
+              className="bg-blue-500 text-white px-4 py-2 rounded"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="flex flex-col items-center">
+          <p>Form submitted successfully.</p>
           <button
             type="button"
-            onClick={handleSubmit}
-            className="bg-blue-500 text-white px-4 py-2 rounded"
+            onClick={handleReset}
+            className="bg-green-500 text-white px-4 py-2 rounded mt-4"
           >
-            Submit
+            Fill out the form again
           </button>
         </div>
-      </div>
+      )}
     </div>
   );
 };
