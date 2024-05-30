@@ -40,7 +40,7 @@ const ListOfBraceletIdeas: React.FC<ListOfBraceletIdeasProps> = ({
             >
               -
             </button>
-            <span className="px-4">{braceletQuantities[key].value}</span>
+            <span className="px-4 w-10">{braceletQuantities[key].value}</span>
             <button
               onClick={() => handleIncrement(key)}
               disabled={!braceletQuantities[key].active}
