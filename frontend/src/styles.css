@@ -23,20 +23,20 @@
     --color-secondary: var(--color-secondary-midnights);
   }
   
-/* Hide scrollbar for specific element */
+
+/* Custom scrollbar styles for horizontal scrolling */
 .writers {
-  overflow: auto;
+  overflow-x: auto; /* Enable horizontal scrolling */
+  white-space: nowrap; /* Prevent line breaks */
 }
 
+/* Hide scrollbar */
 .writers::-webkit-scrollbar {
-  display: none;
+  height: 0; /* Set height to 0 */
 }
 
-.writers {
-  scrollbar-width: none; /* For Firefox */
+/* Optionally, hide scrollbar track */
+.writers::-webkit-scrollbar-track {
+  background: transparent; /* Hide scrollbar track */
 }
 
-/* custom.css */
-.transition-width {
-  transition-property: width;
-}
