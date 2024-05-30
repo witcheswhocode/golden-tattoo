@@ -209,12 +209,6 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
           />
         </Tab>
       </Tabs>
-
-      <ListOfBraceletIdeas
-        braceletQuantities={braceletQuantities}
-        handleDecrement={handleDecrement}
-        handleIncrement={handleIncrement}
-      />
     </div>
   );
 };

@@ -7,19 +7,18 @@ interface Bracelet {
 }
 
 interface ListOfBraceletIdeasProps {
-    braceletQuantities: {[key: string]: { value: number; active: boolean }};
-    handleDecrement: (id: string) => void;
-    handleIncrement: (id: string) => void;
+  braceletQuantities: { [key: string]: { value: number; active: boolean } };
+  handleDecrement: (id: string) => void;
+  handleIncrement: (id: string) => void;
 }
 
 const ListOfBraceletIdeas: React.FC<ListOfBraceletIdeasProps> = ({
   braceletQuantities,
   handleDecrement,
-  handleIncrement
+  handleIncrement,
 }) => {
   return (
     <div className="p-4">
-      <div className="bg-black h-0.5 m-5"></div>
       {Object.keys(braceletQuantities).map((key) => (
         <div
           key={key}

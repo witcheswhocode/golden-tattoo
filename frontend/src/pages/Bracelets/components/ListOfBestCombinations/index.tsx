@@ -11,7 +11,7 @@ const ListOfBestCombinations: React.FC<ListOfBestCombinationsProps> = ({
   desc
 }) => {
   return (
-    <div className="p-4">
+    <div className="px-4 pb-2">
       <div className="font-bold my-1">{title}</div>
       <div className="text-xs my-1 mb-2">{desc}</div>
       <div>
