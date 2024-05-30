@@ -21,8 +21,8 @@ export default function WriterItems(props: any) {
   const [revealeImages, setRevealeImages] = useState(false);
 
   const handleToggleImage = () => {
+    props.setIsHeightIncreased(!revealeImages);
     setRevealeImages(!revealeImages);
-    console.log(`Toggled images, new state: ${revealeImages}`);
   };
 
   return (
@@ -49,7 +49,7 @@ export default function WriterItems(props: any) {
                 <div
                   className={`bg-${getColor(
                     writer
-                  )} min-w-max inline-block mr-2 mb-4 px-2 py-1 text-center text-black bg-transparent border border-transparent rounded-full text-sm`}
+                  )} min-w-max inline-block mr-2 mb-4 px-2 py-1 text-center text-black bg-transparent border border-transparent rounded-full text-sm mt-0.5`}
                 >
                   {writer}
                 </div>

@@ -14,6 +14,76 @@ module.exports = {
         "border-radius": "border-radius",
         width: "width",
       },
+
+      boxShadow: {
+        custom: "10px 10px 0px 0px rgba(0,0,0,0.75)",
+        "stars-1": "var(--stars-1)",
+        "stars-2": "var(--stars-2)",
+        "stars-3": "var(--stars-3)",
+        "stars-4": "var(--stars-4)",
+        "stars-5": "var(--stars-5)",
+        "stars-6": "var(--stars-6)",
+        "custom-light":
+          "0 0 30px 0px var(--blood-moon-light-1), 0 0 100px 0 var(--blood-moon-light-2)",
+      },
+      animationDelay: {
+        "0.1s": "0.1s",
+        "0.2s": "0.2s",
+      },
+
+      opacity: {
+        75: "0.75",
+      },
+      zIndex: {
+        "-1": "-1",
+      },
+      backgroundSize: {
+        "200%": "200% 200%",
+      },
+      aspectRatio: {
+        "1/1": "1 / 1",
+      },
+      gradients: {
+        blood: ["var(--blood-moon-light-1)", "var(--blood-moon-light-2)"],
+      },
+      fontFamily: {
+        monoton: ["Monoton", "cursive"],
+      },
+      fontSize: {
+        "2.5xl": "2.5rem",
+      },
+      backgroundImage: {
+        "midnights-moon":
+          "url('https://i0.wp.com/lunasociety.org/wp-content/uploads/2015/11/cropped-Full-Moon-Flat.png')",
+        "bloodmoon-gradient":
+          "linear-gradient(300deg, var(--blood-moon-1) 10%, var(--blood-moon-2), var(--blood-moon-3), var(--blood-moon-4), transparent)",
+      },
+      keyframes: {
+        "animating-multiple-properties": {
+          "0%": {
+            transform: "translateY(40vh)",
+            filter: "brightness(75%)",
+            opacity: "20%",
+          },
+          "100%": {
+            transform: "translateY(10px)", // Corrected unit for consistency
+            opacity: "100%",
+          },
+        },
+        "glowing-stars": {
+          "0%": { opacity: 0 },
+          "25%": { opacity: 0.5 },
+          "50%": { opacity: 1 },
+          "75%": { opacity: 0.5 },
+          "100%": { opacity: 0 },
+        },
+      },
+      animation: {
+        "animating-multiple-properties":
+          "animating-multiple-properties 2s  ease-in-out forwards",
+        "glowing-stars": "glowing-stars 1s linear infinite",
+        "custom-animation": "Animation 5s ease",
+      },
       colors: {
         // writers
         TaylorSwift: "rgb(28, 136, 199, 0.5)",
@@ -35,10 +105,9 @@ module.exports = {
             2: "#fff",
           },
         },
-
         lightpurple: "#a99daf",
         moonstone: "#3AA8c1",
-        midnightsBackground: "#09071a",
+        midnights: "#09071a",
         midnightsButton: "grey",
         midnightsBlbum: "#a99daf", // Using direct color value
         mommyYellow: "#d39a1e",
@@ -50,25 +119,36 @@ module.exports = {
         mommyAlbumBorder: "#d39a1e", // Using direct color value
         mommyHeaderText: "#e0dbc0", // Using direct color value
         theme: {
-          backgroundColor: "#000000",
+          background: "white",
+          text: "black",
           main: "#FFA500",
           secondary: "#FFA500",
           third: "#FFA500",
         },
+        lover: {
+          background: "#09071a",
+          text: "white",
+          main: "#FFFFFF",
+          secondary: "forestgreen",
+          third: "yellow",
+        },
         folklore: {
-          backgroundColor: "#000000",
+          background: "#09071a",
+          text: "black",
           main: "#FFFFFF",
           secondary: "forestgreen",
           third: "yellow",
         },
         reputation: {
-          backgroundColor: "#000000",
+          background: "#000000",
+          text: "white",
           main: "lightblue",
           secondary: "#FFA500",
           third: "#FFA500",
         },
         midnights: {
-          backgroundColor: "#000000",
+          background: "#000000",
+          text: "black",
           main: "#FFA500",
           secondary: "#FFA500",
           third: "#FFA500",
@@ -76,5 +156,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/aspect-ratio")],
 };
