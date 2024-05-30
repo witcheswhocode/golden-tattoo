@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import SongName from "./components/SongName";
 import WriterItems from "./components/WriterItems";
 
@@ -8,14 +8,23 @@ export interface SongItemProps {
 }
 
 function SongItem(props: SongItemProps) {
+  const [isHeightIncreased, setIsHeightIncreased] = useState(false);
+
   return (
     <div
-      className="mb-1 flex mx-auto container bg-white rounded-lg hover:rounded-none transition-all duration-600 ease-in pb-1 overflow-hidden"
+      className={`mb-1 flex mx-auto bg-white pb-1 overflow-hidden ${
+        isHeightIncreased
+          ? "rounded-lg transition-border-radius  ease-in"
+          : "rounded-full transition-border-radius ease-out"
+      }`}
       key={`${props.song}`}
     >
       <SongName song={props.song} />
 
-      <WriterItems writers={props.writers} />
+      <WriterItems
+        writers={props.writers}
+        setIsHeightIncreased={setIsHeightIncreased}
+      />
     </div>
   );
 }

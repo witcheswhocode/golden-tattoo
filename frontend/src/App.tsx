@@ -16,10 +16,7 @@ function App() {
     const { theme, toggleTheme } = useTheme();
 
     const items = ["theme", "lover", "folklore", "reputation", "midnights"];
-
-    const dropdownItems: DropdownItem[] = items.map(item => ({ value: item }));
     
-    function handleThemeChange(theme: any) {
     const dropdownItems = items.map((item) => ({
       value: item,
     }));

@@ -13,9 +13,10 @@ module.exports = {
       transitionProperty: {
         "border-radius": "border-radius",
         width: "width",
+      },
 
       boxShadow: {
-        "custom": "10px 10px 0px 0px rgba(0,0,0,0.75)",
+        custom: "10px 10px 0px 0px rgba(0,0,0,0.75)",
         "stars-1": "var(--stars-1)",
         "stars-2": "var(--stars-2)",
         "stars-3": "var(--stars-3)",
@@ -80,7 +81,7 @@ module.exports = {
       animation: {
         "animating-multiple-properties":
           "animating-multiple-properties 2s  ease-in-out forwards",
-        "glowing-stars": 'glowing-stars 1s linear infinite',
+        "glowing-stars": "glowing-stars 1s linear infinite",
         "custom-animation": "Animation 5s ease",
       },
       colors: {
