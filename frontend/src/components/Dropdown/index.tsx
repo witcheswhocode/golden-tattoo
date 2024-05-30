@@ -48,7 +48,7 @@ export default function Dropdown(props: DropdownProps) {
   }, []);
 
   return (
-    <div className="flex" ref={dropdownRef}>
+    <div className="relative">
       <button
         type="button"
         className="inline-flex justify-center items-center px-4 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150"
@@ -58,16 +58,17 @@ export default function Dropdown(props: DropdownProps) {
       </button>
 
       {isOpen && (
-        <div className="inline-flex mt-2 w-56">
+        <div className="absolute mt-2 w-56 bg-white shadow-md z-10">
           {dropdownItems.map((item, index) => (
-            <a
-              key={item.value}
-              href="#"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-              onClick={() => handleItemClick(item.value)}
-            >
-              {item.value}
-            </a>
+            <div key={item.value} className="mb-1">
+              <a
+                href="#"
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                onClick={() => handleItemClick(item.value)}
+              >
+                {item.value}
+              </a>
+            </div>
           ))}
         </div>
       )}

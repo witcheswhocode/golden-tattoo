@@ -6,12 +6,22 @@ import Writers from "./pages/Writers";
 import Bracelets from "./pages/Bracelets";
 import LyricsTable from "./pages/Lyrics";
 import Navbar from "./components/Navbar";
-import Dropdown from "./components/Dropdown/Dropdown";
+import Dropdown from "./components/Dropdown";
 import { ThemeProvider, useTheme } from "./components/ThemeContext";
-import { DropdownItem } from "./components/Dropdown/Dropdown";
 import ShimmeringStars from "./components/ShimmeringStars";
 
 function App() {
+
+  return (
+    <ThemeProvider>
+      <ThemeWrapper />
+    </ThemeProvider>
+  );
+}
+
+function ThemeWrapper() {
+  const { theme } = useTheme();
+
   const ThemeToggle = () => {
     const { theme, toggleTheme } = useTheme();
 
@@ -35,19 +45,10 @@ function App() {
   };
 
   return (
-    <ThemeProvider>
-      <ThemeWrapper />
-    </ThemeProvider>
-  );
-}
-
-function ThemeWrapper() {
-  const { theme } = useTheme();
-
-  return (
     <div className={`bg-${theme}-background min-h-screen`}>
       <Router>
         <Header />
+        <ThemeToggle />
         <Navbar />
         <AppContent />
         <Footer />

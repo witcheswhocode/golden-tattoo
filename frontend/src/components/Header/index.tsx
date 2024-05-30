@@ -16,12 +16,12 @@ function Header(props: HeaderProps) {
         className="relative flex justify-center font-monoton text-custom-gray text-2.5xl text-justify mt-4"
       >
         <div id="header-box"></div>
-        <span id="head-text">
+        <span id="head-text" className="text-white">
           golden
           <span className="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
           <span className="spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> tattoo
         </span>
-        <div className="relative flex justify-center items-center">
+        <div className={`relative flex justify-center items-center ${theme === 'midnights' ? '' : 'hidden'}`}>
           {/* Moon image */}
           <div className="absolute h-24 w-24 shadow-custom-light rounded-full z-[-2] bg-center bg-cover midnights-moon animate-animating-multiple-properties">
             {/* Background with gradient */}
