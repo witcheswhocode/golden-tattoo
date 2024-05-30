@@ -149,7 +149,7 @@ function Jukebox(props: WritersData) {
 
   return (
     <div className="p-3 w-full m-auto lg:w-2/3">
-      <button onClick={toggleSortOrder}>Toggle Sort Order</button>
+      <button onClick={toggleSortOrder}>Sort By Date</button>
       {result}
     </div>
   );
