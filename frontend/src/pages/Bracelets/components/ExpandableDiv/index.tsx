@@ -15,7 +15,7 @@ const ExpandableDiv: React.FC<ExpandableDivProps> = ({ children, count }) => {
   };
 
   return (
-    <div className="z-10 fixed bottom-0 left-0 w-full p-4 bg-white shadow-lg">
+    <div className="z-10 fixed bottom-0 left-0 w-full p-4 bg-white shadow-lg md:w-3/4 md:left-auto">
       <div
         className={`flex justify-between items-center cursor-pointer bg-white`}
         onClick={toggleExpansion}

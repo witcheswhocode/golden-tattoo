@@ -178,37 +178,47 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
         letterTotal={letterTotal}
         lettersLeft={lettersLeft}
       />
-      <ExpandableDiv count={braceletSelection && Object.keys(braceletSelection).length}>
-        <BraceletSelection
-          braceletSelection={braceletSelection || {}}
-          braceletQuantities={braceletQuantities}
-          handleDecrement={handleDecrement}
-          handleIncrement={handleIncrement}
-        />
-      </ExpandableDiv>
-
-      <Tabs>
-        <Tab label="Build Your Own">
-          <ListOfBraceletIdeas
+      <div className="flex items-center justify-center">
+        <ExpandableDiv
+          count={braceletSelection && Object.keys(braceletSelection).length}
+        >
+          <BraceletSelection
+            braceletSelection={braceletSelection || {}}
             braceletQuantities={braceletQuantities}
             handleDecrement={handleDecrement}
             handleIncrement={handleIncrement}
           />
-        </Tab>
-        <Tab label="Optimized Combos">
-          <ListOfBestCombinations
-            combinations={mostLettersUsed}
-            title={"Use the Most Letters"}
-            desc={"This list gives you the variation that will use the most beads."}
-          />
+        </ExpandableDiv>
+      </div>
 
-          <ListOfBestCombinations
-            combinations={mostBraceletOptions}
-            title={"Make the Most Bracelets"}
-            desc={"This is a list a various combinations you can try to make the most bracelets."}
-          />
-        </Tab>
-      </Tabs>
+      <div className="md:w-3/4 m-auto">
+        <Tabs>
+          <Tab label="Build Your Own">
+            <ListOfBraceletIdeas
+              braceletQuantities={braceletQuantities}
+              handleDecrement={handleDecrement}
+              handleIncrement={handleIncrement}
+            />
+          </Tab>
+          <Tab label="Optimized Combos">
+            <ListOfBestCombinations
+              combinations={mostLettersUsed}
+              title={"Use the Most Letters"}
+              desc={
+                "This list gives you the variation that will use the most beads."
+              }
+            />
+
+            <ListOfBestCombinations
+              combinations={mostBraceletOptions}
+              title={"Make the Most Bracelets"}
+              desc={
+                "This is a list a various combinations you can try to make the most bracelets."
+              }
+            />
+          </Tab>
+        </Tabs>
+      </div>
     </div>
   );
 };
