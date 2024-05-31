@@ -19,7 +19,7 @@ const Tabs: React.FC<TabsProps> = ({ children }) => {
                   index === activeTab
                     ? "bg-blue-500 text-white"
                     : "bg-gray-200 text-gray-800"
-                } px-4 py-2 mr-2 rounded-t-lg`}
+                } px-4 py-2 w-full rounded-t-lg`}
                 onClick={() => setActiveTab(index)}
               >
                 {child.props.label}
