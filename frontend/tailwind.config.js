@@ -13,6 +13,7 @@ module.exports = {
       transitionProperty: {
         "border-radius": "border-radius",
         width: "width",
+        'max-height': 'max-height',
       },
 
       boxShadow: {

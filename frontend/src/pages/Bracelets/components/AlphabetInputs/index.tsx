@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
+import { useTheme } from "src/components/ThemeContext";
 
 interface AlphabetInputProps {
-  handleCombinationPossibilities: (value: string[]) => void;
+  handleCombinationPossibilities: (value: string[] | null) => void;
   handleMostLetterCombinationPossibilities: (value: string[][]) => void;
   handleMostBraceletCombinationPossibilities: (value: string[][]) => void;
   inputValues: { [key: string]: number };
   setInputValues: (value: { [key: string]: number | any }) => void;
+  resultsRef: React.RefObject<HTMLDivElement>;
+  setShowSparkles: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const AlphabetInputs: React.FC<AlphabetInputProps> = ({
@@ -14,8 +17,12 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
   handleMostLetterCombinationPossibilities,
   handleMostBraceletCombinationPossibilities,
   setInputValues,
+  resultsRef,
+  setShowSparkles
 }) => {
-  //const [inputValues, setInputValues] = useState<{ [key: string]: string }>({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isFormVisible, setIsFormVisible] = useState(true);
+  const { theme } = useTheme();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -55,23 +62,62 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
         handleMostBraceletCombinationPossibilities(
           data.data.mostBraceletOptions
         );
+        setIsFormVisible(false); // Hide the form with animation
+        setTimeout(() => setIsSubmitted(true), 300); // Wait for the animation to complete before showing the new content
+        setShowSparkles(true); // Show sparkles
+
+        setTimeout(() => {
+          setIsSubmitted(true); // Show the success message and reset button
+          if (resultsRef.current) {
+            const yOffset = -250; // Adjust the offset value as needed
+            const y =
+              resultsRef.current.getBoundingClientRect().top +
+              window.pageYOffset +
+              yOffset;
+            window.scrollTo({ top: y, behavior: "smooth" });
+          }
+          setTimeout(() => setShowSparkles(false), 1000); // Hide sparkles after 1 second
+        }, 300); // Wait for the animation to complete before showing the new content
       })
       .catch((error) => console.error("Error fetching modal data:", error));
   };
 
-  useEffect(() => {
-    /*setInputValues({
-      a: 10,
-      b: 20,
-      d: 20,
-      i: 2,
-      l: 10,
-      o: 20,
-      p: 2,
-      r: 10,
-      s: 2,
-    });*/
+  const handleReset = () => {
+    handleCombinationPossibilities(null);
+    setIsSubmitted(false);
 
+    setInputValues({
+      a: 2,
+      b: 2,
+      c: 2,
+      d: 2,
+      e: 2,
+      f: 2,
+      g: 2,
+      h: 2,
+      i: 2,
+      j: 2,
+      k: 2,
+      l: 2,
+      m: 2,
+      n: 2,
+      o: 2,
+      p: 2,
+      q: 2,
+      r: 2,
+      s: 2,
+      t: 2,
+      u: 2,
+      v: 2,
+      w: 2,
+      x: 2,
+      y: 2,
+      z: 2,
+    });
+    setIsFormVisible(true);
+  };
+
+  useEffect(() => {
     setInputValues({
       a: 2,
       b: 2,
@@ -103,36 +149,65 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
   }, []);
 
   return (
-    <div className="container mx-auto mt-8 p-4 bg-red">
-      <div className="grid grid-cols-10 gap-2">
-        {Array.from({ length: 26 }, (_, i) => {
-          const letter = String.fromCharCode(65 + i);
-          return (
-            <div key={letter} className="flex flex-col items-center">
-              <label htmlFor={letter} className="mb-1">
-                {letter}
-              </label>
-              <input
-                type="text"
-                id={letter.toLowerCase()}
-                name={letter.toLowerCase()}
-                onChange={handleInputChange}
-                value={inputValues[letter.toLowerCase()] || ""}
-                className="border rounded w-8 h-8 p-2 text-center focus:ring focus:ring-blue-200 focus:outline-none"
-              />
+    <div className="container mx-auto mt-2 p-4 bg-red md:w-3/4">
+      {!isSubmitted ? (
+        <div
+          className={`transition-opacity duration-300 ${
+            isFormVisible ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <p className="text-center">
+            Input the quantity of each letter bead you have and press submit.
+            The results will help you generate Taylor Swift related bracelet
+            ideas.
+          </p>
+          <div className="grid grid-cols-10 gap-2 mt-8">
+            {Array.from({ length: 26 }, (_, i) => {
+              const letter = String.fromCharCode(65 + i);
+              return (
+                <div key={letter} className="flex flex-col items-center">
+                  <label htmlFor={letter} className="mb-1">
+                    {letter}
+                  </label>
+                  <input
+                    type="text"
+                    id={letter.toLowerCase()}
+                    name={letter.toLowerCase()}
+                    onChange={handleInputChange}
+                    value={inputValues[letter.toLowerCase()] || ""}
+                    className="border rounded w-8 h-8 p-2 text-center focus:ring focus:ring-blue-200 focus:outline-none"
+                  />
+                </div>
+              );
+            })}
+            <div className="mt-4 w-full">
+              <button
+                type="button"
+                onClick={handleSubmit}
+                className="bg-blue-500 text-white px-4 py-2 rounded"
+              >
+                Submit
+              </button>
             </div>
-          );
-        })}
-        <div className="mt-4 w-full">
-          <button
-            type="button"
-            onClick={handleSubmit}
-            className="bg-blue-500 text-white px-4 py-2 rounded"
-          >
-            Submit
-          </button>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div
+          className={`transition-opacity duration-300 ${
+            isSubmitted ? "opacity-100" : "opacity-0"
+          } ${isSubmitted ? "block" : "hidden"}`}
+        >
+          <div className="flex">
+              <button
+                type="button"
+                onClick={handleReset}
+                className="bg-blue-500 text-white px-4 py-2 rounded"
+              >
+                ⬅️ Go back and start over
+              </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
