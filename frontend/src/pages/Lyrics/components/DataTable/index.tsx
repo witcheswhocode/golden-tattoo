@@ -187,12 +187,15 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
 
   return (
     <>
-      <input
-        type="text"
-        placeholder="Search..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
+      <div className="w-full flex justify-center items-center">
+        <input
+          type="text"
+          placeholder="Search..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className={`border-2 p-1 m-2 w-1/3`}
+        />
+      </div>
       <div className="flex flex-row flex-nowrap w-full mb-4 overflow-auto gap-1 md:flex-wrap md:justify-center">
         {allCategories.map((category, index) => (
           <div
