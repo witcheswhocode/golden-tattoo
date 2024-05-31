@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Pagination from "../Pagination";
 import Table from "../Table";
+import { useTheme } from "src/components/ThemeContext";
 
 export interface TableRow {
   wordid: number;
@@ -74,6 +75,7 @@ const allCategories = [
 ];
 
 const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
+  const { theme } = useTheme();
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const [searchTerm, setSearchTerm] = useState("");
@@ -177,11 +179,11 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-      <div className="flex flex-row flex-nowrap">
-        {allCategories.map((category) => (
-
-          <div className="flex flex-nowrap justify-center items-center w-auto px-3 py-1 rounded-full bg-lightpurple cursor-pointer whitespace-nowrap"
-          key={category}
+      <div className="flex flex-row flex-nowrap w-full overflow-auto gap-1">
+        {allCategories.map((category, index) => (
+          <div
+            className={`flex flex-nowrap justify-center items-center w-auto px-3 py-1 text-sm text-white rounded-full bg-lightpurple cursor-pointer whitespace-nowrap category-color-${['queer', 'midnights'].includes(category) ? category : index} selected`}
+            key={category}
             onClick={() => handleCategoryClick(category)}
           >
             {category}
