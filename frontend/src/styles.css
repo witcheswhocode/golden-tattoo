@@ -276,6 +276,17 @@
   border: rgb(75, 143, 76, 0.7) solid 2px!important;
 }
 
+.category-color-100.selected{
+  background-color: rgb(75, 143, 76, 0.7);
+  border: rgb(75, 143, 76, 0.7) solid 2px!important;
+  color: white;
+}
+.category-color-100{
+  background-color: #fff;
+  color: rgb(75, 143, 76, 0.7);
+  border: rgb(75, 143, 76, 0.7) solid 2px!important;
+}
+
 .category-color-queer.selected{
   background-image: linear-gradient(to left,rgba(255,150,246,.8),rgba(91,149,213,.8));
   border: rgba(213, 150, 255, 0.8) solid 2px!important;

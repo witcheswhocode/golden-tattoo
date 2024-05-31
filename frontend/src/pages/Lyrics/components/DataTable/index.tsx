@@ -80,21 +80,24 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
   const [itemsPerPage, setItemsPerPage] = useState(20);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortColumn, setSortColumn] = useState<string | null>(null);
-  const [sortCategory, setSortCategory] = useState<string | null>(null);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const [selectedCategories, setSelectedCategories] =
+    useState<string[]>(allCategories);
+  const numberOfCategories = allCategories.length;
+  const [clickedCategory, setClickedCategory] = useState<Boolean>(false);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const hasCommonElement = (arr1: string[], arr2: string[]): boolean => {
+    return arr1.some((element) => arr2.includes(element));
+  };
+
   const filteredData = props.data
     .filter(
       (item) =>
         item.otherwords.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        (sortCategory === null ||
-          (item.categories &&
-            item.categories
-              .split("|")
-              .map((cat) => cat.trim())
-              .includes(sortCategory)))
+        item.categories &&
+        hasCommonElement(item.categories.split("|"), selectedCategories)
     )
     .sort((a, b) => {
       const startsWithSearchTermA = a.otherwords
@@ -164,10 +167,18 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
   };
 
   const handleCategoryClick = (category: string) => {
-    if (category === sortCategory) {
-      setSortCategory(null);
+    console.log(selectedCategories);
+    if (!clickedCategory) {
+      setClickedCategory(true);
+      setSelectedCategories([category])
+    }
+
+    if (selectedCategories.includes(category)) {
+      // Deselect the category if it's already selected
+      setSelectedCategories(selectedCategories.filter((c) => c === category));
     } else {
-      setSortCategory(category);
+      // Select the category if it's not already selected
+      setSelectedCategories([...selectedCategories, category]);
     }
   };
 
@@ -182,7 +193,9 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
       <div className="flex flex-row flex-nowrap w-full overflow-auto gap-1">
         {allCategories.map((category, index) => (
           <div
-            className={`flex flex-nowrap justify-center items-center w-auto px-3 py-1 text-sm text-white rounded-full bg-lightpurple cursor-pointer whitespace-nowrap category-color-${['queer', 'midnights'].includes(category) ? category : index} selected`}
+            className={`flex flex-nowrap justify-center items-center w-auto px-3 py-1 text-sm text-white rounded-full cursor-pointer whitespace-nowrap category-color-${
+              ["queer", "midnights"].includes(category) ? category : (index > 7 ? `100` : index)
+            }  ${selectedCategories.includes(category) ? "selected" : ""}`}
             key={category}
             onClick={() => handleCategoryClick(category)}
           >
