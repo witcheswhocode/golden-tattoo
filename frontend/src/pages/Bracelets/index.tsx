@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import BraceletIdeas from "./components/BraceletIdeas";
 import AlphabetInputs from "./components/AlphabetInputs";
+import Sparkles from "src/components/Sparkles";
 
 type LetterCount = { [letter: string]: number };
 
@@ -22,6 +23,8 @@ const Bracelets = () => {
 
   const resultsRef = useRef<HTMLDivElement>(null);
 
+  const [showSparkles, setShowSparkles] = useState<boolean>(false);
+
   return (
     <div className="container mx-auto mt-8">
       <h1 className="text-2xl font-bold text-center">
@@ -39,9 +42,11 @@ const Bracelets = () => {
         inputValues={inputValues}
         setInputValues={setInputValues}
         resultsRef={resultsRef}
+        setShowSparkles={setShowSparkles}
       />
       {combinationPossibilities && (
         <div ref={resultsRef}>
+          {showSparkles && <Sparkles />}
           <BraceletIdeas
             bracelets={combinationPossibilities}
             mostLettersUsed={mostLetterCombinationPossibilities}

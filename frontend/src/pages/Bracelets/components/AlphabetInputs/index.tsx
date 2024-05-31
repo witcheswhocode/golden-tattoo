@@ -8,6 +8,7 @@ interface AlphabetInputProps {
   inputValues: { [key: string]: number };
   setInputValues: (value: { [key: string]: number | any }) => void;
   resultsRef: React.RefObject<HTMLDivElement>;
+  setShowSparkles: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const AlphabetInputs: React.FC<AlphabetInputProps> = ({
@@ -17,6 +18,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
   handleMostBraceletCombinationPossibilities,
   setInputValues,
   resultsRef,
+  setShowSparkles
 }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isFormVisible, setIsFormVisible] = useState(true);
@@ -62,16 +64,21 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
         );
         setIsFormVisible(false); // Hide the form with animation
         setTimeout(() => setIsSubmitted(true), 300); // Wait for the animation to complete before showing the new content
+        setShowSparkles(true); // Show sparkles
 
         setTimeout(() => {
           setIsSubmitted(true); // Show the success message and reset button
           if (resultsRef.current) {
             const yOffset = -250; // Adjust the offset value as needed
-            const y = resultsRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            const y =
+              resultsRef.current.getBoundingClientRect().top +
+              window.pageYOffset +
+              yOffset;
             window.scrollTo({ top: y, behavior: "smooth" });
           }
+          setTimeout(() => setShowSparkles(false), 1000); // Hide sparkles after 1 second
         }, 300); // Wait for the animation to complete before showing the new content
-        })
+      })
       .catch((error) => console.error("Error fetching modal data:", error));
   };
 
