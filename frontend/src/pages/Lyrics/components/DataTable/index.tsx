@@ -47,7 +47,31 @@ const getConsecutiveMatches = (str: string, searchTerm: string) => {
   return maxCount;
 };
 
-const allCategories = ["parallels", "transportation", "queer"];
+const allCategories = [
+  "all categories",
+  "parallels",
+  "literature",
+  "color",
+  "queer",
+  "date",
+  "number",
+  "explicit",
+  "alcohol",
+  "hiding",
+  "secrets",
+  "family",
+  "body",
+  "reflective light",
+  "place",
+  "transportation",
+  "person",
+  "games",
+  "spiritual",
+  "elements",
+  "space",
+  "kingdom",
+  "no category",
+];
 
 const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -63,7 +87,12 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
     .filter(
       (item) =>
         item.otherwords.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        (sortCategory === null || (item.categories && item.categories.split('|').map(cat => cat.trim()).includes(sortCategory)))
+        (sortCategory === null ||
+          (item.categories &&
+            item.categories
+              .split("|")
+              .map((cat) => cat.trim())
+              .includes(sortCategory)))
     )
     .sort((a, b) => {
       const startsWithSearchTermA = a.otherwords
@@ -148,16 +177,22 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-      {allCategories.map((category) => (
-        <div
-          className="cursor-pointer"
+      <div className="flex flex-row flex-nowrap">
+        {allCategories.map((category) => (
+
+          <div className="flex flex-nowrap justify-center items-center w-auto px-3 py-1 rounded-full bg-lightpurple cursor-pointer whitespace-nowrap"
           key={category}
-          onClick={() => handleCategoryClick(category)}
-        >
-          {category}
-        </div>
-      ))}
-      <Table openModal={handleOpenModal} headerClick={handleHeaderClick} data={currentItems} />
+            onClick={() => handleCategoryClick(category)}
+          >
+            {category}
+          </div>
+        ))}
+      </div>
+      <Table
+        openModal={handleOpenModal}
+        headerClick={handleHeaderClick}
+        data={currentItems}
+      />
       <Pagination
         pages={Array.from(Array(props.data.length).keys()).map((x) => x++)}
         totalItems={props.data.length}
