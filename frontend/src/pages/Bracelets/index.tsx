@@ -22,7 +22,7 @@ const Bracelets = () => {
 
   return (
     <div className="container mx-auto mt-8">
-      <h1 className="text-2xl font-bold mb-4">bracelet Tally</h1>
+      <h1 className="text-2xl font-bold text-center">Bracelet Idea Generator</h1>
 
       <AlphabetInputs
         handleCombinationPossibilities={setCombinationPossibilities}

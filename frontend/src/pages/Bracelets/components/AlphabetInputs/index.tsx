@@ -17,6 +17,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
   setInputValues,
 }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isFormVisible, setIsFormVisible] = useState(true);
   const { theme } = useTheme();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,7 +58,8 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
         handleMostBraceletCombinationPossibilities(
           data.data.mostBraceletOptions
         );
-        setIsSubmitted(true); // Hide the form after submission
+        setIsFormVisible(false); // Hide the form with animation
+        setTimeout(() => setIsSubmitted(true), 300); // Wait for the animation to complete before showing the new content
       })
       .catch((error) => console.error("Error fetching modal data:", error));
   };
@@ -93,6 +95,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
       y: 2,
       z: 2,
     });
+    setIsFormVisible(true);
   };
 
   useEffect(() => {
@@ -127,47 +130,53 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
   }, []);
 
   return (
-    <div className="container mx-auto mt-8 p-4 bg-red">
+    <div className="container mx-auto mt-2 p-4 bg-red">
       {!isSubmitted ? (
-        <div className="grid grid-cols-10 gap-2">
-          {Array.from({ length: 26 }, (_, i) => {
-            const letter = String.fromCharCode(65 + i);
-            return (
-              <div key={letter} className="flex flex-col items-center">
-                <label htmlFor={letter} className="mb-1">
-                  {letter}
-                </label>
-                <input
-                  type="text"
-                  id={letter.toLowerCase()}
-                  name={letter.toLowerCase()}
-                  onChange={handleInputChange}
-                  value={inputValues[letter.toLowerCase()] || ""}
-                  className="border rounded w-8 h-8 p-2 text-center focus:ring focus:ring-blue-200 focus:outline-none"
-                />
-              </div>
-            );
-          })}
-          <div className="mt-4 w-full">
-            <button
-              type="button"
-              onClick={handleSubmit}
-              className="bg-blue-500 text-white px-4 py-2 rounded"
-            >
-              Submit
-            </button>
+        <div
+          className={`transition-opacity duration-300 ${
+            isFormVisible ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <p className="text-center">Input how many of each letter bead you have and press submit. The results will help you generate Taylor Swift related bracelet ideas.</p>
+          <div className="grid grid-cols-10 gap-2 mt-8">
+            {Array.from({ length: 26 }, (_, i) => {
+              const letter = String.fromCharCode(65 + i);
+              return (
+                <div key={letter} className="flex flex-col items-center">
+                  <label htmlFor={letter} className="mb-1">
+                    {letter}
+                  </label>
+                  <input
+                    type="text"
+                    id={letter.toLowerCase()}
+                    name={letter.toLowerCase()}
+                    onChange={handleInputChange}
+                    value={inputValues[letter.toLowerCase()] || ""}
+                    className="border rounded w-8 h-8 p-2 text-center focus:ring focus:ring-blue-200 focus:outline-none"
+                  />
+                </div>
+              );
+            })}
+            <div className="mt-4 w-full">
+              <button
+                type="button"
+                onClick={handleSubmit}
+                className="bg-blue-500 text-white px-4 py-2 rounded"
+              >
+                Submit
+              </button>
+            </div>
           </div>
         </div>
       ) : (
-        <div className="flex flex-col items-center">
-          <p>Form submitted successfully.</p>
-          <button
-            type="button"
-            onClick={handleReset}
-            className="bg-green-500 text-white px-4 py-2 rounded mt-4"
-          >
-            Fill out the form again
-          </button>
+        <div
+          className={`transition-opacity duration-300 ${
+            isSubmitted ? "opacity-100" : "opacity-0"
+          } ${isSubmitted ? "block" : "hidden"}`}
+        >
+          <div className="flex flex-col items-center">
+            <p className="text-center">Scroll down to see your results! To input the letter count again <a onClick={handleReset} type="button">click here</a>.</p>
+          </div>
         </div>
       )}
     </div>
