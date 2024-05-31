@@ -45,7 +45,11 @@ const Table: React.FC<TableProps> = (props: TableProps) => {
           >
             <td className="border-b">{item.word}</td>
             <td className="border-b">{item.songcount}</td>
-            <td className="border-b">{item.categories}</td>
+            <td className="border-b">
+              {item.categories?.split("|").map((cat, index) => (
+                <span key={index} className={`category-${cat.trim()}`}></span>
+              ))}
+            </td>
           </tr>
         ))}
       </tbody>
