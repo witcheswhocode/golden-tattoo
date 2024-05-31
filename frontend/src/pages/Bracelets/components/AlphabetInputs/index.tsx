@@ -149,7 +149,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
   }, []);
 
   return (
-    <div className="container mx-auto mt-2 p-4 bg-red">
+    <div className="container mx-auto mt-2 p-4 bg-red md:w-3/4">
       {!isSubmitted ? (
         <div
           className={`transition-opacity duration-300 ${
@@ -197,14 +197,14 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
             isSubmitted ? "opacity-100" : "opacity-0"
           } ${isSubmitted ? "block" : "hidden"}`}
         >
-          <div className="flex flex-col items-center">
-            <p className="text-center">
-              Scroll down to see your results! To input the letter count again{" "}
-              <a onClick={handleReset} type="button">
-                click here
-              </a>
-              .
-            </p>
+          <div className="flex">
+              <button
+                type="button"
+                onClick={handleReset}
+                className="bg-blue-500 text-white px-4 py-2 rounded"
+              >
+                ⬅️ Go back and start over
+              </button>
           </div>
         </div>
       )}
