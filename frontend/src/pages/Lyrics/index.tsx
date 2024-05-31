@@ -31,7 +31,7 @@ const LyricsTable: React.FC = () => {
   }, []);
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 md:w-5/6">
       {tableRows && <DataTable data={tableRows} openModal={openModal} />}
       {selectedItem && <Modal data={selectedItem} onClose={closeModal} />}
     </div>
