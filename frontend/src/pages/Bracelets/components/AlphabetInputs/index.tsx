@@ -137,7 +137,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
             isFormVisible ? "opacity-100" : "opacity-0"
           }`}
         >
-          <p className="text-center">Input how many of each letter bead you have and press submit. The results will help you generate Taylor Swift related bracelet ideas.</p>
+          <p className="text-center">Input the quantity of each letter bead you have and press submit. The results will help you generate Taylor Swift related bracelet ideas.</p>
           <div className="grid grid-cols-10 gap-2 mt-8">
             {Array.from({ length: 26 }, (_, i) => {
               const letter = String.fromCharCode(65 + i);
