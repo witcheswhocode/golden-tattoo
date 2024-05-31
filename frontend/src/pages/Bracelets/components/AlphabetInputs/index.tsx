@@ -7,6 +7,7 @@ interface AlphabetInputProps {
   handleMostBraceletCombinationPossibilities: (value: string[][]) => void;
   inputValues: { [key: string]: number };
   setInputValues: (value: { [key: string]: number | any }) => void;
+  resultsRef: React.RefObject<HTMLDivElement>;
 }
 
 const AlphabetInputs: React.FC<AlphabetInputProps> = ({
@@ -15,6 +16,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
   handleMostLetterCombinationPossibilities,
   handleMostBraceletCombinationPossibilities,
   setInputValues,
+  resultsRef,
 }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isFormVisible, setIsFormVisible] = useState(true);
@@ -60,13 +62,23 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
         );
         setIsFormVisible(false); // Hide the form with animation
         setTimeout(() => setIsSubmitted(true), 300); // Wait for the animation to complete before showing the new content
-      })
+
+        setTimeout(() => {
+          setIsSubmitted(true); // Show the success message and reset button
+          if (resultsRef.current) {
+            const yOffset = -250; // Adjust the offset value as needed
+            const y = resultsRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
+            window.scrollTo({ top: y, behavior: "smooth" });
+          }
+        }, 300); // Wait for the animation to complete before showing the new content
+        })
       .catch((error) => console.error("Error fetching modal data:", error));
   };
 
   const handleReset = () => {
     handleCombinationPossibilities(null);
     setIsSubmitted(false);
+
     setInputValues({
       a: 2,
       b: 2,
@@ -137,7 +149,11 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
             isFormVisible ? "opacity-100" : "opacity-0"
           }`}
         >
-          <p className="text-center">Input the quantity of each letter bead you have and press submit. The results will help you generate Taylor Swift related bracelet ideas.</p>
+          <p className="text-center">
+            Input the quantity of each letter bead you have and press submit.
+            The results will help you generate Taylor Swift related bracelet
+            ideas.
+          </p>
           <div className="grid grid-cols-10 gap-2 mt-8">
             {Array.from({ length: 26 }, (_, i) => {
               const letter = String.fromCharCode(65 + i);
@@ -175,7 +191,13 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
           } ${isSubmitted ? "block" : "hidden"}`}
         >
           <div className="flex flex-col items-center">
-            <p className="text-center">Scroll down to see your results! To input the letter count again <a onClick={handleReset} type="button">click here</a>.</p>
+            <p className="text-center">
+              Scroll down to see your results! To input the letter count again{" "}
+              <a onClick={handleReset} type="button">
+                click here
+              </a>
+              .
+            </p>
           </div>
         </div>
       )}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import BraceletIdeas from "./components/BraceletIdeas";
 import AlphabetInputs from "./components/AlphabetInputs";
 
@@ -17,12 +17,16 @@ const Bracelets = () => {
     mostBraceletCombinationPossibilities,
     setMostBraceletCombinationPossibilities,
   ] = useState<string[][] | null>(null);
-  
+
   const [inputValues, setInputValues] = useState<{ [key: string]: number }>({});
+
+  const resultsRef = useRef<HTMLDivElement>(null);
 
   return (
     <div className="container mx-auto mt-8">
-      <h1 className="text-2xl font-bold text-center">Bracelet Idea Generator</h1>
+      <h1 className="text-2xl font-bold text-center">
+        Bracelet Idea Generator
+      </h1>
 
       <AlphabetInputs
         handleCombinationPossibilities={setCombinationPossibilities}
@@ -34,14 +38,17 @@ const Bracelets = () => {
         }
         inputValues={inputValues}
         setInputValues={setInputValues}
+        resultsRef={resultsRef}
       />
       {combinationPossibilities && (
-        <BraceletIdeas
-          bracelets={combinationPossibilities}
-          mostLettersUsed={mostLetterCombinationPossibilities}
-          mostBraceletOptions={mostBraceletCombinationPossibilities}
-          letters={inputValues}
-        />
+        <div ref={resultsRef}>
+          <BraceletIdeas
+            bracelets={combinationPossibilities}
+            mostLettersUsed={mostLetterCombinationPossibilities}
+            mostBraceletOptions={mostBraceletCombinationPossibilities}
+            letters={inputValues}
+          />
+        </div>
       )}
     </div>
   );
