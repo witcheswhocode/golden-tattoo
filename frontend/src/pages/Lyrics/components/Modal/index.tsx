@@ -10,29 +10,31 @@ const Modal: React.FC<ModalProps> = ({ data, onClose }) => {
   const addCategoryNote = data[0].categories && (
     data[0].categories.includes("parallels") ||
     data[0].categories.includes("queer"));
-  const createDiv = (albumshort: string, song: string) => (
+  const createDiv = (albumshort: string, alb:string, song: string) => (
     <div key={`${albumshort}-${song}`}>
-      <div className="text-center text-xl">{`${albumshort} - ${song}`}</div>
+      <div className={`bg-album-${alb} rounded-full shadow-2xl p-2 m-4`}>
+      <div className="text-center text-lg">{`${song.replace("Taylor's Version", "TV").replace("From the Vault", "FtV")}`}</div>
+      <div className="text-center text-md">{`${albumshort}`}</div></div>
       {data
         .filter((item) => item.albumshort === albumshort && item.song === song)
         .map((filteredItem) => (
           <div
-            className="text-m"
+            className="text-center text-m"
             key={`${filteredItem.lyric}-${filteredItem.lyricid}`}
           >{HtmlReactParser(filteredItem.lyric)}</div>
         ))}
     </div>
   );
-
+  
   // Get unique album and song combinations
   const uniqueAlbumsAndSongs = [
-    ...new Set(data.map((item) => `${item.albumshort}-${item.song}`)),
+    ...new Set(data.map((item) => `${item.albumshort}-${item.alb}-${item.song}`)),
   ];
 
   // Render div elements for each unique album and song combination
   const result = uniqueAlbumsAndSongs.map((combination) => {
-    const [albumshort, song] = combination.split("-");
-    return createDiv(albumshort, song);
+    const [albumshort, alb, song] = combination.split("-");
+    return createDiv(albumshort, alb, song);
   });
 
   return (
