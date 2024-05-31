@@ -170,15 +170,19 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
     console.log(selectedCategories);
     if (!clickedCategory) {
       setClickedCategory(true);
-      setSelectedCategories([category])
+      setSelectedCategories([category]);
     }
-
-    if (selectedCategories.includes(category)) {
-      // Deselect the category if it's already selected
-      setSelectedCategories(selectedCategories.filter((c) => c === category));
+    if (category === "all categories") {
+      setClickedCategory(false);
+      setSelectedCategories(allCategories);
     } else {
-      // Select the category if it's not already selected
-      setSelectedCategories([...selectedCategories, category]);
+      if (selectedCategories.includes(category)) {
+        // Deselect the category if it's already selected
+        setSelectedCategories(selectedCategories.filter((c) => c === category));
+      } else {
+        // Select the category if it's not already selected
+        setSelectedCategories([...selectedCategories, category]);
+      }
     }
   };
 
@@ -194,7 +198,11 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
         {allCategories.map((category, index) => (
           <div
             className={`flex flex-nowrap justify-center items-center w-auto px-3 py-1 text-sm text-white rounded-full cursor-pointer whitespace-nowrap category-color-${
-              ["queer", "midnights"].includes(category) ? category : (index > 7 ? `100` : index)
+              ["queer", "midnights"].includes(category)
+                ? category
+                : index > 7
+                ? `100`
+                : index
             }  ${selectedCategories.includes(category) ? "selected" : ""}`}
             key={category}
             onClick={() => handleCategoryClick(category)}
