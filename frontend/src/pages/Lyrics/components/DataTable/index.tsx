@@ -167,7 +167,6 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
   };
 
   const handleCategoryClick = (category: string) => {
-    console.log(selectedCategories);
     if (!clickedCategory) {
       setClickedCategory(true);
       setSelectedCategories([category]);
@@ -194,7 +193,7 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-      <div className="flex flex-row flex-nowrap w-full overflow-auto gap-1">
+      <div className="flex flex-row flex-nowrap w-full mb-4 overflow-auto gap-1 md:flex-wrap md:justify-center">
         {allCategories.map((category, index) => (
           <div
             className={`flex flex-nowrap justify-center items-center w-auto px-3 py-1 text-sm text-white rounded-full cursor-pointer whitespace-nowrap category-color-${
