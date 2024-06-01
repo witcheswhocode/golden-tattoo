@@ -95,6 +95,24 @@ module.exports = {
         Shellback: "rgb(56, 163, 165, 0.5)",
         AaronDessner: "rgb(241, 101, 41, 0.5)",
         JoeAlwyn: "rgb(213, 198, 255, 0.5)",
+        // albums
+        album: {
+          taylorswift: "#38a3a5",
+          fearless: "#fcc700",
+          speaknow: "#973aa8",
+          red: "#ca0f2e",
+          _1989: "#1c88c7",
+          lover: "#d5c6ff",
+          evermore: "#f16529",
+          folklore: "#4b8f4c",
+          reputation: "#222222",
+          fearlesstv: "#bba251",
+          midnights: "#1f185c",
+          redtv: "#952e2b",
+          _1989tv: "blue",
+          thetorturedpoetsdepartment: "",
+          other: "#952e2b", single: "#952e2b", null: "#952e2b"
+        },
         // themes
         bloodmoon: {
           1: "black",

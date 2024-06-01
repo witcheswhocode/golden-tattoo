@@ -18,7 +18,13 @@ function Writers() {
   }, []);
 
   return (
-    <div className="">{writerData && <Jukebox data={writerData} />}</div>
+    <div className="">
+      <div className="w-full px-2">
+      <p className="text-sm text-start p-2 my-2">Explore the complete list of Taylor's discography and the songwriters who contributed to her music. Click on the writers name to see their picture.</p>
+
+      </div>
+      {writerData && <Jukebox data={writerData} />}
+      </div>
   );
 }
 

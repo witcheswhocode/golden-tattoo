@@ -98,6 +98,221 @@
   content: " \00a0 🥃  \00a0 💰  \00a0 🧟‍♀️  \00a0 🌼  \00a0 🔥 ";
 }
 
+
+.category-no-category:before{
+  content:"";
+}
+.category-queer:before{
+  content:"🏳️‍🌈  ";
+}
+.category-parallels:before{
+  content:"🖇️  ";
+}
+.category-literature:before{
+  content:"📚  ";
+}
+.category-date:before{
+  content:"🗓️  ";
+}
+.category-number:before{
+  content:"🔢  ";
+}
+.category-color:before{
+  content:"🎨  ";
+}
+.category-games:before{
+  content:"🃏  ";
+}
+.category-kingdom:before{
+  content:"🏰  ";
+}
+.category-spiritual:before{
+  content:"⛪  ";
+}
+.category-family:before{
+  content:"👪  ";
+}
+.category-reflective-light:before{
+  content:"✨ ";
+}
+.category-person:before{
+  content:"🧍🏼‍♀️  ";
+}
+.category-alcohol:before{
+  content:"🍷  ";
+}
+.category-elements:before{
+  content:"🌳  ";
+}
+.category-secrets:before{
+  content:"🤐  ";
+}
+.category-hiding:before{
+  content:"🥸  ";
+}
+.category-explicit:before{
+  content:"⛔  ";
+}
+.category-NYC:before{
+  content:"🗽  ";
+}
+.category-UK:before{
+  content:"🇬🇧  ";
+}
+.category-place:before{
+  content:"📍  ";
+}
+.category-transportation:before{
+  content:"🚕  ";
+}
+.category-reflective-light:before{
+  content:"✨  ";
+}
+.category-spiritual:before{
+  content:"⛪  ";
+}
+.category-body:before{
+  content:"👄  ";
+}
+.category-space:before{
+  content:"🪐  ";
+}
+.category-midnights:before{
+  content:"🌌  ";
+}
+.category-new:before{
+  content: "🆕 ";
+}
+.category-update:before{
+  content:"⬅️ ";
+}
+
+.category-color-0.selected{
+  background-color: rgb(151, 58, 168, 0.7);
+  border: rgb(151, 58, 168, 0.7) solid 2px!important;
+  color: white;
+}
+.category-color-0{
+  background-color: #fff;
+  color: rgb(151, 58, 168, 0.7);
+  border: rgb(151, 58, 168, 0.7) solid 2px!important;
+}
+
+.category-color-1.selected{
+  background-color: rgb(28, 136, 199, 0.7);
+  border: rgb(28, 136, 199, 0.7) solid 2px!important;
+  color: white;
+}
+.category-color-1{
+  background-color: #fff;
+  color: rgb(28, 136, 199, 0.7);
+  border: rgb(28, 136, 199, 0.7) solid 2px!important;
+}
+
+.category-color-2.selected{
+  background-color: rgb(187, 162, 81, 0.8);
+  border: rgb(187, 162, 81, 0.8) solid 2px!important;
+  color: white;
+}
+.category-color-2{
+  background-color: #fff;
+  color: rgb(187, 162, 81, 0.8);
+  border: rgb(187, 162, 81, 0.8) solid 2px!important;
+}
+
+
+.category-color-3.selected{
+  background-color: rgba(240, 128, 225, 0.7);
+  border: rgb(240, 128, 225, 0.7) solid 2px!important;
+  color: white;
+}
+.category-color-3{
+  background-color: #fff;
+  color: rgb(240, 128, 225, 0.7);
+  border: rgb(240, 128, 225, 0.7) solid 2px!important;
+}
+
+.category-color-4.selected{
+  background-color: rgb(202, 15, 46,0.7);
+  border: rgb(202, 15, 46,0.7) solid 2px!important;
+  color: white;
+}
+.category-color-4{
+  background-color: #fff;
+  color: rgb(202, 15, 46,0.7);
+  border: rgb(202, 15, 46,0.7) solid 2px!important;
+}
+
+.category-color-5.selected{
+  background-color: rgb(34, 34, 34,0.7);
+  border: rgb(34, 34, 34,0.7) solid 2px!important;
+  color: white;
+}
+.category-color-5{
+  background-color: #fff;
+  color: rgb(34, 34, 34,0.7);
+  border: rgb(34, 34, 34,0.7) solid 2px!important;
+}
+
+.category-color-6.selected{
+  background-color: rgb(241, 101, 41, 0.7);
+  border: rgb(241, 101, 41, 0.7) solid 2px!important;
+  color: white;
+}
+.category-color-6{
+  background-color: #fff;
+  color: rgb(241, 101, 41, 0.7);
+  border: rgb(241, 101, 41, 0.7) solid 2px!important;
+}
+
+.category-color-7.selected{
+  background-color: rgb(75, 143, 76, 0.7);
+  border: rgb(75, 143, 76, 0.7) solid 2px!important;
+  color: white;
+}
+.category-color-7{
+  background-color: #fff;
+  color: rgb(75, 143, 76, 0.7);
+  border: rgb(75, 143, 76, 0.7) solid 2px!important;
+}
+
+.category-color-100.selected{
+  background-color: rgb(75, 143, 76, 0.7);
+  border: rgb(75, 143, 76, 0.7) solid 2px!important;
+  color: white;
+}
+.category-color-100{
+  background-color: #fff;
+  color: rgb(75, 143, 76, 0.7);
+  border: rgb(75, 143, 76, 0.7) solid 2px!important;
+}
+
+.category-color-queer.selected{
+  background-image: linear-gradient(to left,rgba(255,150,246,.8),rgba(91,149,213,.8));
+  border: rgba(213, 150, 255, 0.8) solid 2px!important;
+  color: white;
+}
+.category-color-queer{
+  background:white;
+  border: rgba(255,150,246,.8) solid 2px!important;
+  color:rgba(91,149,213,.8);
+}
+
+.category-midnights.selected{
+  background-image: linear-gradient(to left,rgba(91, 29, 223, 0.8),rgba(166, 91, 213, 0.8));
+  border: rgba(91, 29, 223, 0.8) solid 2px!important;
+}
+.category-midnights{
+  background:white;
+  border: rgba(91, 29, 223, 0.8) solid 2px!important;
+  color:rgba(166, 91, 213, 0.8);
+}
+
+.lyric-header-text {
+  color: white;
+  text-shadow: 0.8px 0.8px 0.8px rgb(0, 0, 0);
+}
+
 .midnights-moon {
   background-image: url(https://i0.wp.com/lunasociety.org/wp-content/uploads/2015/11/cropped-Full-Moon-Flat.png);
 }

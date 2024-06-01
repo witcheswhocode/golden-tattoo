@@ -4,10 +4,12 @@ import Modal from "./components/Modal";
 import { TableRow } from "./components/DataTable";
 
 const LyricsTable: React.FC = () => {
+  const [selectedWord, setSelectedWord] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<ModalData[] | null>(null);
   const [tableRows, setTableRows] = useState<TableRow[] | null>(null);
 
   const openModal = (item: TableRow) => {
+    setSelectedWord(item.word);
     fetch(`http://localhost:3001/getLyrics/${item.wordid}`)
       .then((response) => response.json())
       .then((data) => setSelectedItem(data.data))
@@ -22,18 +24,19 @@ const LyricsTable: React.FC = () => {
     const apiUrl =
       process.env.NODE_ENV === "production"
         ? "https://golden-tattoo-a7c279f70d6d.herokuapp.com/"
-        : "http://localhost:3001";
+        : "http://localhost:3001/";
 
-    fetch(`${apiUrl}/words`)
+    fetch(`${apiUrl}words`)
       .then((response) => response.json())
       .then((data) => setTableRows(data))
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 md:w-5/6">
+      <p className="text-sm text-center p-2 mb-4">Explore Taylor Swift's lyrics by clicking on the table and filters. The data was collected from multiple sources, learn more about the data.</p>
       {tableRows && <DataTable data={tableRows} openModal={openModal} />}
-      {selectedItem && <Modal data={selectedItem} onClose={closeModal} />}
+      {selectedItem && <Modal data={selectedItem} word={selectedWord} onClose={closeModal} />}
     </div>
   );
 };
