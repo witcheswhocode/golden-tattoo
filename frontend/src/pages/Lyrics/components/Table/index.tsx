@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { TableRow } from "../DataTable";
+import { useTheme } from "src/components/ThemeContext";
 
 interface TableProps {
   data: TableRow[];
@@ -7,6 +8,7 @@ interface TableProps {
   headerClick: (value: string) => void;
 }
 const Table: React.FC<TableProps> = (props: TableProps) => {
+  const { theme } = useTheme();
   const handleOpenModal = (item: TableRow) => {
     props.openModal(item);
   };
@@ -16,7 +18,7 @@ const Table: React.FC<TableProps> = (props: TableProps) => {
   };
 
   return (
-    <table className="min-w-full border border-gray-300">
+    <table className={`min-w-full border bg-${theme}-backgroundContent border-${theme}-button`}>
       <thead>
         <tr>
           <th
@@ -35,13 +37,15 @@ const Table: React.FC<TableProps> = (props: TableProps) => {
         </tr>
       </thead>
       <tbody>
-        {props.data.map((item) => (
+        {props.data.map((item, index) => (
           <tr
             key={item.wordid}
             data-songcount={item.songcount}
             data-word={item.word}
             onClick={() => handleOpenModal(item)}
-            className="cursor-pointer"
+            className={`cursor-pointer ${
+              index % 2 === 0 ? `bg-${theme}-backgroundContentSecondary` : "bg-white"
+            }`}
           >
             <td className="border-b px-2 py-1">{item.word}</td>
             <td className="border-b text-center">{item.songcount}</td>

@@ -156,7 +156,7 @@ module.exports = {
           background: "bg-gradient-to-r from-lover-pink to-lover-blue",
           text: "white",
           backgroundContent: "#e2f8ff",
-          backgroundContentSecondary: "#e2f8ff",
+          backgroundContentSecondary: "#d5c6ff80",
           textContent: "#ff38a7",
           borderContent: "border border-lover-textContent",
           button: "#ff38a7",
