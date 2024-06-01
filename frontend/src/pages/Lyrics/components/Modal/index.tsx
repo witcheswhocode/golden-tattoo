@@ -54,7 +54,7 @@ const Modal: React.FC<ModalProps> = ({ data, word, onClose }) => {
         className="bg-black opacity-50 fixed inset-0"
         onClick={onClose}
       ></div>
-      <div className="bg-white w-1/2 h-full overflow-scroll md:h-5/6 p-4 rounded shadow-lg z-10">
+      <div className="bg-white md:w-1/2 h-full overflow-scroll md:h-5/6 p-4 rounded shadow-lg z-10">
         <div className="flex justify-between w-full border-b">
           <div className="ml-8 pb-2 text-3xl">{word}</div>
           <>
