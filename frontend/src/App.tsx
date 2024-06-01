@@ -46,7 +46,7 @@ function ThemeWrapper() {
   };
 
   return (
-    <div className={`bg-${theme}-background flex flex-col min-h-screen`}>
+    <div className={`${['lover'].includes(theme) ? `bg-gradient-to-r from-lover-pink to-lover-blue` : `bg-${theme}-background`} flex flex-col min-h-screen`}>
       <Router>
         <Header />
         <ThemeToggle />

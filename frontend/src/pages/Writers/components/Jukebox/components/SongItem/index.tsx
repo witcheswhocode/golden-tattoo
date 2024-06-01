@@ -12,7 +12,7 @@ function SongItem(props: SongItemProps) {
 
   return (
     <div
-      className={`mb-1 flex mx-auto bg-white pb-1 overflow-hidden ${
+      className={`bg-white mb-1 flex mx-auto p-1 mt-2 w-11/12 overflow-hidden ${
         isHeightIncreased
           ? "rounded-lg transition-border-radius  ease-in"
           : "rounded-full transition-border-radius ease-out"

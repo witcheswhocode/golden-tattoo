@@ -17,10 +17,10 @@ function AlbumInfo(props: AlbumInfoProps) {
   const { theme } = useTheme();
 
   return (
-    <div className={`flex flex-col justify-center items-center overflow-hidden w-full bg-${theme}-backgroundOther`}>
-      <p className={`text-${theme}-text text-lg`}>{props.album.replace("Taylor's Version", "TV")}</p>
-      <p className={`text-${theme}-text text-xs m-1`}>Released {props.released}</p>
-      <p className={`text-${theme}-text text-xs m-1`}>
+    <div className={`flex flex-col justify-center items-center overflow-hidden w-full bg-${theme}-backgroundContent shadow-${theme} z-1`}>
+      <p className={`text-${theme}-textContent text-lg`}>{props.album.replace("Taylor's Version", "TV").toUpperCase()}</p>
+      <p className={`text-${theme}-textContent text-xs m-1`}>Released {props.released}</p>
+      <p className={`text-${theme}-textContent text-xs m-1`}>
         {props.totalwriters} Total Writers | {props.totalselfwritten} Taylor
         self wrote
       </p>

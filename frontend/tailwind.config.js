@@ -13,10 +13,12 @@ module.exports = {
       transitionProperty: {
         "border-radius": "border-radius",
         width: "width",
-        'max-height': 'max-height',
+        "max-height": "max-height",
       },
 
       boxShadow: {
+        lover: "10px 7px 41px 7px #e838a7a6",
+
         custom: "10px 10px 0px 0px rgba(0,0,0,0.75)",
         "stars-1": "var(--stars-1)",
         "stars-2": "var(--stars-2)",
@@ -111,9 +113,14 @@ module.exports = {
           redtv: "#952e2b",
           _1989tv: "blue",
           thetorturedpoetsdepartment: "",
-          other: "#952e2b", single: "#952e2b", null: "#952e2b"
+          other: "#952e2b",
+          single: "#952e2b",
+          null: "#952e2b",
         },
         // themes
+        "lover-pink": "#ff96f6",
+        "lover-blue": "#5b95d5",
+
         bloodmoon: {
           1: "black",
           2: "transparent",
@@ -138,33 +145,38 @@ module.exports = {
         mommyAlbumBorder: "#d39a1e", // Using direct color value
         mommyHeaderText: "#e0dbc0", // Using direct color value
         theme: {
-          background: "white",
-          backgroundOther: "purple",
+          background: "bg-gradient-to-r from-black to-white",
+          backgroundContent: "purple",
           text: "black",
           main: "#FFA500",
           secondary: "#FFA500",
           third: "#FFA500",
         },
         lover: {
-          background: "#09071a",
-          backgroundOther: "purple",
+          background: "bg-gradient-to-r from-lover-pink to-lover-blue",
           text: "white",
+          backgroundContent: "#e2f8ff",
+          backgroundContentSecondary: "#e2f8ff",
+          textContent: "#ff38a7",
+          borderContent: "border border-lover-textContent",
+          button: "#ff38a7",
+          buttonText: "white",
           main: "#FFFFFF",
           secondary: "forestgreen",
           third: "yellow",
         },
         folklore: {
           background: "#09071a",
-          backgroundOther: "purple",
+          backgroundContent: "purple",
           text: "black",
           main: "#FFFFFF",
           secondary: "forestgreen",
-          backgroundOther: "purple",
+          backgroundContent: "purple",
           third: "yellow",
         },
         reputation: {
           background: "#000000",
-          backgroundOther: "purple",
+          backgroundContent: "purple",
           text: "white",
           main: "lightblue",
           secondary: "#FFA500",
@@ -172,7 +184,7 @@ module.exports = {
         },
         midnights: {
           background: "#000000",
-          backgroundOther: "purple",
+          backgroundContent: "purple",
           text: "black",
           main: "#FFA500",
           secondary: "#FFA500",

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AlbumHeader from "./components/AlbumHeader";
 import SongItem from "./components/SongItem";
 import RowOfEmojis from "../RowOfEmojis";
+import { useTheme } from "src/components/ThemeContext";
 
 export interface WritersProps {
   alb: string | null;
@@ -30,6 +31,7 @@ export interface WritersData {
 }
 
 function Jukebox(props: WritersData) {
+  const { theme } = useTheme();
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc"); // Track sorting order
 
   const createDiv = (
@@ -48,7 +50,7 @@ function Jukebox(props: WritersData) {
       (released !== null ? `-${released}` : "") +
       (count !== null ? `-${count}` : "");
 
-    if (released && released !== 'null') {
+    if (released && released !== "null") {
       return (
         <section
           id="writers-section"
@@ -66,6 +68,9 @@ function Jukebox(props: WritersData) {
             spotify={spotify}
             other={other}
           />
+          <div 
+          className={`z-50 py-4 bg-${theme}-backgroundContent`}>
+
           {props.data
             .filter((item) => item.albumshort === albumshort)
             .map((filteredItem) => (
@@ -74,6 +79,7 @@ function Jukebox(props: WritersData) {
                 writers={filteredItem.writers}
               />
             ))}
+          </div>
           <RowOfEmojis />
         </section>
       );
