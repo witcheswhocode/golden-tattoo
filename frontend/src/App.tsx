@@ -45,7 +45,7 @@ function ThemeWrapper() {
   };
 
   return (
-    <div className={`bg-${theme}-background min-h-screen`}>
+    <div className={`bg-${theme}-background flex flex-col min-h-screen`}>
       <Router>
         <Header />
         <ThemeToggle />
