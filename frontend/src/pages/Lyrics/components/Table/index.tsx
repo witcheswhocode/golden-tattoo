@@ -20,18 +20,18 @@ const Table: React.FC<TableProps> = (props: TableProps) => {
       <thead>
         <tr>
           <th
-            className="border-b cursor-pointer"
+            className="w-1/2 border-b cursor-pointer text-sm"
             onClick={() => handleHeaderClick("word")}
           >
             word
           </th>
           <th
-            className="border-b cursor-pointer"
+            className="border-b cursor-pointer text-sm"
             onClick={() => handleHeaderClick("songcount")}
           >
-            song count
+            # of songs
           </th>
-          <th className="border-b">categories</th>
+          <th className="border-b text-sm">categories</th>
         </tr>
       </thead>
       <tbody>
@@ -43,9 +43,9 @@ const Table: React.FC<TableProps> = (props: TableProps) => {
             onClick={() => handleOpenModal(item)}
             className="cursor-pointer"
           >
-            <td className="border-b">{item.word}</td>
-            <td className="border-b">{item.songcount}</td>
-            <td className="border-b">
+            <td className="border-b pl-2">{item.word}</td>
+            <td className="border-b text-center">{item.songcount}</td>
+            <td className="border-b text-center">
               {item.categories?.split("|").map((cat, index) => (
                 <span key={index} className={`category-${cat.trim()}`}></span>
               ))}
