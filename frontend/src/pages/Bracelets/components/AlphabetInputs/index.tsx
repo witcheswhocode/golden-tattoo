@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useTheme } from "src/components/ThemeContext";
 
 interface AlphabetInputProps {
@@ -31,20 +31,34 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
       [name]: value,
     }));
   };
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
-  const handleSubmit = () => {
-    // Convert inputValues object to URLSearchParams
+  const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setSelectedOptions((prev) =>
+      prev.includes(value)
+        ? prev.filter((option) => option !== value)
+        : [...prev, value]
+    );
+  };
+
+  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.target as HTMLFormElement);
+
     const params = new URLSearchParams();
-
-    for (const key in inputValues) {
-      const value = inputValues[key].toString().toLowerCase();
-      const numericValue = parseFloat(value);
-
+    formData.forEach((value, key) => {
+      const numericValue = parseFloat(value as string);
       params.append(
-        key.toString().toLowerCase(),
-        isNaN(numericValue) ? value : numericValue.toString()
+        key.toLowerCase(),
+        isNaN(numericValue)
+          ? (value as string).toLowerCase()
+          : numericValue.toString()
       );
-    }
+    });
+
+    // Append selected checkboxes values
+    selectedOptions.forEach((option) => params.append("options", option));
 
     const apiUrl =
       process.env.NODE_ENV === "production"
@@ -161,10 +175,11 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
             The results will help you generate Taylor Swift related bracelet
             ideas.
           </p>
-          <div
+          <form
+            onSubmit={handleFormSubmit}
             className={`bg-${theme}-backgroundContent rounded-lg border-solid border-2 border-${theme}-button shadow-${theme} mt-8 p-4`}
           >
-            <div className={`grid grid-cols-8 gap-2`}>
+            <div className={`grid grid-cols-6 gap-2`}>
               {Array.from({ length: 26 }, (_, i) => {
                 const letter = String.fromCharCode(65 + i);
                 return (
@@ -183,17 +198,29 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
                   </div>
                 );
               })}
+              <div className="flex justify-cemter items-center pt-8 py-2">
+                <label className="mr-2 flex justify-center items-center">
+                  explicit
+                </label>
+                <input
+                  type="checkbox"
+                  id="explicit"
+                  name="options"
+                  value="explicit"
+                  className="mr-1"
+                  onChange={handleCheckboxChange}
+                />
+              </div>
             </div>
             <div className="flex justify-center items-center pt-2 mt-2">
               <button
-                type="button"
-                onClick={handleSubmit}
-                className={`bg-${theme}-button text-white px-4 py-2 rounded`}
+                type="submit"
+                className={`bg-${theme}-button text-${theme}-buttonText px-4 py-2 rounded`}
               >
                 Submit
               </button>
             </div>
-          </div>
+          </form>
         </div>
       ) : (
         <div
@@ -205,7 +232,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
             <button
               type="button"
               onClick={handleReset}
-              className="bg-blue-500 text-white px-4 py-2 rounded"
+              className={`bg-${theme}-button text-${theme}-buttonText px-4 py-2 rounded`}
             >
               ⬅️ Go back and start over
             </button>
