@@ -7,6 +7,13 @@ export default function RowOfEmojis(props: any) {
       <span className={`${theme}-rowof-emoji`} />
       <span className={`${theme}-rowof-emoji`} />
       <span className={`${theme}-rowof-emoji`} />
+      <span className={`${theme}-rowof-emoji`} />
+      <span className={`${theme}-rowof-emoji`} />
+      <span className={`${theme}-rowof-emoji`} />
+      <span className={`${theme}-rowof-emoji hidden md:contents`} />
+      <span className={`${theme}-rowof-emoji hidden md:contents`} />
+      <span className={`${theme}-rowof-emoji hidden lg:contents`} />
+      <span className={`${theme}-rowof-emoji hidden lg:contents`} />
     </div>
   );
 }
