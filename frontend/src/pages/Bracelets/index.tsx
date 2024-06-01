@@ -2,10 +2,12 @@ import React, { useState, useRef } from "react";
 import BraceletIdeas from "./components/BraceletIdeas";
 import AlphabetInputs from "./components/AlphabetInputs";
 import Sparkles from "src/components/Sparkles";
+import { useTheme } from "src/components/ThemeContext";
 
 type LetterCount = { [letter: string]: number };
 
 const Bracelets = () => {
+  const { theme } = useTheme();
   const [combinationPossibilities, setCombinationPossibilities] = useState<
     string[] | null
   >(null);
@@ -26,7 +28,7 @@ const Bracelets = () => {
   const [showSparkles, setShowSparkles] = useState<boolean>(false);
 
   return (
-    <div className="container mx-auto mt-8">
+    <div className={`container mx-auto mt-8`}>
       <h1 className="text-2xl font-bold text-center">
         Bracelet Idea Generator
       </h1>

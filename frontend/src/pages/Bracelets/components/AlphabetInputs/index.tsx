@@ -18,7 +18,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
   handleMostBraceletCombinationPossibilities,
   setInputValues,
   resultsRef,
-  setShowSparkles
+  setShowSparkles,
 }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isFormVisible, setIsFormVisible] = useState(true);
@@ -149,7 +149,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
   }, []);
 
   return (
-    <div className="container mx-auto mt-2 p-4 bg-red md:w-3/4">
+    <div className={`container mx-auto mt-2 p-4 bg-red md:w-3/4`}>
       {!isSubmitted ? (
         <div
           className={`transition-opacity duration-300 ${
@@ -161,30 +161,34 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
             The results will help you generate Taylor Swift related bracelet
             ideas.
           </p>
-          <div className="grid grid-cols-10 gap-2 mt-8">
-            {Array.from({ length: 26 }, (_, i) => {
-              const letter = String.fromCharCode(65 + i);
-              return (
-                <div key={letter} className="flex flex-col items-center">
-                  <label htmlFor={letter} className="mb-1">
-                    {letter}
-                  </label>
-                  <input
-                    type="text"
-                    id={letter.toLowerCase()}
-                    name={letter.toLowerCase()}
-                    onChange={handleInputChange}
-                    value={inputValues[letter.toLowerCase()] || ""}
-                    className="border rounded w-8 h-8 p-2 text-center focus:ring focus:ring-blue-200 focus:outline-none"
-                  />
-                </div>
-              );
-            })}
-            <div className="mt-4 w-full">
+          <div
+            className={`bg-${theme}-backgroundContent rounded-lg border-solid border-2 border-${theme}-button shadow-${theme} mt-8 p-4`}
+          >
+            <div className={`grid grid-cols-8 gap-2`}>
+              {Array.from({ length: 26 }, (_, i) => {
+                const letter = String.fromCharCode(65 + i);
+                return (
+                  <div key={letter} className="flex flex-col items-center">
+                    <label htmlFor={letter} className="mb-1">
+                      {letter}
+                    </label>
+                    <input
+                      type="text"
+                      id={letter.toLowerCase()}
+                      name={letter.toLowerCase()}
+                      onChange={handleInputChange}
+                      value={inputValues[letter.toLowerCase()] || ""}
+                      className="border rounded w-8 h-8 p-2 text-center focus:ring focus:ring-blue-200 focus:outline-none"
+                    />
+                  </div>
+                );
+              })}
+            </div>
+            <div className="flex justify-center items-center pt-2 mt-2">
               <button
                 type="button"
                 onClick={handleSubmit}
-                className="bg-blue-500 text-white px-4 py-2 rounded"
+                className={`bg-${theme}-button text-white px-4 py-2 rounded`}
               >
                 Submit
               </button>
@@ -198,13 +202,13 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
           } ${isSubmitted ? "block" : "hidden"}`}
         >
           <div className="flex">
-              <button
-                type="button"
-                onClick={handleReset}
-                className="bg-blue-500 text-white px-4 py-2 rounded"
-              >
-                ⬅️ Go back and start over
-              </button>
+            <button
+              type="button"
+              onClick={handleReset}
+              className="bg-blue-500 text-white px-4 py-2 rounded"
+            >
+              ⬅️ Go back and start over
+            </button>
           </div>
         </div>
       )}
