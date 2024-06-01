@@ -4,9 +4,10 @@ import HtmlReactParser from "html-react-parser";
 
 interface ModalProps {
   data: ModalData[];
+  word: string | null;
   onClose: () => void;
 }
-const Modal: React.FC<ModalProps> = ({ data, onClose }) => {
+const Modal: React.FC<ModalProps> = ({ data, word, onClose }) => {
   const addCategoryNote =
     data[0].categories &&
     (data[0].categories.includes("parallels") ||
@@ -54,28 +55,30 @@ const Modal: React.FC<ModalProps> = ({ data, onClose }) => {
         onClick={onClose}
       ></div>
       <div className="bg-white w-1/2 h-full overflow-scroll md:h-5/6 p-4 rounded shadow-lg z-10">
-        <div className="flex justify-start items-center text-lg">Word</div>
-        <div className="flex justify-end">
-          <span
-            data-testid="modal-close"
-            className="cursor-pointer"
-            onClick={onClose}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 text-gray-600 hover:text-gray-800"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+        <div className="flex justify-between w-full border-b">
+          <div className="ml-8 pb-2 text-3xl">{word}</div>
+          <>
+            <span
+              data-testid="modal-close"
+              className="cursor-pointer"
+              onClick={onClose}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 text-gray-600 hover:text-gray-800"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </span>
+          </>
         </div>
         <div className="mb-10 p-4">{result}</div>
         {addCategoryNote && (

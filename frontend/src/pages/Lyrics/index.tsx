@@ -4,10 +4,12 @@ import Modal from "./components/Modal";
 import { TableRow } from "./components/DataTable";
 
 const LyricsTable: React.FC = () => {
+  const [selectedWord, setSelectedWord] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<ModalData[] | null>(null);
   const [tableRows, setTableRows] = useState<TableRow[] | null>(null);
 
   const openModal = (item: TableRow) => {
+    setSelectedWord(item.word);
     fetch(`http://localhost:3001/getLyrics/${item.wordid}`)
       .then((response) => response.json())
       .then((data) => setSelectedItem(data.data))
@@ -33,7 +35,7 @@ const LyricsTable: React.FC = () => {
   return (
     <div className="container mx-auto p-4 md:w-5/6">
       {tableRows && <DataTable data={tableRows} openModal={openModal} />}
-      {selectedItem && <Modal data={selectedItem} onClose={closeModal} />}
+      {selectedItem && <Modal data={selectedItem} word={selectedWord} onClose={closeModal} />}
     </div>
   );
 };
