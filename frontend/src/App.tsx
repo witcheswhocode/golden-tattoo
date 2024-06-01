@@ -11,7 +11,6 @@ import { ThemeProvider, useTheme } from "./components/ThemeContext";
 import ShimmeringStars from "./components/ShimmeringStars";
 
 function App() {
-
   return (
     <ThemeProvider>
       <ThemeWrapper />
@@ -26,21 +25,23 @@ function ThemeWrapper() {
     const { theme, toggleTheme } = useTheme();
 
     const items = ["theme", "lover", "folklore", "reputation", "midnights"];
-    
+
     const dropdownItems = items.map((item) => ({
       value: item,
     }));
 
-    function handleThemeChange(theme:any) {
+    function handleThemeChange(theme: any) {
       toggleTheme(theme);
     }
 
     return (
-      <Dropdown
-        items={dropdownItems}
-        theme={theme}
-        handleThemeChange={handleThemeChange}
-      />
+      <div className="mx-4 my-2 md:w-3/4 md:m-auto flex justify-start items-start">
+        <Dropdown
+          items={dropdownItems}
+          theme={theme}
+          handleThemeChange={handleThemeChange}
+        />
+      </div>
     );
   };
 
@@ -52,9 +53,8 @@ function ThemeWrapper() {
         <Navbar />
         <AppContent />
         <Footer />
-      <ShimmeringStars />
+        <ShimmeringStars />
       </Router>
-
     </div>
   );
 }
