@@ -69,6 +69,32 @@
   }
 }
 
+.typewriter-container {
+  @apply inline-block;
+}
+
+.typewriter-text {
+  @apply text-2xl font-mono;
+}
+
+.typewriter-cursor {
+  @apply text-2xl font-mono;
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
+
+
+
 .theme-single-emoji:before{
   content: "🌃";
 }
