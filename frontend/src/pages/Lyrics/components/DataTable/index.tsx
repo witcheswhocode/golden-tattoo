@@ -18,6 +18,8 @@ export interface TableRow {
 export interface ModalData {
   lyricid: number;
   lyric: string;
+  lyricbefore: string;
+  lyricafter: string;
   subtext: string;
   lyrichtml: string;
   categories: string;

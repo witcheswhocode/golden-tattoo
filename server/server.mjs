@@ -12,22 +12,24 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const apiUrl =
-      process.env.NODE_ENV === "production"
-        ? "https://golden-tattoo-a7c279f70d6d.herokuapp.com/"
-        : "http://localhost:3000";
+  process.env.NODE_ENV === "production"
+    ? "https://golden-tattoo-a7c279f70d6d.herokuapp.com/"
+    : "http://localhost:3000";
 const port = process.env.PORT || 3001; // Use 3001 as fallback
 
 app.use(cors());
-app.use(cors({
-  origin: apiUrl, // Replace with your frontend URL
-  optionsSuccessStatus: 200 // Some legacy browsers choke on 204
-}));
+app.use(
+  cors({
+    origin: apiUrl, // Replace with your frontend URL
+    optionsSuccessStatus: 200, // Some legacy browsers choke on 204
+  })
+);
 
-app.use(express.json())
+app.use(express.json());
 
-const db = new sqlite3.Database("./server/TS_liz.db");
+const db = new sqlite3.Database("./server/TS_liz_new.db");
 
-app.get('/words', (req, res) => {
+app.get("/words", (req, res) => {
   db.all("select * from word", (err, rows) => {
     if (err) {
       res.status(500).json({ error: err.message });
@@ -39,16 +41,31 @@ app.get('/words', (req, res) => {
 
 app.get("/getLyrics/:id", (req, res, next) => {
   var id = req.params.id;
-
-  var sql =
-    "select l.lyricid as lyricid,l.lyric as lyric,l.subtext as subtext,l.lyrichtml as lyrichtml,w.categories";
-  sql =
-    sql +
-    ",a.album as album,a.albumshort as albumshort,a.alb as alb,s.song as song ";
-  sql = sql + "from lyrics l join album a on a.albumid = l.albumid ";
-  sql = sql + "join word w on w.wordid = l.wordid ";
-  sql = sql + "join song s on s.songid = l.songid ";
-  sql = sql + "where l.wordid = " + id + " order by a.albumid desc";
+  console.log("getting", id);
+  const sql = `
+  SELECT 
+  l.lyricid AS lyricid,
+  l.lyric AS lyric,
+  l.lyricbefore AS lyricbefore,
+  l.lyricafter AS lyricafter,
+  l.subtext AS subtext,
+  l.lyrichtml AS lyrichtml,
+  w.categories,
+  a.album AS album,
+  a.albumshort AS albumshort,
+  a.alb AS alb,
+  s.song AS song 
+FROM 
+  lyrics l 
+  JOIN album a ON a.albumid = l.albumid 
+  JOIN word w ON w.wordid = l.wordid 
+  JOIN song s ON s.songid = l.songid 
+WHERE 
+  l.wordid = 43
+ORDER BY 
+  CASE WHEN a.albumid > 99 THEN 1 ELSE 0 END, 
+  a.albumid DESC
+`;
   var params = [];
   db.all(sql, params, (err, rows) => {
     if (err) {
@@ -61,6 +78,7 @@ app.get("/getLyrics/:id", (req, res, next) => {
     });
   });
 });
+
 app.get("/getWriters", (req, res, next) => {
   const id = req.params.id;
 

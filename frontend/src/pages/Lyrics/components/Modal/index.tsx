@@ -12,6 +12,7 @@ const Modal: React.FC<ModalProps> = ({ data, word, onClose }) => {
     data[0].categories &&
     (data[0].categories.includes("parallels") ||
       data[0].categories.includes("queer"));
+      console.log(data)
   const createDiv = (albumshort: string, alb: string, song: string) => (
     <div key={`${albumshort}-${song}`}>
       <div
@@ -26,10 +27,12 @@ const Modal: React.FC<ModalProps> = ({ data, word, onClose }) => {
         .filter((item) => item.albumshort === albumshort && item.song === song)
         .map((filteredItem) => (
           <div
-            className="text-center text-m mb-8"
+            className="text-center mb-8"
             key={`${filteredItem.lyric}-${filteredItem.lyricid}`}
-          >
-            {HtmlReactParser(filteredItem.lyric)}
+          > 
+            <p className="text-xs py-1 font-light">{filteredItem.lyricbefore && HtmlReactParser(filteredItem.lyricbefore)}</p>
+            <p className="text-sm py-2">{HtmlReactParser(filteredItem.lyric)}</p>
+            <p className="text-xs py-1 font-light">{filteredItem.lyricafter && HtmlReactParser(filteredItem.lyricafter)}</p>
           </div>
         ))}
     </div>
