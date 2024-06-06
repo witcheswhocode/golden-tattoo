@@ -7,7 +7,7 @@ const Navbar: React.FC = () => {
   const { theme } = useTheme();
 
   return (
-    <nav className="p-4 text-white">
+    <nav className="p-4 text-white z-10">
       <div className="container mx-auto flex justify-center">
         <ul className="flex space-x-4">
           <li>
