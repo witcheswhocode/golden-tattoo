@@ -10,6 +10,7 @@ const Navbar: React.FC = () => {
     <nav className="p-4 text-white z-10">
       <div className="container mx-auto flex justify-center">
         <ul className="flex space-x-4">
+          <SingleEmoji />
           <li>
             <NavLink
               to="/bracelets"
@@ -42,6 +43,7 @@ const Navbar: React.FC = () => {
               writers
             </NavLink>
           </li>
+          <SingleEmoji />
         </ul>
       </div>
     </nav>
