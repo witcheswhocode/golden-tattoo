@@ -9,7 +9,7 @@ const generateStarPositions = (numStars: number, viewportWidth: number, viewport
   for (let i = 0; i < numStars; i++) {
     const top = getRandomValue(0, viewportHeight);
     const left = getRandomValue(0, viewportWidth);
-    const delay = getRandomDelay(0, 2000); // Delay between 0 and 2000ms
+    const delay = getRandomDelay(500, 2500); // Delay between 0 and 2000ms
     starPositions.push({ top, left, delay });
   }
   return starPositions;
@@ -23,7 +23,7 @@ const Stars3: React.FC = () => {
 
   useEffect(() => {
     const updateStarPositions = () => {
-      const positions = generateStarPositions(50, viewportWidth, viewportHeight); // Generate 50 stars
+      const positions = generateStarPositions(150, viewportWidth, viewportHeight); // Generate 50 stars
       setStarPositions(positions);
     };
 
@@ -44,7 +44,7 @@ const Stars3: React.FC = () => {
       {starPositions.map((position, index) => (
         <div
           key={index}
-          className={`absolute w-1 h-1 bg-white rounded-full animate-glowing-stars ${
+          className={`absolute w-0.5 h-0.5 bg-white rounded-full animate-glowing-stars ${
             theme === "midnights" ? "" : "hidden"
           }`}
           style={{

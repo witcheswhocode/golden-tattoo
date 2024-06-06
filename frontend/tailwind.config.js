@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require('tailwindcss/plugin');
 module.exports = {
   content: ["./src/**/*.{html,js,jsx,tsx,ts}", "./public/index.html"],
   variants: {
@@ -11,12 +12,12 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        folklore: ['"IM Fell DW Pica"', 'serif'],
-        red: ['Anton', 'sans-serif'],
-        reputation: ['UnifrakturMaguntia', 'cursive'],
-        lover: ['Satisfy', 'cursive'],
-        midnights: ['Monoton', 'cursive'],
-        mommy: ['Monoton', 'cursive'],
+        folklore: ['"IM Fell DW Pica"', "serif"],
+        red: ["Anton", "sans-serif"],
+        reputation: ["UnifrakturMaguntia", "cursive"],
+        lover: ["Satisfy", "cursive"],
+        midnights: ["Monoton", "cursive"],
+        mommy: ["Monoton", "cursive"],
         monoton: ["Monoton", "cursive"],
       },
       transitionProperty: {
@@ -153,7 +154,7 @@ module.exports = {
         theme: {
           background: "bg-gradient-to-r from-black to-white",
           backgroundContent: "purple",
-          text: "black",
+          text: "#625449",
           main: "#FFA500",
           secondary: "#FFA500",
           third: "#FFA500",
@@ -172,26 +173,26 @@ module.exports = {
           third: "yellow",
         },
         folklore: {
-          background: "#09071a",
+          //background: "#09071a",
           backgroundContent: "purple",
-          text: "black",
+          text: "#2f4f4f",
           main: "#FFFFFF",
           secondary: "forestgreen",
           backgroundContent: "purple",
           third: "yellow",
         },
         reputation: {
-          background: "#000000",
+          //background: "#000000",
           backgroundContent: "purple",
-          text: "white",
+          text: "black",
           main: "lightblue",
           secondary: "#FFA500",
           third: "#FFA500",
         },
         midnights: {
-          background: "#000000",
+          background: "#09071a",
           backgroundContent: "purple",
-          text: "black",
+          text: "white",
           main: "#FFA500",
           secondary: "#FFA500",
           third: "#FFA500",
@@ -199,5 +200,24 @@ module.exports = {
       },
     },
   },
-  plugins: [require("@tailwindcss/aspect-ratio")],
+  plugins: [
+    require("@tailwindcss/aspect-ratio"),
+    plugin(function ({ addUtilities }) {
+      const newUtilities = {
+        ".bg-folklore-background": {
+          backgroundImage:
+            'linear-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0.6)), url("../public/assets/albums/folklore.png")',
+          backgroundPosition: "70% 0",
+          backgroundSize: "1000px",
+        },
+        '.bg-reputation-background': {
+          backgroundImage: 'linear-gradient(rgba(233, 233, 233, 0.8), rgba(233, 233, 233, 0.8)), url("../public/assets/albums/repbackground3.png")',
+          backgroundRepeat: 'repeat-y',
+          backgroundSize: 'contain',
+        },
+      };
+
+      addUtilities(newUtilities, ["responsive", "hover"]);
+    }),
+  ],
 };
