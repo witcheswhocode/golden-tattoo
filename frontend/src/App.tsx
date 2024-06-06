@@ -8,11 +8,13 @@ import LyricsTable from "./pages/Lyrics";
 import Navbar from "./components/Navbar";
 import Dropdown from "./components/Dropdown";
 import { ThemeProvider, useTheme } from "./components/ThemeContext";
+import { ThemeLoader } from "./components/ThemeContext/components/ThemeLoader";
 import ShimmeringStars from "./components/ShimmeringStars";
 
 function App() {
   return (
     <ThemeProvider>
+      <ThemeLoader />
       <ThemeWrapper />
     </ThemeProvider>
   );
@@ -46,7 +48,13 @@ function ThemeWrapper() {
   };
 
   return (
-    <div className={`${['lover'].includes(theme) ? `bg-gradient-to-r from-lover-pink to-lover-blue` : `bg-${theme}-background`} flex flex-col min-h-screen`}>
+    <div
+      className={`${
+        ["lover"].includes(theme)
+          ? `bg-gradient-to-r from-lover-pink to-lover-blue`
+          : `bg-${theme}-background`
+      } flex flex-col min-h-screen`}
+    >
       <Router>
         <Header />
         <ThemeToggle />

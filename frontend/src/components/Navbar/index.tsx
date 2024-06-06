@@ -14,7 +14,7 @@ const Navbar: React.FC = () => {
             <NavLink
               to="/bracelets"
               className={({ isActive }) =>
-                `hover:underline text-center text-${theme}-text ${isActive ? 'underline' : ''}`
+                `hover:underline text-center text-${theme}-text font-${theme} ${isActive ? 'underline' : ''}`
               }
             >
               bracelets
@@ -25,7 +25,7 @@ const Navbar: React.FC = () => {
             <NavLink
               to="/lyrics"
               className={({ isActive }) =>
-                `hover:underline text-center text-${theme}-text ${isActive ? 'underline' : ''}`
+                `hover:underline text-center text-${theme}-text font-${theme} ${isActive ? 'underline' : ''}`
               }
             >
               lyrics
@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
             <NavLink
               to="/writers"
               className={({ isActive }) =>
-                `hover:underline text-center text-${theme}-text ${isActive ? 'underline' : ''}`
+                `hover:underline text-center text-${theme}-text font-${theme} ${isActive ? 'underline' : ''}`
               }
             >
               writers

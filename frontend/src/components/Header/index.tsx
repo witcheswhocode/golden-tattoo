@@ -20,12 +20,12 @@ function Header(props: HeaderProps) {
         {theme === "theme" ? (
           <Typewriter text={"golden tattoo"} />
         ) : (
-          <span id="head-text" className={`text-${theme}-text`}>
+          <span id="head-text" className={`text-${theme}-text font-${theme}`}>
             golden
-            <span className={`${theme === "midnights" ? "" : "hidden"}`}>
+            <span className={`${theme === "midnights" ? "" : "hidden"} font-${theme}`}>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </span>
-            <span className={`${theme === "midnights" ? "" : "hidden"}`}>
+            <span className={`${theme === "midnights" ? "" : "hidden"} font-${theme}`}>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </span>{" "}
             tattoo

@@ -10,6 +10,15 @@ module.exports = {
   },
   theme: {
     extend: {
+      fontFamily: {
+        folklore: ['"IM Fell DW Pica"', 'serif'],
+        red: ['Anton', 'sans-serif'],
+        reputation: ['UnifrakturMaguntia', 'cursive'],
+        lover: ['Satisfy', 'cursive'],
+        midnights: ['Monoton', 'cursive'],
+        mommy: ['Monoton', 'cursive'],
+        monoton: ["Monoton", "cursive"],
+      },
       transitionProperty: {
         "border-radius": "border-radius",
         width: "width",
@@ -48,9 +57,6 @@ module.exports = {
       },
       gradients: {
         blood: ["var(--blood-moon-light-1)", "var(--blood-moon-light-2)"],
-      },
-      fontFamily: {
-        monoton: ["Monoton", "cursive"],
       },
       fontSize: {
         "2.5xl": "2.5rem",

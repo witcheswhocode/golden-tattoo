@@ -69,16 +69,8 @@
   }
 }
 
-.typewriter-container {
-  @apply inline-block;
-}
-
-.typewriter-text {
-  @apply text-2xl font-mono;
-}
 
 .typewriter-cursor {
-  @apply text-2xl font-mono;
   animation: blink 1s steps(1) infinite;
 }
 

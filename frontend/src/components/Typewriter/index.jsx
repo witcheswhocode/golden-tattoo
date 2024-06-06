@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import { useTheme } from "../ThemeContext";
 
 const Typewriter = ({ text, speed = 100 }) => {
-  const [displayedText, setDisplayedText] = useState('');
+  const { theme } = useTheme();
+  const [displayedText, setDisplayedText] = useState("");
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -14,11 +16,15 @@ const Typewriter = ({ text, speed = 100 }) => {
       return () => clearInterval(intervalId);
     }
   }, [index, text, speed]);
-
+  
   return (
-    <div className="typewriter-container">
-      <span className="typewriter-text">{displayedText}</span>
-      <span className="typewriter-cursor">|</span>
+    <div className="inline-block">
+      <span className={`text-4xl font-mono font-${theme}`}>
+        {displayedText}
+      </span>
+      <span className={`typewriter-cursor text-4xl font-mono font-${theme}`}>
+        |
+      </span>
     </div>
   );
 };
