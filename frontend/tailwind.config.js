@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-const plugin = require('tailwindcss/plugin');
+const plugin = require("tailwindcss/plugin");
 module.exports = {
   content: ["./src/**/*.{html,js,jsx,tsx,ts}", "./public/index.html"],
   variants: {
@@ -59,6 +59,11 @@ module.exports = {
       gradients: {
         blood: ["var(--blood-moon-light-1)", "var(--blood-moon-light-2)"],
       },
+      gradientColorStops: {
+        "bloodmoon-gradient": {
+          300: "300deg, var(--blood-moon-1) 10%, var(--blood-moon-2), var(--blood-moon-3), var(--blood-moon-4), transparent",
+        },
+      },
       fontSize: {
         "2.5xl": "2.5rem",
       },
@@ -69,16 +74,21 @@ module.exports = {
           "linear-gradient(300deg, var(--blood-moon-1) 10%, var(--blood-moon-2), var(--blood-moon-3), var(--blood-moon-4), transparent)",
       },
       keyframes: {
-        "animating-multiple-properties": {
+        "animating-bloodmoon-properties": {
           "0%": {
             transform: "translateY(40vh)",
             filter: "brightness(75%)",
             opacity: "20%",
           },
           "100%": {
-            transform: "translateY(10px)", // Corrected unit for consistency
+            transform: "translateY(10px)",
             opacity: "100%",
           },
+        },
+        bloodmoonAnimation: {
+          "0%": { backgroundPosition: "10% 0%" },
+          "50%": { backgroundPosition: "91% 100%" },
+          "100%": { backgroundPosition: "10% 0%" },
         },
         "glowing-stars": {
           "0%": { opacity: 0 },
@@ -89,10 +99,10 @@ module.exports = {
         },
       },
       animation: {
-        "animating-multiple-properties":
-          "animating-multiple-properties 2s  ease-in-out forwards",
+        "animating-bloodmoon-properties":
+          "animating-bloodmoon-properties 6s linear 0s alternate forwards",
+        "bloodmoon-animation": "bloodmoonAnimation 5s ease 1",
         "glowing-stars": "glowing-stars 1s linear infinite",
-        "custom-animation": "Animation 5s ease",
       },
       colors: {
         // writers
@@ -192,7 +202,7 @@ module.exports = {
         midnights: {
           background: "#09071a",
           backgroundContent: "purple",
-          text: "white",
+          text: "#a99daf",
           main: "#FFA500",
           secondary: "#FFA500",
           third: "#FFA500",
@@ -210,10 +220,22 @@ module.exports = {
           backgroundPosition: "70% 0",
           backgroundSize: "1000px",
         },
-        '.bg-reputation-background': {
-          backgroundImage: 'linear-gradient(rgba(233, 233, 233, 0.8), rgba(233, 233, 233, 0.8)), url("../public/assets/albums/repbackground3.png")',
-          backgroundRepeat: 'repeat-y',
-          backgroundSize: 'contain',
+        ".bg-reputation-background": {
+          backgroundImage:
+            'linear-gradient(rgba(233, 233, 233, 0.8), rgba(233, 233, 233, 0.8)), url("../public/assets/albums/repbackground3.png")',
+          backgroundRepeat: "repeat-y",
+          backgroundSize: "contain",
+        },
+        ".bloodmoon-gradient": {
+          background:
+            "linear-gradient(300deg, var(--blood-moon-1) 10%, var(--blood-moon-2), var(--blood-moon-3), var(--blood-moon-4), transparent)",
+          opacity: "75%",
+          borderRadius: "50%",
+          height: "100px",
+          aspectRatio: "1 / 1",
+          backgroundSize: "200% 200%",
+          boxShadow:
+            "0 0 30px 0px var(--blood-moon-light-1), 0 0 100px 0 var(--blood-moon-light-2)",
         },
       };
 

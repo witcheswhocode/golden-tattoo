@@ -12,18 +12,24 @@ function Header(props: HeaderProps) {
 
   return (
     <header className={`p-4 h-36 ${themeClass}`}>
-      <div
-        className="relative flex justify-center font-monoton text-custom-gray text-2.5xl text-justify mt-4"
-      >
+      <div className="relative flex justify-center font-monoton text-custom-gray text-2.5xl text-justify mt-4">
         {theme === "theme" ? (
           <Typewriter text={"golden tattoo"} />
         ) : (
           <span className={`absolute text-${theme}-text font-${theme} z-20`}>
             golden
-            <span className={`${theme === "midnights" ? "" : "hidden"} font-${theme}`}>
+            <span
+              className={`${
+                theme === "midnights" ? "" : "hidden"
+              } font-${theme}`}
+            >
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </span>
-            <span className={`${theme === "midnights" ? "" : "hidden"} font-${theme}`}>
+            <span
+              className={`${
+                theme === "midnights" ? "" : "hidden"
+              } font-${theme}`}
+            >
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </span>{" "}
             tattoo
@@ -35,9 +41,9 @@ function Header(props: HeaderProps) {
           }`}
         >
           {/* Moon image */}
-          <div className="absolute h-24 w-24 shadow-custom-light rounded-full z-10 bg-center bg-cover midnights-moon animate-animating-multiple-properties">
+          <div className="absolute h-24 w-24 shadow-custom-light rounded-full z-10 bg-center bg-cover midnights-moon animate-animating-bloodmoon-properties">
             {/* Background with gradient */}
-            <div className="absolute inset-0 rounded-full bg-bloodmoon-gradient"></div>
+            <div className="absolute inset-0 rounded-full bloodmoon-gradient animate-bloodmoon-animation"></div>
           </div>
         </div>
       </div>
