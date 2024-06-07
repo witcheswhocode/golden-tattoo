@@ -11,7 +11,7 @@ function Header(props: HeaderProps) {
   const themeClass = `data-theme="${theme}"`;
 
   return (
-    <header className={`p-4 h-36 ${themeClass}`}>
+    <header className={`my-2 p-4 h-28 ${themeClass}`}>
       <div className="relative flex justify-center font-monoton text-custom-gray text-2.5xl text-justify mt-4">
         {theme === "theme" ? (
           <Typewriter text={"golden tattoo"} />

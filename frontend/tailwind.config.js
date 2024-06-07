@@ -19,6 +19,8 @@ module.exports = {
         midnights: ["Monoton", "cursive"],
         mommy: ["Monoton", "cursive"],
         monoton: ["Monoton", "cursive"],
+        theme: ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace"], 
+        ttpd: ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace"], 
       },
       transitionProperty: {
         "border-radius": "border-radius",
@@ -28,7 +30,6 @@ module.exports = {
 
       boxShadow: {
         lover: "10px 7px 41px 7px #e838a7a6",
-
         custom: "10px 10px 0px 0px rgba(0,0,0,0.75)",
         "stars-1": "var(--stars-1)",
         "stars-2": "var(--stars-2)",
@@ -129,7 +130,7 @@ module.exports = {
           midnights: "#1f185c",
           redtv: "#952e2b",
           _1989tv: "blue",
-          thetorturedpoetsdepartment: "",
+          ttpd: "var(--ttpdDark)",
           other: "#952e2b",
           single: "#952e2b",
           null: "#952e2b",
@@ -150,28 +151,30 @@ module.exports = {
         },
         lightpurple: "#a99daf",
         moonstone: "#3AA8c1",
-        midnights: "#09071a",
-        midnightsButton: "grey",
-        midnightsBlbum: "#a99daf", // Using direct color value
         mommyYellow: "#d39a1e",
         mommyPink: "#d28c76",
         mommyOrange: "#d5592b",
         mommyWhite: "#e0dbc0",
         mommyWhiteop: "#e0dbc08c",
-        mommyAlbumBg: "#d5592b", // Using direct color value
-        mommyAlbumBorder: "#d39a1e", // Using direct color value
-        mommyHeaderText: "#e0dbc0", // Using direct color value
+        mommyAlbumBg: "#d5592b", 
+        mommyAlbumBorder: "#d39a1e", 
+        mommyHeaderText: "#e0dbc0", 
         theme: {
-          background: "bg-gradient-to-r from-black to-white",
-          backgroundContent: "purple",
-          text: "#625449",
+          background: "var(--ttpdLight)",
+          text: "var(--ttpdDark)", 
+          backgroundContent: "var(--ttpdDark)",
+          backgroundContentSecondary: "#d5c6ff80",
+          textContent: "var(--ttpdLight)",
+          borderContent: "border black",
+          button: "#ff38a7",
+          buttonText: "white",
           main: "#FFA500",
           secondary: "#FFA500",
           third: "#FFA500",
         },
         lover: {
           background: "bg-gradient-to-r from-lover-pink to-lover-blue",
-          text: "white",
+          text: "#ff38a7",
           backgroundContent: "#e2f8ff",
           backgroundContentSecondary: "#d5c6ff80",
           textContent: "#ff38a7",
@@ -203,6 +206,7 @@ module.exports = {
           background: "#09071a",
           backgroundContent: "purple",
           text: "#a99daf",
+          button: "grey",
           main: "#FFA500",
           secondary: "#FFA500",
           third: "#FFA500",

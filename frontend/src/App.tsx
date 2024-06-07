@@ -57,8 +57,8 @@ function ThemeWrapper() {
     >
       <Router>
         <Header />
-        <ThemeToggle />
         <Navbar />
+        <ThemeToggle />
         <AppContent />
         <Footer />
         <ShimmeringStars />

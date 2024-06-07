@@ -19,10 +19,10 @@ const Typewriter = ({ text, speed = 100 }) => {
   
   return (
     <div className="inline-block">
-      <span className={`text-4xl font-mono font-${theme}`}>
+      <span className={`text-4xl font-${theme} text-${theme}-text`}>
         {displayedText}
       </span>
-      <span className={`typewriter-cursor text-4xl font-mono font-${theme}`}>
+      <span className={`typewriter-cursor text-4xl font-${theme} text-${theme}-text`}>
         |
       </span>
     </div>
