@@ -21,7 +21,8 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
   setShowSparkles,
 }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isFormVisible, setIsFormVisible] = useState(true);
+  const [isFormVisible, setIsFormVisible] = useState(true);  
+  const [isLoading, setIsLoading] = useState(false); 
   const { theme } = useTheme();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,6 +45,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
 
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsLoading(true); // Set loading to true when form is submitted
     const formData = new FormData(event.target as HTMLFormElement);
 
     const params = new URLSearchParams();
@@ -93,7 +95,9 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
           setTimeout(() => setShowSparkles(false), 1000); // Hide sparkles after 1 second
         }, 300); // Wait for the animation to complete before showing the new content
       })
-      .catch((error) => console.error("Error fetching modal data:", error));
+      .catch((error) => console.error("Error fetching modal data:", error))
+      .finally(() => setIsLoading(false)); // Set loading to false after fetch is completed
+
   };
 
   const handleReset = () => {
@@ -164,7 +168,11 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
 
   return (
     <div className={`container mx-auto mt-2 p-4 bg-red md:w-3/4`}>
-      {!isSubmitted ? (
+      {isLoading ? ( // Render loading component if isLoading is true
+        <div className="flex justify-center items-center">
+          <div className="loader">Loading...</div> {/* Your loading component */}
+        </div>
+      ) : !isSubmitted ? (
         <div
           className={`transition-opacity duration-300 ${
             isFormVisible ? "opacity-100" : "opacity-0"
