@@ -111,6 +111,7 @@ app.get("/getAllCombinations", (data, res, next) => {
     const validWords = preprocessWords(wordList, letterCounts);
     const [maxCombinations, combinationsList, finalLetterCounts] =
       findLongestCombinations(validWords, letterCounts);
+    console.log(combinationsList)
 
     const bestOf = findBestCombination(validWords, letterCounts);
     console.log(bestOf);
@@ -193,7 +194,6 @@ function findLongestCombinations(words, letterDict) {
       }
     }
   }
-
   return [maxCombinations, combinationsList, letterCounts];
 }
 
@@ -201,64 +201,73 @@ export default function findBestCombination(words, letterCounts) {
   let bestSolution = [];
   let bestCount = 0;
   let allSolutions = [];
-  let mostOptions = "";
-  let mostUsedLetters = "";
-  let currentWord = "";
+  const MAX_SOLUTIONS = 20; // Limit the number of solutions to store
 
-  function backtrack(index, solution = [], letterCounts, words) {
-    //console.log(letterCounter, words)
-    if (index === words.length) {
-      const count = countLettersUsed(solution);
-      if (count > bestCount) {
-        bestCount = count;
-        bestSolution = solution.slice(); // Make a copy of the solution
+  function backtrackIterative() {
+    const stack = [{ index: 0, solution: [], letterCounts: { ...letterCounts } }];
+
+    while (stack.length > 0) {
+      const { index, solution, letterCounts } = stack.pop();
+
+      if (index === words.length) {
+        const count = countLettersUsed(solution);
+        if (count > bestCount) {
+          bestCount = count;
+          bestSolution = solution.slice();
+        }
+        continue;
       }
-      return;
-    }
 
-    const word = words[index];
-    if (canFormWord(word, letterCounts)) {
-      // Update letter counts
-      const newLetterCounts = updateLetterCounts(word, { ...letterCounts });
-      const newSolution = [...solution, word];
+      const word = words[index];
+      if (canFormWord(word, letterCounts)) {
+        const newLetterCounts = updateLetterCounts(word, { ...letterCounts });
+        const newSolution = [...solution, word];
 
-      if (newSolution.length > 1) {
-        allSolutions.push(newSolution);
+        if (newSolution.length > 1) {
+          allSolutions.push(newSolution);
+          if (allSolutions.length > MAX_SOLUTIONS) {
+            pruneSolutions();
+          }
+        }
+
+        stack.push({ index: index + 1, solution: newSolution, letterCounts: newLetterCounts });
       }
-      // Recursive call
-      backtrack(index + 1, newSolution, newLetterCounts, words);
-    }
 
-    // Recursive call without using the current word
-    backtrack(index + 1, solution, letterCounts, words);
+      stack.push({ index: index + 1, solution, letterCounts });
+    }
   }
 
-  // Initialize the function with index 0
-  backtrack(0, [], letterCounts, words);
+  function pruneSolutions() {
+    allSolutions.sort((a, b) => {
+      const totalA = a.join("").length;
+      const totalB = b.join("").length;
+      if (totalA === totalB) {
+        return b.length - a.length;
+      }
+      return totalB - totalA;
+    });
+
+    allSolutions = allSolutions.slice(0, MAX_SOLUTIONS);
+  }
+
+  backtrackIterative();
 
   return findTheBests(allSolutions);
-  //return allSolutions.sort((a, b) => b.length - a.length);
 
   function findTheBests(allSolutions) {
-    // find most letters used in combinations
-    // Calculate the total number of characters in each array
     const arrayTotals = allSolutions.map((array) => array.join("").length);
 
-    // Sort the array of arrays based on the totals and lengths
     allSolutions.sort((a, b) => {
       const totalA = a.join("").length;
       const totalB = b.join("").length;
 
-      // If totals are equal, sort by the number of elements (length of the array)
       if (totalA === totalB) {
-        return a.length - b.length;
+        return b.length - a.length;
       }
 
-      // Otherwise, sort by the totals in descending order
       return totalB - totalA;
     });
 
-    // Retrieve the first item (and multiple if there is a tie)
     const firstItems = [];
     firstItems.push(allSolutions[0]);
     const totalCharacters = allSolutions[0].join("").length;
@@ -266,16 +275,14 @@ export default function findBestCombination(words, letterCounts) {
       if (arrayTotals[i] === totalCharacters) {
         firstItems.push(allSolutions[i]);
       } else {
-        break; // Stop when encountering the first non-tie
+        break;
       }
     }
 
-    // Find the maximum number of items in any solution
     const maxItems = Math.max(
       ...allSolutions.map((solution) => solution.length)
     );
 
-    // Retrieve the solutions with the maximum number of items
     const maxItemsSolutions = allSolutions.filter(
       (solution) => solution.length === maxItems
     );
@@ -284,25 +291,25 @@ export default function findBestCombination(words, letterCounts) {
   }
 
   function canFormWord(word, letterCounts) {
-    const wordLetters = word.replace(/\s/g, "").toLowerCase(); // Remove spaces and convert to lowercase
-    const countsCopy = { ...letterCounts }; // Make a copy of the letter counts
+    const wordLetters = word.replace(/\s/g, "").toLowerCase();
+    const countsCopy = { ...letterCounts };
 
     for (let char of wordLetters) {
       if (!countsCopy[char] || countsCopy[char] === "0") {
-        return false; // If a required letter is not available or its count is zero, return false
+        return false;
       }
-      countsCopy[char] = String(Number(countsCopy[char]) - 1); // Decrease the count of the letter
+      countsCopy[char] = String(Number(countsCopy[char]) - 1);
     }
 
     return true;
   }
 
   function updateLetterCounts(word, letterCounts) {
-    const countsCopy = { ...letterCounts }; // Make a copy of the letter counts
+    const countsCopy = { ...letterCounts };
 
     for (let char of word.replace(/\s/g, "").toLowerCase()) {
       if (countsCopy[char] && countsCopy[char] !== "0") {
-        countsCopy[char] = String(Number(countsCopy[char]) - 1); // Decrease the count of the letter
+        countsCopy[char] = String(Number(countsCopy[char]) - 1);
       }
     }
 
@@ -310,24 +317,20 @@ export default function findBestCombination(words, letterCounts) {
   }
 
   function countLettersUsed(solution) {
-    // Initialize an empty object to store the counts of each letter
     const letterCounts = {};
 
-    // Iterate over each word in the solution
     for (let word of solution) {
-      // Iterate over each character in the word
       for (let char of word) {
-        // Increment the count for each letter in the letterCounts object
         letterCounts[char] = (letterCounts[char] || 0) + 1;
       }
     }
 
-    // Calculate the total count of letters used
     let totalCount = 0;
     for (let count of Object.values(letterCounts)) {
       totalCount += count;
     }
 
-    return bestSolution;
+    return totalCount;
   }
 }
+
