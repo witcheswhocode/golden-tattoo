@@ -241,6 +241,17 @@ module.exports = {
           boxShadow:
             "0 0 30px 0px var(--blood-moon-light-1), 0 0 100px 0 var(--blood-moon-light-2)",
         },
+        ".fade-right::after": {
+          content: "",
+          position: "absolute",
+          top: "0",
+          right: "0",
+          height: "100%",
+          width: "1.5rem",
+          backgroundImage: "linear-gradient(to left, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0))",
+          pointerEvents: "none",
+        }
+        
       };
 
       addUtilities(newUtilities, ["responsive", "hover"]);

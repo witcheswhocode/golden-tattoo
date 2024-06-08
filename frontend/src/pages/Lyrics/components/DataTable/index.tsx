@@ -198,22 +198,24 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
           className={`border-2 p-1 m-2 mb-4 md:w-1/3`}
         />
       </div>
-      <div className="flex flex-row flex-nowrap w-full mb-4 overflow-auto gap-1 md:flex-wrap md:justify-center">
-        {allCategories.map((category, index) => (
-          <div
-            className={`flex flex-nowrap justify-center items-center w-auto px-3 py-1 text-sm text-white rounded-full cursor-pointer whitespace-nowrap category-color-${
-              ["queer", "midnights"].includes(category)
-                ? category
-                : index > 7
-                ? `100`
-                : index
-            }  ${selectedCategories.includes(category) ? "selected" : ""}`}
-            key={category}
-            onClick={() => handleCategoryClick(category)}
-          >
-            {category}
-          </div>
-        ))}
+      <div className="relative w-full fade-right">
+        <div className="flex flex-row flex-nowrap w-full mb-4 overflow-auto gap-1 md:flex-wrap md:justify-center">
+          {allCategories.map((category, index) => (
+            <div
+              className={`flex flex-nowrap justify-center items-center w-auto px-3 py-1 text-sm text-white rounded-full cursor-pointer whitespace-nowrap category-color-${
+                ["queer", "midnights"].includes(category)
+                  ? category
+                  : index > 7
+                  ? `100`
+                  : index
+              }  ${selectedCategories.includes(category) ? "selected" : ""}`}
+              key={category}
+              onClick={() => handleCategoryClick(category)}
+            >
+              {category}
+            </div>
+          ))}
+        </div>
       </div>
       <Table
         openModal={handleOpenModal}
