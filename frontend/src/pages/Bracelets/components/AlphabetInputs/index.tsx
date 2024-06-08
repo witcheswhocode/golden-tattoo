@@ -210,6 +210,17 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
                   className="mr-1"
                   onChange={handleCheckboxChange}
                 />
+                <label className="mr-2 flex justify-center items-center">
+                  acronyms
+                </label>
+                <input
+                  type="checkbox"
+                  id="acronyms"
+                  name="options"
+                  value="acronyms"
+                  className="mr-1"
+                  onChange={handleCheckboxChange}
+                />
               </div>
             </div>
             <div className="flex justify-center items-center pt-2 mt-2">

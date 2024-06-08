@@ -97,9 +97,48 @@ app.get("/getWriters", (req, res, next) => {
     });
   });
 });
+function buildSQLQuery(options) {
+  let whereConditions = [];
+
+  // Construct the SELECT statement
+  const selectClause = `SELECT *`;
+
+  // Construct the FROM clause (assuming the table name is 'bracelets')
+  const fromClause = "FROM bracelets b";
+
+  if (!options) {
+    var sqlQuery =
+      "SELECT * FROM bracelets b WHERE b.explicit IS NULL AND b.acronyms IS NULL";
+  } else {
+    // Check if options include 'explicit' or 'acronym'
+    if (options.includes("explicit")) {
+      whereConditions.push("(b.explicit IS NULL OR b.explicit = 'TRUE')");
+    } else {
+      whereConditions.push("(b.explicit IS NULL)");
+    }
+
+    if (options.includes("acronyms")) {
+      whereConditions.push("(b.acronyms IS NULL OR b.acronyms = 'TRUE')");
+    } else {
+      whereConditions.push("(b.acronyms IS NULL)");
+    }
+
+    // Construct the WHERE clause if there are conditions
+    const whereClause =
+      whereConditions.length > 0
+        ? `WHERE ${whereConditions.join(" AND ")}`
+        : "";
+
+    // Combine all parts to form the final query
+    var sqlQuery = `${selectClause} ${fromClause} ${whereClause}`;
+  }
+  return sqlQuery;
+}
 
 app.get("/getAllCombinations", (data, res, next) => {
-  var sql = "select * from bracelets";
+  var sql = buildSQLQuery(data.query["options"]);
+  delete data.query["options"];
+  console.log(sql);
   var params = [];
   db.all(sql, params, (err, rows) => {
     if (err) {
@@ -111,7 +150,7 @@ app.get("/getAllCombinations", (data, res, next) => {
     const validWords = preprocessWords(wordList, letterCounts);
     const [maxCombinations, combinationsList, finalLetterCounts] =
       findLongestCombinations(validWords, letterCounts);
-    console.log(combinationsList)
+    //console.log(combinationsList);
 
     const bestOf = findBestCombination(validWords, letterCounts);
     console.log(bestOf);
@@ -204,7 +243,9 @@ export default function findBestCombination(words, letterCounts) {
   const MAX_SOLUTIONS = 20; // Limit the number of solutions to store
 
   function backtrackIterative() {
-    const stack = [{ index: 0, solution: [], letterCounts: { ...letterCounts } }];
+    const stack = [
+      { index: 0, solution: [], letterCounts: { ...letterCounts } },
+    ];
 
     while (stack.length > 0) {
       const { index, solution, letterCounts } = stack.pop();
@@ -230,7 +271,11 @@ export default function findBestCombination(words, letterCounts) {
           }
         }
 
-        stack.push({ index: index + 1, solution: newSolution, letterCounts: newLetterCounts });
+        stack.push({
+          index: index + 1,
+          solution: newSolution,
+          letterCounts: newLetterCounts,
+        });
       }
 
       stack.push({ index: index + 1, solution, letterCounts });
@@ -333,4 +378,3 @@ export default function findBestCombination(words, letterCounts) {
     return totalCount;
   }
 }
-
