@@ -25,8 +25,8 @@ const CustomButton: React.FC<ButtonProps> = ({
     justify-center
     items-center
     bg-${theme}-button
-    border-r-2 border-b-2 border-gray-500 border-r-outset border-b-outset
-    hover:border-t-2 hover:border-l-2 hover:border-gray-500 hover:border-outset hover:text-gray-500
+    border-r-2 border-b-2 border-${theme}-buttonBorder border-r-outset border-b-outset
+    hover:border-t-2 hover:border-l-2 hover:border-${theme}-buttonBorder hover:border-outset hover:text-${theme}-buttonTextHover
     rounded-md
     box-border
     p-1

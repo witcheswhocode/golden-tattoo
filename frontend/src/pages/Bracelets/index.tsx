@@ -28,7 +28,7 @@ const Bracelets = () => {
   const [showSparkles, setShowSparkles] = useState<boolean>(false);
 
   return (
-    <div className={`container mx-auto z-10 text-${theme}-text`}>
+    <div className={`z-10 text-${theme}-text`}>
       <AlphabetInputs
         handleCombinationPossibilities={setCombinationPossibilities}
         handleMostLetterCombinationPossibilities={

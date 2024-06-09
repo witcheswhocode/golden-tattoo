@@ -230,7 +230,8 @@ module.exports = {
 
           button: "#8e877d",
           buttonText: "white",
-          buttonTextHover: "",
+          buttonTextHover: "black",
+          buttonBorder: "black",
 
           tableHeader: "#a48a6b",
           tableHeaderText: "white",
@@ -266,8 +267,9 @@ module.exports = {
           panelTextSecondary: "#ff38a7",
 
           button: "#ff38a7",
-          buttonText: "white",
-          buttonTextHover: "",
+          buttonText: "#eae3ff",
+          buttonTextHover: "white",
+          buttonBorder: "#eae3ff",
 
           tableHeader: "#e2f8ff",
           tableHeaderText: "#0967b3",
@@ -339,8 +341,9 @@ module.exports = {
           icon:"white",
 
           button: "#8e877d",
-          buttonText: "white",
-          buttonTextHover: "",
+          buttonText: "black",
+          buttonTextHover: "#f3731c",
+          buttonBorder: "#f3731c",
 
           tableHeader: "#f3731c",
           tableHeaderText: "white",
@@ -377,7 +380,8 @@ module.exports = {
 
           button: "#808080",
           buttonText: "white",
-          buttonTextHover: "",
+          buttonTextHover: "#6d0a06",
+          buttonBorder: "#a99daf",
 
           tableHeader: "#6d0a06",
           tableHeaderText: "white",

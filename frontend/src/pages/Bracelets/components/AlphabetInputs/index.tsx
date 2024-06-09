@@ -168,7 +168,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
   }, []);
 
   return (
-    <div className={`container mx-auto mt-2 p-4 md:w-3/4`}>
+    <div className={`px-2 md:w-3/4`}>
       {isLoading ? (
         <div
           className={`bg-${theme}-panel rounded-lg space-y-4 border-solid border-2 border-${theme}-button shadow-${theme} mt-8 p-4`}
@@ -183,7 +183,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
         >
           <form
             onSubmit={handleFormSubmit}
-            className={`bg-${theme}-panel rounded-lg space-y-4 border-solid border-2 border-${theme}-button shadow-${theme} mt-8 p-4`}
+            className={`bg-${theme}-panel rounded-lg space-y-4 border-solid border-2 border-${theme}-button shadow-${theme} mt-4 p-4`}
           >
             <h1
               className={`text-2xl font-bold text-center text-${theme}-panelText`}
