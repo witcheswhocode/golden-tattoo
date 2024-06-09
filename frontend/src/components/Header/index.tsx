@@ -13,7 +13,7 @@ function Header(props: HeaderProps) {
 
   return (
     <header className={`my-2 p-4 h-32 ${themeClass}`}>
-      <div className="relative flex justify-center font-monoton text-custom-gray text-2.5xl text-justify">
+      <div className="md:w-2/3 md:mx-auto relative flex justify-center font-monoton text-custom-gray text-2.5xl text-justify">
         {theme === "theme" ? (
           <Curtains />
         ) : (
