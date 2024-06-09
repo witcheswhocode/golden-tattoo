@@ -68,7 +68,7 @@ function Jukebox(props: WritersData) {
             spotify={spotify}
             other={other}
           />
-          <div className={`z-50 py-4 bg-${theme}-backgroundContent`}>
+          <div className={`z-50 py-4 bg-${theme}-panel`}>
             {props.data
               .filter((item) => item.albumshort === albumshort)
               .map((filteredItem) => (

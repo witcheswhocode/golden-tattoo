@@ -35,7 +35,7 @@ const LoadingBeads = () => {
           })}
         </div>
       </div>
-      <p className="w-3/4 m-auto text-center text-sm">
+      <p className="w-3/4 m-auto text-center text-sm text-black">
         This may take a minute or so depending on the number of beads and if
         you're including acronyms.
       </p>

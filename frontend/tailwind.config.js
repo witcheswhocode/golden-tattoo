@@ -105,6 +105,7 @@ module.exports = {
         "bloodmoon-animation": "bloodmoonAnimation 5s ease 1",
         "glowing-stars": "glowing-stars 1s linear infinite",
       },
+
       colors: {
         // writers
         TaylorSwift: "rgb(28, 136, 199, 0.5)",
@@ -175,15 +176,38 @@ module.exports = {
         lover: {
           background: "bg-gradient-to-r from-lover-pink to-lover-blue",
           text: "#ff38a7",
-          backgroundContent: "#e2f8ff",
-          backgroundContentSecondary: "#d5c6ff80",
-          textContent: "#ff38a7",
-          borderContent: "border border-lover-textContent",
+
+          panel: "#e2f8ff",
+          panelText: "#0967b3",
+
           button: "#ff38a7",
           buttonText: "white",
-          main: "#FFFFFF",
-          secondary: "forestgreen",
-          third: "yellow",
+          buttonTextHover: "",
+
+          tableHeader:"",
+          tableHeaderText:"",
+          evenRow:"",
+          oddRow:"",
+          rowText:"",
+          searchBackground:"",
+
+          scoreBoard:"#eae3ff",
+          scoreBoardText:"#ae97e5",
+          scoreBoardTextHeader:"#0967b3",
+          scoreBoardTextNumber:"#ff38a7",
+          scoreBoardBorder:"white",
+          tabBorder:"white",
+          tabActive:"#e2f8ff",
+          tabTextActive:"#ff38a7",
+          tabInactive:"#ae97e5",
+          tabTextInactive:"white",
+          braceletItemText:"#0967b3",
+          braceletItemTextSelected:"#ff38a7",
+          minus:"#ae97e5",
+          plus:"#ff38a7",
+          bottomExpander:"#eae3ff",
+          bottomExpanderTextHeader:"#0967b3"
+
         },
         folklore: {
           //background: "#09071a",

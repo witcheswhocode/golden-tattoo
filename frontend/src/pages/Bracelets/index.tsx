@@ -28,11 +28,7 @@ const Bracelets = () => {
   const [showSparkles, setShowSparkles] = useState<boolean>(false);
 
   return (
-    <div className={`container mx-auto mt-8 z-10 text-${theme}-text`}>
-      <h1 className={`text-2xl font-bold text-center`}>
-        Bracelet Idea Generator
-      </h1>
-
+    <div className={`container mx-auto z-10 text-${theme}-text`}>
       <AlphabetInputs
         handleCombinationPossibilities={setCombinationPossibilities}
         handleMostLetterCombinationPossibilities={

@@ -22,8 +22,8 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
   setShowSparkles,
 }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isFormVisible, setIsFormVisible] = useState(true);  
-  const [isLoading, setIsLoading] = useState(false); 
+  const [isFormVisible, setIsFormVisible] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const { theme } = useTheme();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -98,7 +98,6 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
       })
       .catch((error) => console.error("Error fetching modal data:", error))
       .finally(() => setIsLoading(false)); // Set loading to false after fetch is completed
-
   };
 
   const handleReset = () => {
@@ -168,28 +167,41 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
   }, []);
 
   return (
-    <div className={`container mx-auto mt-2 p-4 bg-red md:w-3/4`}>
-      {isLoading ? ( <LoadingBeads />
+    <div className={`container mx-auto mt-2 p-4 md:w-3/4`}>
+      {isLoading ? (
+        <div
+          className={`bg-${theme}-panel rounded-lg space-y-4 border-solid border-2 border-${theme}-button shadow-${theme} mt-8 p-4`}
+        >
+          <LoadingBeads />
+        </div>
       ) : !isSubmitted ? (
         <div
           className={`transition-opacity duration-300 ${
             isFormVisible ? "opacity-100" : "opacity-0"
           }`}
         >
-          <p className="text-center">
-            Input the quantity of each letter bead you have and press submit.
-            The results will help you generate Taylor Swift related bracelet
-            ideas.
-          </p>
           <form
             onSubmit={handleFormSubmit}
-            className={`bg-${theme}-backgroundContent rounded-lg border-solid border-2 border-${theme}-button shadow-${theme} mt-8 p-4`}
+            className={`bg-${theme}-panel rounded-lg space-y-4 border-solid border-2 border-${theme}-button shadow-${theme} mt-8 p-4`}
           >
-            <div className={`grid grid-cols-6 gap-2`}>
+            <h1
+              className={`text-2xl font-bold text-center text-${theme}-panelText`}
+            >
+              Bracelet Idea Generator
+            </h1>
+            <p className={`text-center text-${theme}-panelText`}>
+              Input the quantity of each letter bead you have and press submit.
+              The results will help you generate Taylor Swift related bracelet
+              ideas.
+            </p>
+            <div className={`grid grid-cols-6 gap-2 text-${theme}-panelText`}>
               {Array.from({ length: 26 }, (_, i) => {
                 const letter = String.fromCharCode(65 + i);
                 return (
-                  <div key={letter} className="flex flex-col items-center">
+                  <div
+                    key={letter}
+                    className="flex flex-col items-center font-bold"
+                  >
                     <label htmlFor={letter} className="mb-1">
                       {letter}
                     </label>
@@ -249,7 +261,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
             <button
               type="button"
               onClick={handleReset}
-              className={`bg-${theme}-button text-${theme}-buttonText px-4 py-2 rounded`}
+              className={`text-sm bg-${theme}-button text-${theme}-buttonText px-4 py-2 rounded shadow-${theme} border border-${theme}-border`}
             >
               ⬅️ Go back and start over
             </button>

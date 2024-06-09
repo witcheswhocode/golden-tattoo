@@ -18,7 +18,7 @@ const Table: React.FC<TableProps> = (props: TableProps) => {
   };
 
   return (
-    <table className={`min-w-full border bg-${theme}-backgroundContent border-${theme}-button`}>
+    <table className={`min-w-full border bg-${theme}-panel border-${theme}-button`}>
       <thead>
         <tr>
           <th
@@ -44,7 +44,7 @@ const Table: React.FC<TableProps> = (props: TableProps) => {
             data-word={item.word}
             onClick={() => handleOpenModal(item)}
             className={`cursor-pointer ${
-              index % 2 === 0 ? `bg-${theme}-backgroundContentSecondary` : "bg-white"
+              index % 2 === 0 ? `bg-${theme}-panelSecondary` : "bg-white"
             }`}
           >
             <td className="border-b px-2 py-1">{item.word}</td>

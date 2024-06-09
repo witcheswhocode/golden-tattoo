@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useTheme } from "../ThemeContext";
 
 interface TabsProps {
   children: React.ReactNode;
 }
 
 const Tabs: React.FC<TabsProps> = ({ children }) => {
+  const { theme } = useTheme();
   const [activeTab, setActiveTab] = useState<number>(0);
 
   return (
@@ -17,8 +19,8 @@ const Tabs: React.FC<TabsProps> = ({ children }) => {
                 key={index}
                 className={`${
                   index === activeTab
-                    ? "bg-blue-500 text-white"
-                    : "bg-gray-200 text-gray-800"
+                    ? `font-semibold border-2 border-${theme}-tabBorder bg-${theme}-tabActive text-${theme}-tabTextActive`
+                    : `border-2 border-${theme}-tabBorder bg-${theme}-tabInactive text-${theme}-tabTextInactive`
                 } px-4 py-2 w-full rounded-t-lg`}
                 onClick={() => setActiveTab(index)}
               >
@@ -29,7 +31,7 @@ const Tabs: React.FC<TabsProps> = ({ children }) => {
           return null;
         })}
       </div>
-      <div className="bg-gray-100 p-4 rounded-b-lg">
+      <div className={`bg-${theme}-panel p-4 rounded-b-lg`}>
         {React.Children.toArray(children)[activeTab]}
       </div>
     </div>

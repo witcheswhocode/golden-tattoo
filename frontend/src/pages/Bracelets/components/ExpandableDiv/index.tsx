@@ -15,14 +15,14 @@ const ExpandableDiv: React.FC<ExpandableDivProps> = ({ children, count }) => {
   };
 
   return (
-    <div className="z-10 fixed bottom-0 left-0 w-full p-4 bg-white shadow-lg md:w-3/4 md:left-auto">
+    <div className={`z-10 fixed bottom-0 left-0 w-full p-4 bg-${theme}-bottomExpander shadow-lg md:w-3/4 md:left-auto`}>
       <div
-        className={`flex justify-between items-center cursor-pointer bg-white`}
+        className={`flex justify-between items-center cursor-pointer`}
         onClick={toggleExpansion}
       >
-        <h2 className="text-lg font-semibold bg-white">Selected Bracelets</h2>
+        <h2 className={`text-lg font-semibold text-${theme}-bottomExpanderTextHeader`}>Selected Bracelets</h2>
         <span>{count !== undefined ? `${count} selected` : `0 selected`}</span>
-        <div className={`transform transition-transform duration-300 ${isExpanded ? 'rotate-180' : 'rotate-0'}`}>
+        <div className={`text-${theme}-bottomExpanderTextHeader transform transition-transform duration-300 ${isExpanded ? 'rotate-180' : 'rotate-0'}`}>
           <svg
             className="w-6 h-6"
             fill="none"
@@ -41,13 +41,13 @@ const ExpandableDiv: React.FC<ExpandableDivProps> = ({ children, count }) => {
       </div>
       <div
         className={`overflow-hidden transition-all duration-300 ${
-          isExpanded ? "max-h-screen border-t-2 border-gray-600 mt-4" : "max-h-0"
-        } bg-white`}
+          isExpanded ? `max-h-screen border-t-2 border-${theme}-bottomExpanderTextHeader mt-4` : "max-h-0"
+        }`}
       >
         {count ? (
-          <div className="py-4 bg-white opacity-100">{children}</div>
+          <div className="py-4 opacity-100">{children}</div>
         ) : (
-          <div className="py-4">No bracelets selected.</div>
+          <div className={`py-4 text-${theme}-bottomExpanderTextHeader`}>No bracelets selected.</div>
         )}
       </div>
     </div>
