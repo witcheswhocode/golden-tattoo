@@ -272,7 +272,7 @@ module.exports = {
           backgroundImage:
             'linear-gradient(rgba(233, 233, 233, 0.8), rgba(233, 233, 233, 0.8)), url("../public/assets/albums/repbackground3.png")',
           backgroundRepeat: "repeat-y",
-          backgroundSize: "contain",
+          backgroundSize: "100% auto",
         },
         ".bloodmoon-gradient": {
           background:
