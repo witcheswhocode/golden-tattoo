@@ -15,39 +15,39 @@ const Curtains = ({ text = "golden tattoo", speed = 100 }) => {
   }, []);
 
   return (
-    <div className="mx-auto w-full h-32 overflow-hidden bg-white">
+    <div className="w-full h-32 overflow-hidden">
       <div className="relative w-full h-full">
         <div
           className={`flex items-center bg-center bg-cover bg-curtain ${
             isChecked ? "animate-curtainsLeft" : ""
-          }  text-white float-left w-1/2 h-full z-20 justify-end`}
+          } text-white absolute left-0 w-1/2 h-full z-30 justify-end`}
         >
-          <h1 className="p-2">female rage:</h1>
+          <p className="p-2 text-3xl">female rage:</p>
         </div>
 
         <div
-          className={`flex items-center text-white p-4 h-full justify-center absolute text-center z-10 w-full transition-opacity duration-1000 ease-out ${
+          className={`flex items-center text-white h-full justify-center border-2 border-theme-text absolute text-center z-20 w-full transition-opacity duration-1000 ease-out ${
             isChecked ? "opacity-100" : "opacity-0"
           }`}
         >
-          <h2 className="pr-4 text-black">golden</h2>
+          <p className="mx-auto text-3xl font-ttpd text-theme-text">golden</p>
           <img
             loading="lazy"
             src={"/assets/ttpd-header.png"}
-            className="w-1/5 shadow-custom-light rounded-full"
+            className="w-1/4 shadow-ttpd rounded-full"
             alt={
               "Taylor screaming into microphone during Who's Afraid of Little Old Me? on the Era's tour."
             }
           />
-          <h2 className="pl-4 text-black">tattoo</h2>
+          <p className="mx-auto text-3xl font-ttpd text-theme-text">tattoo</p>
         </div>
 
         <div
-          className={`flex items-center  bg-center bg-cover bg-curtain ${
+          className={`flex items-center bg-center bg-cover bg-curtain ${
             isChecked ? "animate-curtainsRight" : ""
-          }  text-white w-1/2 h-full z-20 justify-start`}
+          } text-white absolute right-0 w-1/2 h-full z-30 justify-start`}
         >
-          <h1 className="p-2"> the musical</h1>
+          <p className="p-2 text-3xl">the musical</p>
         </div>
       </div>
     </div>

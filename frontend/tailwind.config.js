@@ -50,6 +50,7 @@ module.exports = {
       boxShadow: {
         lover: "10px 7px 41px 7px #e838a7a6",
         custom: "10px 10px 0px 0px rgba(0,0,0,0.75)",
+        ttpd:"0 0 100px 0px white, 0 0 100px 0 white",
         "stars-1": "var(--stars-1)",
         "stars-2": "var(--stars-2)",
         "stars-3": "var(--stars-3)",
@@ -133,7 +134,7 @@ module.exports = {
             transform: "translateX(75%)",
           },
           "100%": {
-            transform: "translateX(100%)",
+            transform: "translateX(1000%)",
           },
         },
         curtainsLeft: {
@@ -150,7 +151,7 @@ module.exports = {
             transform: "translateX(-75%)",
           },
           "100%": {
-            transform: "translateX(-100%)",
+            transform: "translateX(-1000%)",
           },
         },
       },
@@ -219,7 +220,7 @@ module.exports = {
         mommyHeaderText: "#e0dbc0",
         theme: {
           background: "var(--ttpdLight)",
-          text: "#312a22",
+          text: "var(--ttpdDark)",
 
           panel: "var(--ttpdDark)",
           panelText: "#f9f8f4",
