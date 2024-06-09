@@ -1,4 +1,5 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
+import LoadingBeads from "src/components/LoadingBeads";
 import { useTheme } from "src/components/ThemeContext";
 
 interface AlphabetInputProps {
@@ -168,10 +169,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
 
   return (
     <div className={`container mx-auto mt-2 p-4 bg-red md:w-3/4`}>
-      {isLoading ? ( // Render loading component if isLoading is true
-        <div className="flex justify-center items-center">
-          <div className="loader">Loading...</div> {/* Your loading component */}
-        </div>
+      {isLoading ? ( <LoadingBeads />
       ) : !isSubmitted ? (
         <div
           className={`transition-opacity duration-300 ${
