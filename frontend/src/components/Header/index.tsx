@@ -1,6 +1,7 @@
 import React from "react";
 import { useTheme } from "../ThemeContext";
 import Typewriter from "../Typewriter";
+import Curtains from "../Curtains";
 
 interface HeaderProps {
   // Define any props you want to pass to the Header component
@@ -11,10 +12,10 @@ function Header(props: HeaderProps) {
   const themeClass = `data-theme="${theme}"`;
 
   return (
-    <header className={`my-2 p-4 h-28 ${themeClass}`}>
-      <div className="relative flex justify-center font-monoton text-custom-gray text-2.5xl text-justify mt-4">
+    <header className={`my-2 p-4 h-32 ${themeClass}`}>
+      <div className="relative flex justify-center font-monoton text-custom-gray text-2.5xl text-justify">
         {theme === "theme" ? (
-          <Typewriter text={"golden tattoo"} />
+          <Curtains />
         ) : (
           <span className={`absolute text-${theme}-text font-${theme} z-20`}>
             golden

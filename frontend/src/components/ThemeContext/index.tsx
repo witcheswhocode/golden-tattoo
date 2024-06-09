@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
-type Theme = "theme" | "lover" | "midnights" | "folklore";
+type Theme = "theme" | "lover" | "midnights" | "reputation";
 
 interface ThemeContextProps {
   theme: Theme;
@@ -40,4 +40,3 @@ export const useTheme = () => {
   }
   return context;
 };
-

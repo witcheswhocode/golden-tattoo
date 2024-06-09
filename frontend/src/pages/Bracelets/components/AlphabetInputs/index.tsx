@@ -194,15 +194,15 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
               The results will help you generate Taylor Swift related bracelet
               ideas.
             </p>
-            <div className={`grid grid-cols-6 gap-2 text-${theme}-panelText`}>
+            <div className={`grid grid-cols-6 gap-2`}>
               {Array.from({ length: 26 }, (_, i) => {
                 const letter = String.fromCharCode(65 + i);
                 return (
                   <div
                     key={letter}
-                    className="flex flex-col items-center font-bold"
+                    className={`flex flex-col items-center font-bold`}
                   >
-                    <label htmlFor={letter} className="mb-1">
+                    <label htmlFor={letter} className={`mb-1 text-${theme}-panelText`}>
                       {letter}
                     </label>
                     <input
@@ -211,7 +211,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
                       name={letter.toLowerCase()}
                       onChange={handleInputChange}
                       value={inputValues[letter.toLowerCase()] || ""}
-                      className="border rounded w-8 h-8 p-2 text-center focus:ring focus:ring-blue-200 focus:outline-none"
+                      className={`text-black border rounded w-8 h-8 p-2 text-center focus:ring focus:ring-blue-200 focus:outline-none`}
                     />
                   </div>
                 );

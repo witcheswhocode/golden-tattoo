@@ -39,7 +39,7 @@ module.exports = {
           "Courier New",
           "monospace",
         ],
-        'futura': ['Futura', 'serif'],
+        futura: ["Futura", "serif"],
       },
       transitionProperty: {
         "border-radius": "border-radius",
@@ -90,6 +90,8 @@ module.exports = {
       backgroundImage: {
         "midnights-moon":
           "url('https://i0.wp.com/lunasociety.org/wp-content/uploads/2015/11/cropped-Full-Moon-Flat.png')",
+        curtain:
+          "url('https://img.freepik.com/free-vector/theater-cinema-curtains-with-focus-light-vector-illustration_1017-38346.jpg')",
         "bloodmoon-gradient":
           "linear-gradient(300deg, var(--blood-moon-1) 10%, var(--blood-moon-2), var(--blood-moon-3), var(--blood-moon-4), transparent)",
       },
@@ -117,12 +119,48 @@ module.exports = {
           "75%": { opacity: 0.5 },
           "100%": { opacity: 0 },
         },
+        curtainsRight: {
+          "0%": {
+            transform: "translateX(0)",
+          },
+          "25%": {
+            transform: "translateX(25%)",
+          },
+          "50%": {
+            transform: "translateX(50%)",
+          },
+          "75%": {
+            transform: "translateX(75%)",
+          },
+          "100%": {
+            transform: "translateX(100%)",
+          },
+        },
+        curtainsLeft: {
+          "0%": {
+            transform: "translateX(0)",
+          },
+          "25%": {
+            transform: "translateX(-25%)",
+          },
+          "50%": {
+            transform: "translateX(-50%)",
+          },
+          "75%": {
+            transform: "translateX(-75%)",
+          },
+          "100%": {
+            transform: "translateX(-100%)",
+          },
+        },
       },
       animation: {
         "animating-bloodmoon-properties":
           "animating-bloodmoon-properties 6s linear 0s alternate forwards",
         "bloodmoon-animation": "bloodmoonAnimation 5s ease 1",
         "glowing-stars": "glowing-stars 1s linear infinite",
+        curtainsLeft: "curtainsLeft 2s ease forwards",
+        curtainsRight: "curtainsRight 2s ease forwards",
       },
 
       colors: {
@@ -181,16 +219,40 @@ module.exports = {
         mommyHeaderText: "#e0dbc0",
         theme: {
           background: "var(--ttpdLight)",
-          text: "var(--ttpdDark)",
-          backgroundContent: "var(--ttpdDark)",
-          backgroundContentSecondary: "#d5c6ff80",
-          textContent: "var(--ttpdLight)",
-          borderContent: "border black",
-          button: "#ff38a7",
+          text: "#312a22",
+
+          panel: "var(--ttpdDark)",
+          panelText: "#f9f8f4",
+          panelTextSecondary: "var(--ttpdDark)",
+
+          button: "#8e877d",
           buttonText: "white",
-          main: "#FFA500",
-          secondary: "#FFA500",
-          third: "#FFA500",
+          buttonTextHover: "",
+
+          tableHeader: "#a48a6b",
+          tableHeaderText: "white",
+          tableBorder: "#494e47",
+          evenRow: "white",
+          oddRow: "#e7e1d9",
+          rowText: "black",
+          searchBackground: "",
+
+          scoreBoard: "#e7e1d9",
+          scoreBoardText: "#ae97e5",
+          scoreBoardTextHeader: "white",
+          scoreBoardTextNumber: "#494e47",
+          scoreBoardBorder: "white",
+          tabBorder: "white",
+          tabActive: "#a48a6b",
+          tabTextActive: "#ff38a7",
+          tabInactive: "#ae97e5",
+          tabTextInactive: "white",
+          braceletItemText: "#0967b3",
+          braceletItemTextSelected: "#ff38a7",
+          minus: "#ae97e5",
+          plus: "#ff38a7",
+          bottomExpander: "#eae3ff",
+          bottomExpanderTextHeader: "#0967b3",
         },
         lover: {
           background: "bg-gradient-to-r from-lover-pink to-lover-blue",
@@ -230,13 +292,40 @@ module.exports = {
           bottomExpanderTextHeader: "#0967b3",
         },
         folklore: {
-          //background: "#09071a",
-          backgroundContent: "purple",
-          text: "#2f4f4f",
-          main: "#FFFFFF",
-          secondary: "forestgreen",
-          backgroundContent: "purple",
-          third: "yellow",
+          text: "#494e47",
+
+          panel: "#a48a6b",
+          panelText: "white",
+          panelTextSecondary: "white",
+
+          button: "#494e47",
+          buttonText: "white",
+          buttonTextHover: "",
+
+          tableHeader: "#a48a6b",
+          tableHeaderText: "white",
+          tableBorder: "#494e47",
+          evenRow: "white",
+          oddRow: "#e7e1d9",
+          rowText: "black",
+          searchBackground: "",
+
+          scoreBoard: "#e7e1d9",
+          scoreBoardText: "#ae97e5",
+          scoreBoardTextHeader: "white",
+          scoreBoardTextNumber: "#494e47",
+          scoreBoardBorder: "white",
+          tabBorder: "white",
+          tabActive: "#a48a6b",
+          tabTextActive: "#ff38a7",
+          tabInactive: "#ae97e5",
+          tabTextInactive: "white",
+          braceletItemText: "#0967b3",
+          braceletItemTextSelected: "#ff38a7",
+          minus: "#ae97e5",
+          plus: "#ff38a7",
+          bottomExpander: "#eae3ff",
+          bottomExpanderTextHeader: "#0967b3",
         },
         reputation: {
           //background: "#000000",

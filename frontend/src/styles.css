@@ -126,12 +126,31 @@
   content: " \00a0 🌈  \00a0 🌈  \00a0 🌈  \00a0 🌈  \00a0 🌈 ";
 }
 
-
 .reputation-single-emoji:before {
   content: "🐍";
 }
 .reputation-rowof-emoji:before {
   content: " \00a0 🥃  \00a0 💰  \00a0 🧟‍♀️  \00a0 🌼  \00a0 🔥 ";
+}
+
+.folklore-single-emoji:before {
+  content: '✨';
+}
+.folklore-rowof-emoji:before {
+  content: '\00a0 🌙 \00a0 🦂 \00a0 🪐 \00a0 🎹 \00a0 ✨';
+}
+
+.theme-single-emoji:before {
+  content: '🖋️';
+}
+.theme-rowof-emoji:before {
+  content: '\00a0 🐺 \00a0 🪶 \00a0 🐈‍⬛ \00a0 🪟 \00a0 🧸';
+}
+.ttpd-single-emoji:before {
+  content: '🖋️';
+}
+.ttpd-rowof-emoji:before {
+  content: '\00a0 🐺 \00a0 🪶 \00a0 🐈‍⬛ \00a0 🪟 \00a0 🧸';
 }
 
 
