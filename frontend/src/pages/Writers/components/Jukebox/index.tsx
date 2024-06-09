@@ -68,17 +68,15 @@ function Jukebox(props: WritersData) {
             spotify={spotify}
             other={other}
           />
-          <div 
-          className={`z-50 py-4 bg-${theme}-backgroundContent`}>
-
-          {props.data
-            .filter((item) => item.albumshort === albumshort)
-            .map((filteredItem) => (
-              <SongItem
-                song={filteredItem.song}
-                writers={filteredItem.writers}
-              />
-            ))}
+          <div className={`z-50 py-4 bg-${theme}-backgroundContent`}>
+            {props.data
+              .filter((item) => item.albumshort === albumshort)
+              .map((filteredItem) => (
+                <SongItem
+                  song={filteredItem.song}
+                  writers={filteredItem.writers}
+                />
+              ))}
           </div>
           <RowOfEmojis />
         </section>
@@ -155,7 +153,15 @@ function Jukebox(props: WritersData) {
 
   return (
     <div className="p-3 w-full m-auto md:w-2/3">
-      <button onClick={toggleSortOrder}>Sort By Date</button>
+      <div className="flex justify-end items-end">
+        {" "}
+        <button
+          className={`my-2 bg-${theme}-button text-${theme}-buttonText px-2 py-1 border border-${theme}-border text-sm leading-5 font-medium rounded-md text-${theme}-buttonText bg-${theme}-button hover:text-gray-500 focus:outline-none focus:border-${theme} focus:shadow-outline-${theme}-border active:bg-gray-50 active:text-gray-800`}
+          onClick={toggleSortOrder}
+        >
+          Sort By Date
+        </button>
+      </div>
       {result}
     </div>
   );
