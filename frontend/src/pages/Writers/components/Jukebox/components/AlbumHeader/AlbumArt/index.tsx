@@ -7,7 +7,7 @@ export interface AlbumArtProps {
 function AlbumArt(props: AlbumArtProps) {
   return (
       <img
-        className="h-full w-auto object-fill"
+        className="h-32 w-auto object-fill"
         loading="lazy"
         src={`assets/albums/${props.alb ? props.alb : '_1989'}.png`}
         alt="Album Image"
