@@ -218,13 +218,14 @@ module.exports = {
         mommyAlbumBg: "#d5592b",
         mommyAlbumBorder: "#d39a1e",
         mommyHeaderText: "#e0dbc0",
-        theme: {
+        ttpd: {
           background: "var(--ttpdLight)",
           text: "var(--ttpdDark)",
 
           panel: "var(--ttpdDark)",
-          panelText: "#f9f8f4",
-          panelTextSecondary: "var(--ttpdDark)",
+          panelText: "white",
+          panelTextSecondary: "var(--ttpdLight)",
+          icon:"white",
 
           button: "#8e877d",
           buttonText: "white",
@@ -329,7 +330,7 @@ module.exports = {
           bottomExpanderTextHeader: "#0967b3",
         },
         reputation: {
-          //background: "#000000",
+          //background: "#000000",#000000c0
           backgroundContent: "purple",
           text: "black",
           main: "lightblue",

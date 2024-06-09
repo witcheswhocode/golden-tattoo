@@ -26,11 +26,11 @@ const Curtains = ({ text = "golden tattoo", speed = 100 }) => {
         </div>
 
         <div
-          className={`flex items-center text-white h-full justify-center border-2 border-theme-text absolute text-center z-20 w-full transition-opacity duration-1000 ease-out ${
+          className={`flex items-center text-white h-full justify-center border-2 border-ttpd-text absolute text-center z-20 w-full transition-opacity duration-1000 ease-out ${
             isChecked ? "opacity-100" : "opacity-0"
           }`}
         >
-          <p className="mx-auto text-3xl font-ttpd text-theme-text">golden</p>
+          <p className="mx-auto text-3xl font-ttpd text-ttpd-text">golden</p>
           <img
             loading="lazy"
             src={"/assets/ttpd-header.png"}
@@ -39,7 +39,7 @@ const Curtains = ({ text = "golden tattoo", speed = 100 }) => {
               "Taylor screaming into microphone during Who's Afraid of Little Old Me? on the Era's tour."
             }
           />
-          <p className="mx-auto text-3xl font-ttpd text-theme-text">tattoo</p>
+          <p className="mx-auto text-3xl font-ttpd text-ttpd-text">tattoo</p>
         </div>
 
         <div
