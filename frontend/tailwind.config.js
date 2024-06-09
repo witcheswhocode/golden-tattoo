@@ -184,11 +184,12 @@ module.exports = {
           buttonText: "white",
           buttonTextHover: "",
 
-          tableHeader:"",
-          tableHeaderText:"",
-          evenRow:"",
-          oddRow:"",
-          rowText:"",
+          tableHeader:"#e2f8ff",
+          tableHeaderText:"#0967b3",
+          tableBorder: "#ff38a7",
+          evenRow:"white",
+          oddRow:"#eae3ff",
+          rowText:"#0967b3",
           searchBackground:"",
 
           scoreBoard:"#eae3ff",

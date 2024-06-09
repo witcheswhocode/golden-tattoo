@@ -18,22 +18,24 @@ const Table: React.FC<TableProps> = (props: TableProps) => {
   };
 
   return (
-    <table className={`min-w-full border bg-${theme}-panel border-${theme}-button`}>
+    <table
+      className={`min-w-full border bg-${theme}-tableHeader border border-${theme}-tableBorder shadow-${theme}`}
+    >
       <thead>
         <tr>
           <th
-            className="w-1/2 border-b cursor-pointer text-sm p-2"
+            className={`w-1/2 border-b-${theme}-tableBorder cursor-pointer text-sm p-2`}
             onClick={() => handleHeaderClick("word")}
           >
             word
           </th>
           <th
-            className="border-b cursor-pointer text-sm"
+            className={`border-b-${theme}-tableBorder cursor-pointer text-sm`}
             onClick={() => handleHeaderClick("songcount")}
           >
             # of songs
           </th>
-          <th className="border-b text-sm">categories</th>
+          <th className={`border-b-${theme}-tableBorder text-sm`}>categories</th>
         </tr>
       </thead>
       <tbody>
@@ -44,12 +46,14 @@ const Table: React.FC<TableProps> = (props: TableProps) => {
             data-word={item.word}
             onClick={() => handleOpenModal(item)}
             className={`cursor-pointer ${
-              index % 2 === 0 ? `bg-${theme}-panelSecondary` : "bg-white"
+              index % 2 === 0
+                ? `bg-${theme}-oddRow border border-${theme}-tableBorder`
+                : `bg-${theme}-evenRow border border-${theme}-tableBorder`
             }`}
           >
-            <td className="border-b px-2 py-1">{item.word}</td>
-            <td className="border-b text-center">{item.songcount}</td>
-            <td className="border-b text-center">
+            <td className={`border-b-${theme}-tableBorder px-2 py-1`}>{item.word}</td>
+            <td className={`border-b-${theme}-tableBorder text-center`}>{item.songcount}</td>
+            <td className={`border-b-${theme}-tableBorder text-center`}>
               {item.categories?.split("|").map((cat, index) => (
                 <span key={index} className={`category-${cat.trim()}`}></span>
               ))}
