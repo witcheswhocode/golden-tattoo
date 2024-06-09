@@ -233,6 +233,10 @@ module.exports = {
           buttonTextHover: "black",
           buttonBorder: "black",
 
+          link: "black",
+          linkHover: "#942f2b",
+          linkVisited: "white",
+
           tableHeader: "#a48a6b",
           tableHeaderText: "white",
           tableBorder: "#494e47",

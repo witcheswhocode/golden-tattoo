@@ -10,6 +10,7 @@ import Dropdown from "./components/Dropdown";
 import { ThemeProvider, useTheme } from "./components/ThemeContext";
 import { ThemeLoader } from "./components/ThemeContext/components/ThemeLoader";
 import ShimmeringStars from "./components/ShimmeringStars";
+import About from "./pages/About";
 
 function App() {
   return (
@@ -73,6 +74,7 @@ function AppContent() {
       <Route path="/writers" element={<Writers />} />
       <Route path="/bracelets" element={<Bracelets />} />
       <Route path="/lyrics" element={<LyricsTable />} />
+      <Route path="/about" element={<About />} />
     </Routes>
   );
 }
