@@ -9,6 +9,7 @@ const hrefDictionary: { [key: string]: string } = {
   red: "https://fonts.googleapis.com/css2?family=Anton",
   reputation: "https://fonts.googleapis.com/css2?family=UnifrakturMaguntia",
   lover: "https://fonts.googleapis.com/css2?family=Satisfy",
+  ttpd: "https://fonts.googleapis.com/css2?family=Satisfy",
   midnights: "https://fonts.googleapis.com/css?family=Monoton",
   mommy: "https://fonts.googleapis.com/css?family=Monoton",
 };

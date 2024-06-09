@@ -22,7 +22,7 @@ const Curtains = ({ text = "golden tattoo", speed = 100 }) => {
             isChecked ? "animate-curtainsLeft" : ""
           } text-white absolute left-0 w-1/2 h-full z-30 justify-end`}
         >
-          <p className="p-2 text-3xl">female rage:</p>
+          <p className="p-2 font-monoton text-3xl">female rage:</p>
         </div>
 
         <div
@@ -47,7 +47,7 @@ const Curtains = ({ text = "golden tattoo", speed = 100 }) => {
             isChecked ? "animate-curtainsRight" : ""
           } text-white absolute right-0 w-1/2 h-full z-30 justify-start`}
         >
-          <p className="p-2 text-3xl">the musical</p>
+          <p className="p-2 font-monoton text-3xl">the musical</p>
         </div>
       </div>
     </div>
