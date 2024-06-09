@@ -1,6 +1,6 @@
 import React from "react";
 import { useTheme } from "../ThemeContext";
-import Typewriter from "../Typewriter";
+import CustomButton from "../Button";
 import Curtains from "../Curtains";
 
 interface HeaderProps {
@@ -22,9 +22,7 @@ function Header(props: HeaderProps) {
           <Curtains />
         ) : (
           <div className="relative w-full h-full flex justify-center items-center">
-            <span
-              className={`absolute text-${theme}-text font-${theme} z-20`}
-            >
+            <span className={`absolute text-${theme}-text font-${theme} z-20`}>
               golden
               <span
                 className={`${
@@ -56,6 +54,7 @@ function Header(props: HeaderProps) {
           </div>
         )}
       </div>
+      <CustomButton text="here" />
     </header>
   );
 }
