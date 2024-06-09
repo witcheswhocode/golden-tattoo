@@ -200,7 +200,7 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
               handleIncrement={handleIncrement}
             />
           </Tab>
-          <Tab label="Optimized Combos">
+          <Tab label="Optimized">
             <ListOfBestCombinations
               combinations={mostLettersUsed}
               title={"Use the Most Letters"}

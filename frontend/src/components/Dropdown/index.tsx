@@ -53,7 +53,7 @@ export default function Dropdown(props: DropdownProps) {
     <div className="relative">
       <button
         type="button"
-        className={`inline-flex justify-center items-center px-2 py-1 border border-${theme}-border text-sm leading-5 font-medium rounded-md text-${theme}-buttonText bg-${theme}-button hover:text-gray-500 focus:outline-none focus:border-${theme} focus:shadow-outline-${theme}-border active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150`}
+        className={`inline-flex justify-center items-center shadow-button px-2 py-1 border border-${theme}-border text-sm leading-5 font-medium rounded-md text-${theme}-buttonText bg-${theme}-button hover:text-gray-500 focus:outline-none focus:border-${theme} focus:shadow-outline-${theme}-border active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150`}
         onClick={toggleDropdown}
       >
         {selectedValue || props.theme}

@@ -19,23 +19,23 @@ const Table: React.FC<TableProps> = (props: TableProps) => {
 
   return (
     <table
-      className={`min-w-full border bg-${theme}-tableHeader border border-${theme}-tableBorder shadow-${theme}`}
+      className={`min-w-full bg-${theme}-tableHeader text-${theme}-rowText border border-${theme}-tableBorder shadow-${theme}`}
     >
       <thead>
         <tr>
           <th
-            className={`w-1/2 border-b-${theme}-tableBorder cursor-pointer text-sm p-2`}
+            className={`w-1/2 border-b-${theme}-tableBorder text-${theme}-tableHeaderText cursor-pointer text-sm p-2`}
             onClick={() => handleHeaderClick("word")}
           >
             word
           </th>
           <th
-            className={`border-b-${theme}-tableBorder cursor-pointer text-sm`}
+            className={`border-b-${theme}-tableBorder text-${theme}-tableHeaderText cursor-pointer text-sm`}
             onClick={() => handleHeaderClick("songcount")}
           >
             # of songs
           </th>
-          <th className={`border-b-${theme}-tableBorder text-sm`}>categories</th>
+          <th className={`border-b-${theme}-tableBorder text-${theme}-tableHeaderText text-sm`}>categories</th>
         </tr>
       </thead>
       <tbody>

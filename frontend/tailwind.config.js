@@ -49,6 +49,7 @@ module.exports = {
 
       boxShadow: {
         lover: "10px 7px 41px 7px #e838a7a6",
+        button: "1px 1px 8px 1px rgb(77, 77, 77)",
         custom: "10px 10px 0px 0px rgba(0,0,0,0.75)",
         ttpd:"0 0 100px 0px white, 0 0 100px 0 white",
         "stars-1": "var(--stars-1)",
@@ -330,12 +331,41 @@ module.exports = {
           bottomExpanderTextHeader: "#0967b3",
         },
         reputation: {
-          //background: "#000000",#000000c0
-          backgroundContent: "purple",
           text: "black",
-          main: "lightblue",
-          secondary: "#FFA500",
-          third: "#FFA500",
+
+          panel: "#000000c0",
+          panelText: "white",
+          panelTextSecondary: "var(--ttpdLight)",
+          icon:"white",
+
+          button: "#8e877d",
+          buttonText: "white",
+          buttonTextHover: "",
+
+          tableHeader: "#f3731c",
+          tableHeaderText: "white",
+          tableBorder: "black",
+          evenRow: "white",
+          oddRow: "#e7e1d9",
+          rowText: "black",
+          searchBackground: "",
+
+          scoreBoard: "black",
+          scoreBoardText: "#ae97e5",
+          scoreBoardTextHeader: "white",
+          scoreBoardTextNumber: "#f3731c",
+          scoreBoardBorder: "white",
+          tabBorder: "white",
+          tabActive: "#000000c0",
+          tabTextActive: "#f3731c",
+          tabInactive: "grey",
+          tabTextInactive: "white",
+          braceletItemText: "#000000c0",
+          braceletItemTextSelected: "#000000c0",
+          minus: "black",
+          plus: "#f3731c",
+          bottomExpander: "#f3731c",
+          bottomExpanderTextHeader: "#000000c0",
         },
         midnights: {
           background: "#09071a",

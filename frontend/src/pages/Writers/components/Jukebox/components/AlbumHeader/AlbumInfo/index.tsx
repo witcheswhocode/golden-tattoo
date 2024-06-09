@@ -24,7 +24,7 @@ function AlbumInfo(props: AlbumInfoProps) {
 
   return (
     <div
-      className={`flex flex-col justify-center items-center overflow-hidden w-full bg-${theme}-panel z-1`}
+      className={`flex flex-col justify-center items-center overflow-hidden w-full z-1`}
     >
       <p
         className={`text-${theme}-panelTextSecondary text-auto font-bold text-center font-futura`}
