@@ -15,8 +15,7 @@ const Curtains = ({ text = "golden tattoo", speed = 100 }) => {
   }, []);
 
   return (
-    <div className="w-full h-32 overflow-hidden">
-      <div className="relative w-full h-full">
+      <div className="relative w-full h-full overflow-hidden">
         <div
           className={`flex items-center bg-center bg-cover bg-curtain ${
             isChecked ? "animate-curtainsLeft" : ""
@@ -50,7 +49,6 @@ const Curtains = ({ text = "golden tattoo", speed = 100 }) => {
           <p className="p-2 font-monoton text-3xl">the musical</p>
         </div>
       </div>
-    </div>
   );
 };
 
