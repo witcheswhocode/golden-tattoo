@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useTheme } from "../ThemeContext";
+import CustomButton from "../Button";
 
 interface DropdownProps {
   theme: string;
@@ -51,13 +52,11 @@ export default function Dropdown(props: DropdownProps) {
 
   return (
     <div className="relative">
-      <button
+      <CustomButton
         type="button"
-        className={`inline-flex justify-center items-center shadow-button px-2 py-1 border border-${theme}-border text-sm leading-5 font-medium rounded-md text-${theme}-buttonText bg-${theme}-button hover:text-gray-500 focus:outline-none focus:border-${theme} focus:shadow-outline-${theme}-border active:bg-gray-50 active:text-gray-800 transition ease-in-out duration-150`}
         onClick={toggleDropdown}
-      >
-        {selectedValue || props.theme}
-      </button>
+        text={selectedValue || props.theme}
+      />
 
       {isOpen && (
         <div className={`\absolute mt-2 w-56 bg-${theme}-button shadow-md z-50

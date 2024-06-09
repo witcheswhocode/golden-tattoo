@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AlbumHeader from "./components/AlbumHeader";
 import SongItem from "./components/SongItem";
 import RowOfEmojis from "../RowOfEmojis";
+import CustomButton from "src/components/Button";
 import { useTheme } from "src/components/ThemeContext";
 
 export interface WritersProps {
@@ -155,12 +156,7 @@ function Jukebox(props: WritersData) {
     <div className="p-3 w-full m-auto md:w-2/3">
       <div className="flex justify-end items-end">
         {" "}
-        <button
-          className={`my-2 bg-${theme}-button text-${theme}-buttonText px-2 py-1 border border-${theme}-border text-sm leading-5 font-medium rounded-md text-${theme}-buttonText bg-${theme}-button hover:text-gray-500 focus:outline-none focus:border-${theme} focus:shadow-outline-${theme}-border active:bg-gray-50 active:text-gray-800`}
-          onClick={toggleSortOrder}
-        >
-          Sort By Date
-        </button>
+        <CustomButton text={"Sort By Date"} onClick={toggleSortOrder} />
       </div>
       {result}
     </div>

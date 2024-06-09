@@ -30,7 +30,9 @@ const CustomButton: React.FC<ButtonProps> = ({
     rounded-md
     box-border
     p-1
-    w-12
+    px-2
+    mb-2
+    w-auto
     text-${theme}-buttonText
     cursor-pointer
     text-sm

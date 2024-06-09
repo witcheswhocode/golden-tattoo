@@ -1,6 +1,5 @@
 import React from "react";
 import { useTheme } from "../ThemeContext";
-import CustomButton from "../Button";
 import Curtains from "../Curtains";
 
 interface HeaderProps {
@@ -54,7 +53,6 @@ function Header(props: HeaderProps) {
           </div>
         )}
       </div>
-      <CustomButton text="here" />
     </header>
   );
 }

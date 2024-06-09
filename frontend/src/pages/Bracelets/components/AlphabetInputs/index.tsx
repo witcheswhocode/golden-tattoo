@@ -1,5 +1,6 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import LoadingBeads from "src/components/LoadingBeads";
+import CustomButton from "src/components/Button";
 import { useTheme } from "src/components/ThemeContext";
 
 interface AlphabetInputProps {
@@ -242,12 +243,10 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
               </div>
             </div>
             <div className="flex justify-center items-center pt-2 mt-2">
-              <button
+              <CustomButton
                 type="submit"
-                className={`bg-${theme}-button text-${theme}-buttonText px-4 py-2 rounded`}
-              >
-                Submit
-              </button>
+                text="Submit"
+              />
             </div>
           </form>
         </div>
@@ -258,13 +257,11 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
           } ${isSubmitted ? "block" : "hidden"}`}
         >
           <div className="flex">
-            <button
+            <CustomButton
               type="button"
               onClick={handleReset}
-              className={`text-sm bg-${theme}-button text-${theme}-buttonText px-4 py-2 rounded shadow-${theme} border border-${theme}-border`}
-            >
-              ⬅️ Go back and start over
-            </button>
+              text={"⬅️ Go back and start over"}
+            />
           </div>
         </div>
       )}
