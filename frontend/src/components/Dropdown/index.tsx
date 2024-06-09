@@ -60,7 +60,8 @@ export default function Dropdown(props: DropdownProps) {
       </button>
 
       {isOpen && (
-        <div className={`absolute mt-2 w-56 bg-${theme}-button shadow-md z-10`}>
+        <div className={`\absolute mt-2 w-56 bg-${theme}-button shadow-md z-50
+        `}>
           {dropdownItems.map((item, index) => (
             <div key={item.value} className="mb-1">
               <a
