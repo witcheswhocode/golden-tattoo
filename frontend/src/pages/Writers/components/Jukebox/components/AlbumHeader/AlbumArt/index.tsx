@@ -9,7 +9,7 @@ function AlbumArt(props: AlbumArtProps) {
       <img
         className="h-full w-auto object-fill"
         loading="lazy"
-        src={`assets/albums/${props.alb}.png`}
+        src={`assets/albums/${props.alb ? props.alb : '_1989'}.png`}
         alt="Album Image"
       />
   );
