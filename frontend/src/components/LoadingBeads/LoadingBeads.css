@@ -9,10 +9,6 @@
     overflow: hidden; /* Ensure beads are hidden when outside the container */
 }
 
-.bead.center {
-  transform: translateX(0); /* Initially centered */
-  animation: string-beads-center 4s linear;
-}
 
 .bead-container::before {
   content: "";
@@ -37,6 +33,11 @@
   z-index: 10;
   text-shadow: 0.8px 0.8px 0.8px rgb(182, 182, 182);
   box-shadow: 0.8px 0.8px rgb(182, 182, 182);  
+}
+.bead.center {
+  transform: translateX(0); /* Initially centered */
+  animation: string-beads-center 4s linear;
+  animation-fill-mode: forwards;
 }
 .bead.start {
   animation: string-beads 8s linear infinite;
