@@ -168,7 +168,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
   }, []);
 
   return (
-    <div className={`px-2 md:w-3/4`}>
+    <div className={`px-2`}>
       {isLoading ? (
         <div
           className={`bg-${theme}-panel rounded-lg space-y-4 border-solid border-2 border-${theme}-button shadow-${theme} mt-8 p-4`}

@@ -38,7 +38,7 @@ function ThemeWrapper() {
     }
 
     return (
-      <div className="mx-4 my-2 md:w-2/3 md:m-auto flex justify-start items-start">
+      <div className="mx-4 my-2 w-full md:w-2/3 md:m-auto flex justify-start items-start">
         <Dropdown
           items={dropdownItems}
           theme={theme}
@@ -54,7 +54,7 @@ function ThemeWrapper() {
         ["lover"].includes(theme)
           ? `bg-gradient-to-r from-lover-pink to-lover-blue`
           : `bg-${theme}-background`
-      } flex flex-col min-h-screen`}
+      }  flex flex-col justify-center items-center min-h-screen`}
     >
       <Router>
         <Header />

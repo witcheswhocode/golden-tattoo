@@ -14,7 +14,7 @@ const LetterCount: React.FC<LetterCountProps> = ({
 }) => {
   const { theme } = useTheme();
   return (
-    <div className={`p-1 mb-3 border-4 border-${theme}-scoreBoardBorder bg-${theme}-scoreBoard md:w-3/4 m-auto`}>
+    <div className={`p-1 mb-3 border-4 border-${theme}-scoreBoardBorder bg-${theme}-scoreBoard m-auto`}>
       <div className={`w-full flex p-1 justify-between`}>
         <p className={`text-sm font-semibold text-${theme}-scoreBoardTextHeader`}>LETTERS LEFT</p>
         <p className={`text-sm`}>

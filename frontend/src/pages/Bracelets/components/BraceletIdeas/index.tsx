@@ -191,34 +191,32 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
         </ExpandableDiv>
       </div>
 
-      <div className="md:w-3/4 m-auto">
-        <Tabs>
-          <Tab label="Build Your Own">
-            <ListOfBraceletIdeas
-              braceletQuantities={braceletQuantities}
-              handleDecrement={handleDecrement}
-              handleIncrement={handleIncrement}
-            />
-          </Tab>
-          <Tab label="Optimized">
-            <ListOfBestCombinations
-              combinations={mostLettersUsed}
-              title={"Use the Most Letters"}
-              desc={
-                "This list gives you the variation that will use the most beads."
-              }
-            />
+      <Tabs>
+        <Tab label="Build Your Own">
+          <ListOfBraceletIdeas
+            braceletQuantities={braceletQuantities}
+            handleDecrement={handleDecrement}
+            handleIncrement={handleIncrement}
+          />
+        </Tab>
+        <Tab label="Optimized">
+          <ListOfBestCombinations
+            combinations={mostLettersUsed}
+            title={"Use the Most Letters"}
+            desc={
+              "This list gives you the variation that will use the most beads."
+            }
+          />
 
-            <ListOfBestCombinations
-              combinations={mostBraceletOptions}
-              title={"Make the Most Bracelets"}
-              desc={
-                "This is a list a various combinations you can try to make the most bracelets."
-              }
-            />
-          </Tab>
-        </Tabs>
-      </div>
+          <ListOfBestCombinations
+            combinations={mostBraceletOptions}
+            title={"Make the Most Bracelets"}
+            desc={
+              "This is a list a various combinations you can try to make the most bracelets."
+            }
+          />
+        </Tab>
+      </Tabs>
     </div>
   );
 };

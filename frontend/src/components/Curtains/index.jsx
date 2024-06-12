@@ -33,7 +33,7 @@ const Curtains = ({ text = "golden tattoo", speed = 100 }) => {
           <img
             loading="lazy"
             src={"/assets/ttpd-header.png"}
-            className="w-1/4 shadow-ttpd rounded-full"
+            className="w-1/4 md:w-1/6 shadow-ttpd rounded-full"
             alt={
               "Taylor screaming into microphone during Who's Afraid of Little Old Me? on the Era's tour."
             }

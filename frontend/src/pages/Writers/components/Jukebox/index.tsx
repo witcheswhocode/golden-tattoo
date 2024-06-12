@@ -153,7 +153,7 @@ function Jukebox(props: WritersData) {
   };
 
   return (
-    <div className="p-3 w-full m-auto md:w-2/3">
+    <div className="p-3 m-auto">
       <div className="flex justify-end items-end">
         {" "}
         <CustomButton text={"Sort By Date"} onClick={toggleSortOrder} />

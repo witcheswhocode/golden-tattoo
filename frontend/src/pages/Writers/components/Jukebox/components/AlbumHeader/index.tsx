@@ -17,7 +17,7 @@ export interface AlbumHeaderProps {
 function AlbumHeader(props: AlbumHeaderProps) {
   const {theme} = useTheme();
   return (
-    <div className={`w-full h-auto p-2 flex mb-3 bg-${theme}-panel`}>
+    <div className={`h-auto p-2 flex mb-3 bg-${theme}-panel`}>
       <AlbumArt alb={props.alb} />
       <AlbumInfo
         alb={props.alb}
