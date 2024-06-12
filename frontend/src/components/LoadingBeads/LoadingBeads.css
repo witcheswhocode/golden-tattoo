@@ -61,6 +61,45 @@
     transform: translateX(2000%); /* Move off-screen to the right */
   }
 }
+
+
+/* Vendor prefixes for better compatibility */
+@-webkit-keyframes string-beads {
+  0% {
+    -webkit-transform: translateX(-2000%);
+  }
+  40% {
+    -webkit-transform: translateX(50%);
+  }
+  50% {
+    -webkit-transform: translateX(50%);
+  }
+  60% {
+    -webkit-transform: translateX(50%);
+  }
+  100% {
+    -webkit-transform: translateX(2000%);
+  }
+}
+
+@-moz-keyframes string-beads {
+  0% {
+    -moz-transform: translateX(-2000%);
+  }
+  40% {
+    -moz-transform: translateX(50%);
+  }
+  50% {
+    -moz-transform: translateX(50%);
+  }
+  60% {
+    -moz-transform: translateX(50%);
+  }
+  100% {
+    -moz-transform: translateX(2000%);
+  }
+}
+
 @keyframes string-beads-center {
   0% {
     transform: translateX(0);
