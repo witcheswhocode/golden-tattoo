@@ -57,7 +57,7 @@ const People: React.FC = () => {
   const { theme } = useTheme();
   return (
     <div className="space-y-4">
-      <p className="space-x-1 text-sm flex flex-wrap justify-center items-center">
+      <p className="space-x-1 text-sm flex-inline flex-wrap justify-center items-center">
         {peopleData.map((person, index) => (
           <span key={index} className="mr-2">
             <a
