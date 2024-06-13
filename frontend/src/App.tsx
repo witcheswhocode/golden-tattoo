@@ -38,7 +38,7 @@ function ThemeWrapper() {
     }
 
     return (
-      <div className="mx-4 my-2 w-full md:w-2/3 md:m-auto flex justify-start items-start">
+      <div className="mx-4 my-2 w-full md:w-2/3 lg:w-1/2 md:m-auto flex justify-start items-start">
         <Dropdown
           items={dropdownItems}
           theme={theme}

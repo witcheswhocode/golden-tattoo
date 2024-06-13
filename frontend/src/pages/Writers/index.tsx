@@ -18,7 +18,7 @@ function Writers() {
   }, []);
 
   return (
-    <div className="w-full md:w-2/3 z-10">
+    <div className="w-full md:w-2/3 lg:w-1/2 z-10">
       <div className="px-2 m-auto">
         <p className="text-sm text-start p-2 my-2">
           Explore the complete list of Taylor's discography and the songwriters

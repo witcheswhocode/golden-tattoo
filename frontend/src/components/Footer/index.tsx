@@ -5,7 +5,7 @@ interface FooterProps {}
 function Footer(props: FooterProps) {
   const { theme } = useTheme();
   return (
-    <footer className={`m-auto text-${theme}-text p-4 px-8 md:w-2/3`}>
+    <footer className={`m-auto text-${theme}-text p-4 px-8 md:w-2/3 lg:w-1/2`}>
       <div className="flex flex-col justify-start items-start gap-2">
         <p>
           Have suggestions or comments?{" "}

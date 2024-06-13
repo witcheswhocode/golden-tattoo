@@ -34,7 +34,7 @@ const LyricsTable: React.FC = () => {
   }, []);
 
   return (
-    <div className="container mx-auto p-4 md:w-3/4 z-20">
+    <div className="container mx-auto p-4 md:w-2/3 lg:w-1/2 z-20">
       <p className="text-sm text-center p-2 mb-4">Explore Taylor Swift's lyrics by clicking on the table and filters. The data was collected from multiple sources, learn more about the data.</p>
       {tableRows && <DataTable data={tableRows} openModal={openModal} />}
       {selectedItem && <Modal data={selectedItem} word={selectedWord} onClose={closeModal} />}

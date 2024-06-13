@@ -256,7 +256,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
             isSubmitted ? "opacity-100" : "opacity-0"
           } ${isSubmitted ? "block" : "hidden"}`}
         >
-          <div className="flex">
+          <div className="flex justify-end items-end">
             <CustomButton
               type="button"
               onClick={handleReset}
