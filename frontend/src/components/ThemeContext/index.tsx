@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
-type Theme = "ttpd" | "lover" | "midnights" | "reputation";
+type Theme = "midnights" | "ttpd" | "reputation" | "lover";
 
 interface ThemeContextProps {
   theme: Theme;
@@ -14,15 +14,15 @@ interface ThemeProviderProps {
 }
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>("ttpd");
+  const [theme, setTheme] = useState<Theme>("midnights");
 
   const toggleTheme = (theme?: Theme) => {
     if (theme) {
       setTheme(theme);
       document.documentElement.setAttribute("data-theme", theme);
     } else {
-      setTheme("ttpd");
-      document.documentElement.setAttribute("data-theme", "ttpd");
+      setTheme("midnights");
+      document.documentElement.setAttribute("data-theme", "midnights");
     }
   };
 

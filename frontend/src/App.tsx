@@ -27,7 +27,7 @@ function ThemeWrapper() {
   const ThemeToggle = () => {
     const { theme, toggleTheme } = useTheme();
 
-    const items = ["ttpd", "lover", "reputation", "midnights"];
+    const items = ["midnights", "ttpd", "reputation", "lover"];
 
     const dropdownItems = items.map((item) => ({
       value: item,

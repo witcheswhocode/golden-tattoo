@@ -275,6 +275,10 @@ module.exports = {
           buttonTextHover: "white",
           buttonBorder: "#eae3ff",
 
+          link: "#0967b3",
+          linkHover: "white",
+          linkVisited: "#ff38a7",
+
           tableHeader: "#e2f8ff",
           tableHeaderText: "#0967b3",
           tableBorder: "#ff38a7",
@@ -349,6 +353,10 @@ module.exports = {
           buttonTextHover: "#f3731c",
           buttonBorder: "#f3731c",
 
+          link: "#f3731c",
+          linkHover: "darkgrey",
+          linkVisited: "black",
+
           tableHeader: "#f3731c",
           tableHeaderText: "white",
           tableBorder: "black",
@@ -386,6 +394,10 @@ module.exports = {
           buttonText: "white",
           buttonTextHover: "#6d0a06",
           buttonBorder: "#a99daf",
+
+          link: "#f3731c",
+          linkHover: "var(--blood-moon-light-1)",
+          linkVisited: "#a99daf",
 
           tableHeader: "#6d0a06",
           tableHeaderText: "white",
