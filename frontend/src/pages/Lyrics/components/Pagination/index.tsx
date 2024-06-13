@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import CustomButton from "src/components/Button";
 
 interface PaginationProps {
   pages: number[];
@@ -38,30 +39,35 @@ const Pagination: React.FC<PaginationProps> = ({
   };
 
   const visiblePages = () => {
-    const pageRange = 2; 
+    const pageRange = 2;
     const startPage = Math.max(1, currentPage - pageRange);
     const endPage = Math.min(totalPages, currentPage + pageRange);
 
-    return Array.from({ length: endPage - startPage + 1 }, (_, index) => startPage + index);
+    return Array.from(
+      { length: endPage - startPage + 1 },
+      (_, index) => startPage + index
+    );
   };
 
   return (
-    <div className="w-full text-center">
-      <button onClick={goToPrevPage} disabled={currentPage === 1}>
-        {'<'}
-      </button>
+    <div className="flex flex-row justify-center items-center w-full space-x-2 text-center my-4">
+      <CustomButton
+        text={"<"}
+        onClick={goToPrevPage}
+        disabled={currentPage === 1}
+      />
       {visiblePages().map((page, index) => (
-        <button
-          key={index}
+        <CustomButton
+          text={`${page}`}
           onClick={() => goToPage(page)}
-          style={{ fontWeight: currentPage === page ? 'bold' : 'normal' }}
-        >
-          &nbsp;&nbsp;{page}&nbsp;&nbsp;
-        </button>
+          selected={page === currentPage ? true : false}
+        />
       ))}
-      <button onClick={goToNextPage} disabled={currentPage === totalPages}>
-        {'>'}
-      </button>
+      <CustomButton
+        text={">"}
+        onClick={goToNextPage}
+        disabled={currentPage === totalPages}
+      />
     </div>
   );
 };

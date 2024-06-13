@@ -8,6 +8,7 @@ interface ButtonProps {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   href?: string;
   disabled?: boolean;
+  selected?: boolean;
 }
 
 const CustomButton: React.FC<ButtonProps> = ({
@@ -16,6 +17,7 @@ const CustomButton: React.FC<ButtonProps> = ({
   onClick,
   href,
   disabled,
+  selected,
   ...rest
 }) => {
   const { theme } = useTheme();
@@ -39,6 +41,7 @@ const CustomButton: React.FC<ButtonProps> = ({
     text-center
     whitespace-nowrap
     tap-highlight-transparent
+    ${selected === true ? `border-t-2 border-l-2 border-${theme}-buttonBorder border-outset text-${theme}-buttonTextHover` : ``}
   `;
 
   if (href) {

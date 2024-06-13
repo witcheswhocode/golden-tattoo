@@ -31,7 +31,11 @@ const LyricsTable: React.FC = () => {
       .then((response) => response.json())
       .then((data) => setTableRows(data))
       .catch((error) => console.error("Error fetching data:", error));
+
+    console.log(tableRows)
   }, []);
+
+  
 
   return (
     <div className="container mx-auto p-4 md:w-2/3 lg:w-1/2 z-20">
