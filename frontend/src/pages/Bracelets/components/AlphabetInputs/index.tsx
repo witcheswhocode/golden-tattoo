@@ -171,7 +171,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
     <div className={`px-2`}>
       {isLoading ? (
         <div
-          className={`bg-${theme}-panel rounded-lg space-y-4 border-solid border-2 border-${theme}-button shadow-${theme} mt-8 p-4`}
+          className={`bg-${theme}-panel text-${theme}-text rounded-lg space-y-4 border-solid border-2 border-${theme}-button shadow-${theme} mt-8 p-4`}
         >
           <LoadingBeads />
         </div>
@@ -203,7 +203,10 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
                     key={letter}
                     className={`flex flex-col items-center font-bold`}
                   >
-                    <label htmlFor={letter} className={`mb-1 text-${theme}-panelText`}>
+                    <label
+                      htmlFor={letter}
+                      className={`mb-1 text-${theme}-panelText`}
+                    >
                       {letter}
                     </label>
                     <input
@@ -217,36 +220,41 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
                   </div>
                 );
               })}
-              <div className="flex justify-cemter items-center pt-8 py-2">
-                <label className="mr-2 flex justify-center items-center">
-                  explicit
-                </label>
-                <input
-                  type="checkbox"
-                  id="explicit"
-                  name="options"
-                  value="explicit"
-                  className="mr-1"
-                  onChange={handleCheckboxChange}
-                />
-                <label className="mr-2 flex justify-center items-center">
-                  acronyms
-                </label>
-                <input
-                  type="checkbox"
-                  id="acronyms"
-                  name="options"
-                  value="acronyms"
-                  className="mr-1"
-                  onChange={handleCheckboxChange}
-                />
+              <div className={`flex justify-between space-x-8 pt-8 py-2`}>
+                <div className={`flex flex-row`}>
+                  <label
+                    className={`mr-2 flex justify-center items-center text-${theme}-panelText`}
+                  >
+                    explicit
+                  </label>
+                  <input
+                    type="checkbox"
+                    id="explicit"
+                    name="options"
+                    value="explicit"
+                    className="mr-1"
+                    onChange={handleCheckboxChange}
+                  />
+                </div>
+                <div className={`flex flex-row`}>
+                  <label
+                    className={`mr-2 flex justify-center items-center text-${theme}-panelText`}
+                  >
+                    acronyms
+                  </label>
+                  <input
+                    type="checkbox"
+                    id="acronyms"
+                    name="options"
+                    value="acronyms"
+                    className="mr-1"
+                    onChange={handleCheckboxChange}
+                  />
+                </div>
               </div>
             </div>
             <div className="flex justify-center items-center pt-2 mt-2">
-              <CustomButton
-                type="submit"
-                text="Submit"
-              />
+              <CustomButton type="submit" text="Submit" />
             </div>
           </form>
         </div>
