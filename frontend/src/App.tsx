@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -24,6 +24,7 @@ function App() {
 
 function ThemeWrapper() {
   const { theme } = useTheme();
+  const [dropDownClicked, setDropDownClicked] = useState<boolean>(false);
 
   const ThemeToggle = () => {
     const { theme, toggleTheme } = useTheme();
@@ -36,6 +37,7 @@ function ThemeWrapper() {
 
     function handleThemeChange(theme: any) {
       toggleTheme(theme);
+      setDropDownClicked(true);
     }
 
     return (
@@ -44,7 +46,16 @@ function ThemeWrapper() {
           items={dropdownItems}
           theme={theme}
           handleThemeChange={handleThemeChange}
-        /> <Typewriter size={'sm'} duration={1000} text={'< Pick a theme here...'}/>
+        />{" "}
+        {!dropDownClicked ? (
+          <Typewriter
+            size={"sm"}
+            duration={1000}
+            text={"< Pick a theme here..."}
+          />
+        ) : (
+          <></>
+        )}
       </div>
     );
   };
