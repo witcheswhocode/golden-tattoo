@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from "../ThemeContext";
 
-const Typewriter = ({ text, size = '4xl', themefont = false, duration, speed = 100 }) => {
+const Typewriter = ({ text, size = '4xl', themefont = false, duration, speed = 100, fade = false }) => {
   const { theme } = useTheme();
   const [displayedText, setDisplayedText] = useState("");
   const [index, setIndex] = useState(0);
@@ -37,10 +37,10 @@ const Typewriter = ({ text, size = '4xl', themefont = false, duration, speed = 1
 
   return (
     <div className="inline-block ml-4">
-      <span className={`text-${size} ${themefont ? `font-${theme}` : `font-mono`} text-${theme}-text`}>
+      <span className={`text-${size} ${themefont ? `font-${theme}` : `font-mono`} text-${theme}-text ${fade ? 'animate-typing-fade' : ''}`}>
         {displayedText}
       </span>
-      <span className={`typewriter-cursor text-${size} ${themefont ? `font-${theme}` : `font-mono`} text-${theme}-text`}>
+      <span className={`typewriter-cursor text-${size} ${themefont ? `font-${theme}` : `font-mono`} text-${theme}-text ${fade ? 'animate-typing-fade' : ''}`}>
         |
       </span>
     </div>

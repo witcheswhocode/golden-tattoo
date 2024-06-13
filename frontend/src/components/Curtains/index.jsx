@@ -25,7 +25,7 @@ const Curtains = ({ text = "golden tattoo", speed = 100 }) => {
         </div>
 
         <div
-          className={`flex items-center text-white h-full justify-center border-2 border-ttpd-text absolute text-center z-20 w-full transition-opacity duration-1000 ease-out ${
+          className={`flex items-center text-white h-full justify-center bg-ttpd-background border-2 border-ttpd-text absolute text-center z-20 w-full transition-opacity duration-1000 ease-out ${
             isChecked ? "opacity-100" : "opacity-0"
           }`}
         >

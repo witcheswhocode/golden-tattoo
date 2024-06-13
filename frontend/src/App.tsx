@@ -12,6 +12,7 @@ import { ThemeLoader } from "./components/ThemeContext/components/ThemeLoader";
 import ShimmeringStars from "./components/ShimmeringStars";
 import About from "./pages/About";
 import Typewriter from "./components/Typewriter";
+import RandomTypewriterBackground from "./components/RandomTypewriterBackground";
 
 function App() {
   return (

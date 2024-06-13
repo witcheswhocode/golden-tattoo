@@ -8,7 +8,7 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className="mt-2 p-4 text-white z-10">
-      <div className="container mx-auto flex justify-center">
+      <div className={`container mx-auto flex justify-center ${theme === "ttpd" ? `bg-ttpd-background z-5 border-t-2 border-b-2 border-${theme}-tableBorder`:''}`}>
         <ul className="flex space-x-2">
           <SingleEmoji />
           <li>

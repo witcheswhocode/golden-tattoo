@@ -201,8 +201,8 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
         />
       </div>
       <div className="relative w-full">
-        <div className={`fade-right${isMobile ? "" : "-none"}`}>
-          <div className="all-categories flex flex-row flex-nowrap w-full mb-4 overflow-auto gap-1 md:flex-wrap md:justify-center">
+        <div className={`py-2 mb-2 ${theme === "ttpd" ? `bg-ttpd-background z-5 border-t-2 border-b-2 border-${theme}-tableBorder`:''} fade-right${isMobile ? "" : "-none"}`}>
+          <div className="all-categories flex flex-row flex-nowrap w-full overflow-auto gap-1 md:flex-wrap md:justify-center">
             {allCategories.map((category, index) => (
               <div
                 className={`flex flex-nowrap justify-center items-center w-auto px-3 py-1 text-sm text-white rounded-full cursor-pointer whitespace-nowrap category-color-${

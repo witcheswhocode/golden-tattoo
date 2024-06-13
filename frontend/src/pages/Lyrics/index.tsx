@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import DataTable, { ModalData } from "./components/DataTable";
 import Modal from "./components/Modal";
 import { TableRow } from "./components/DataTable";
+import { useTheme } from "src/components/ThemeContext";
 
 const LyricsTable: React.FC = () => {
+  const { theme } = useTheme();
   const [selectedWord, setSelectedWord] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<ModalData[] | null>(null);
   const [tableRows, setTableRows] = useState<TableRow[] | null>(null);
@@ -14,7 +16,7 @@ const LyricsTable: React.FC = () => {
       .then((response) => response.json())
       .then((data) => setSelectedItem(data.data))
       .catch((error) => console.error("Error fetching modal data:", error));
-      console.log(selectedItem)
+    console.log(selectedItem);
   };
 
   const closeModal = () => {
@@ -32,16 +34,25 @@ const LyricsTable: React.FC = () => {
       .then((data) => setTableRows(data))
       .catch((error) => console.error("Error fetching data:", error));
 
-    console.log(tableRows)
+    console.log(tableRows);
   }, []);
-
-  
 
   return (
     <div className="container mx-auto p-4 md:w-2/3 lg:w-1/2 z-20">
-      <p className="text-sm text-center p-2 mb-4">Explore Taylor Swift's lyrics by clicking on the table and filters. The data was collected from multiple sources, learn more about the data.</p>
+      <p
+        className={`text-sm text-center p-2 mb-4 ${
+          theme === "ttpd"
+            ? `bg-ttpd-background z-10 border-t-2 border-b-2 border-${theme}-tableBorder`
+            : ""
+        }`}
+      >
+        Explore Taylor Swift's lyrics by clicking on the table and filters. The
+        data was collected from multiple sources, learn more about the data.
+      </p>
       {tableRows && <DataTable data={tableRows} openModal={openModal} />}
-      {selectedItem && <Modal data={selectedItem} word={selectedWord} onClose={closeModal} />}
+      {selectedItem && (
+        <Modal data={selectedItem} word={selectedWord} onClose={closeModal} />
+      )}
     </div>
   );
 };

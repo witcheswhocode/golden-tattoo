@@ -121,6 +121,10 @@ module.exports = {
           "75%": { opacity: 0.5 },
           "100%": { opacity: 0 },
         },
+        "typing-fade": {
+          "0%": { opacity: 1 },
+          "100%": { opacity: 0 },
+        },
         curtainsRight: {
           "0%": {
             transform: "translateX(0)",
@@ -161,6 +165,7 @@ module.exports = {
           "animating-bloodmoon-properties 6s linear 0s alternate forwards",
         "bloodmoon-animation": "bloodmoonAnimation 5s ease 1",
         "glowing-stars": "glowing-stars 1s linear infinite",
+        "typing-fade": "typing-fade 4s ease-out",
         curtainsLeft: "curtainsLeft 2s ease forwards",
         curtainsRight: "curtainsRight 2s ease forwards",
       },

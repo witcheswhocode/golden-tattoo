@@ -1,6 +1,7 @@
 import React from "react";
 import { useTheme } from "../ThemeContext";
 import Curtains from "../Curtains";
+import RandomTypewriterBackground from "../RandomTypewriterBackground";
 
 interface HeaderProps {
   // Define any props you want to pass to the Header component
@@ -53,6 +54,73 @@ function Header(props: HeaderProps) {
           </div>
         )}
       </div>
+      <RandomTypewriterBackground
+          strings={[
+            "i love you it's ruining my life",
+            "who's afraid of little old me?",
+            "i hate it here",
+            "bygones will be bygone",
+            "how can i be guilty as sin?",
+
+            "i love you it's ruining my life",
+            "two graves, one gun",
+            "you're the loss of my life",
+            "a greater woman stays cool",
+            "but i howl like a wolf to the moon",
+            "i got some regrets",
+            "ill bury them in florida",
+            "chloe or sam or sophia or marcus",
+            
+            "i love you it's ruining my life",
+            "just say you loved me",
+            "just say you always wondered",
+            "handcuffed to the spell i was under",
+            "i did my time...",
+            "i love you it's ruining my life",
+            "i love you it's ruining my life",
+            "who's afraid of little old me?",
+            "i hate it here",
+            "bygones will be bygone",
+            "how can i be guilty as sin?",
+
+            "i love you it's ruining my life",
+            "two graves, one gun",
+            "you're the loss of my life",
+            "a greater woman stays cool",
+            "but i howl like a wolf to the moon",
+            "i got some regrets",
+            "ill bury them in florida",
+            "chloe or sam or sophia or marcus",
+            
+            "i love you it's ruining my life",
+            "just say you loved me",
+            "just say you always wondered",
+            "handcuffed to the spell i was under",
+            "i did my time...",
+            "i love you it's ruining my life",
+            "i love you it's ruining my life",
+            "who's afraid of little old me?",
+            "i hate it here",
+            "bygones will be bygone",
+            "how can i be guilty as sin?",
+
+            "i love you it's ruining my life",
+            "two graves, one gun",
+            "you're the loss of my life",
+            "a greater woman stays cool",
+            "but i howl like a wolf to the moon",
+            "i got some regrets",
+            "ill bury them in florida",
+            "chloe or sam or sophia or marcus",
+            
+            "i love you it's ruining my life",
+            "just say you loved me",
+            "just say you always wondered",
+            "handcuffed to the spell i was under",
+            "i did my time...",
+            "i love you it's ruining my life",
+          ]}
+        />
     </header>
   );
 }
