@@ -11,6 +11,7 @@ import { ThemeProvider, useTheme } from "./components/ThemeContext";
 import { ThemeLoader } from "./components/ThemeContext/components/ThemeLoader";
 import ShimmeringStars from "./components/ShimmeringStars";
 import About from "./pages/About";
+import Typewriter from "./components/Typewriter";
 
 function App() {
   return (
@@ -43,7 +44,7 @@ function ThemeWrapper() {
           items={dropdownItems}
           theme={theme}
           handleThemeChange={handleThemeChange}
-        />
+        /> <Typewriter size={'sm'} duration={1000} text={'< Pick a theme here...'}/>
       </div>
     );
   };
