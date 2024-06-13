@@ -12,6 +12,7 @@ const LoadingBeads = () => {
   }, []);
 
   const reversedText = "♥LOADING♥".split("").join("");
+  const reversedTextLength = reversedText.length;
 
   return (
     <>
@@ -19,8 +20,8 @@ const LoadingBeads = () => {
         <div className={`bead-container `}>
           {reversedText.split("").map((char, index) => {
             const animationDelay = startAnimation
-            ? `${(1.8 - index * 0.2) * 1.5}s`
-            : `0.4s`;
+            ? `${((1.2 - index * 0.2) ).toFixed(1)}s`
+            : `${((0.8 - index * 0.2)).toFixed(1)}s`;
             return (
               <div
                 key={index}

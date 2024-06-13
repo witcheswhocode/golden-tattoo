@@ -38,6 +38,8 @@
   transform: translateX(0); /* Initially centered */
   animation: string-beads-center 4s linear;
   animation-fill-mode: forwards;
+  animation-iteration-count: 1; /* This makes the animation run only once */
+
 }
 .bead.start {
   animation: string-beads 8s linear infinite;
@@ -106,7 +108,7 @@
     transform: translateX(0);
   }
   100% {
-    transform: translateX(5200%); /* Move off-screen to the right */
+    transform: translateX(6000%); /* Move off-screen to the right */
   }
 }
   
