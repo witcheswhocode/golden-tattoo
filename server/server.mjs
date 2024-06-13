@@ -61,7 +61,7 @@ FROM
   JOIN word w ON w.wordid = l.wordid 
   JOIN song s ON s.songid = l.songid 
 WHERE 
-  l.wordid = 43
+  l.wordid = ${id}
 ORDER BY 
   CASE WHEN a.albumid > 99 THEN 1 ELSE 0 END, 
   a.albumid DESC
