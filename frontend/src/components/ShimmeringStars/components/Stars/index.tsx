@@ -15,7 +15,7 @@ const generateStarPositions = (numStars: number, viewportWidth: number, viewport
   return starPositions;
 };
 
-const Stars3: React.FC = () => {
+const Stars: React.FC = () => {
   const { theme } = useTheme();
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
   const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
@@ -58,4 +58,4 @@ const Stars3: React.FC = () => {
   );
 };
 
-export default Stars3;
+export default Stars;
