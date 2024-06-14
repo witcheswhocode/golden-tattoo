@@ -36,7 +36,7 @@
 }
 .bead.center {
   transform: translateX(0); /* Initially centered */
-  animation: string-beads-center 4s linear;
+  animation: string-beads-center 3s linear;
   animation-fill-mode: forwards;
   animation-iteration-count: 1; /* This makes the animation run only once */
 

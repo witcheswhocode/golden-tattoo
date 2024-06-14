@@ -228,7 +228,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
                       name={letter.toLowerCase()}
                       onChange={handleInputChange}
                       value={inputValues[letter.toLowerCase()] || ""}
-                      className={`text-black border rounded w-8 h-8 p-2 text-center focus:ring focus:ring-blue-200 focus:outline-none`}
+                      className={`text-black border rounded w-10 h-8 p-2 text-center focus:ring focus:ring-blue-200 focus:outline-none`}
                     />
                   </div>
                 );
