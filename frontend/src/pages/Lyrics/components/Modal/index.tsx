@@ -7,36 +7,62 @@ interface ModalProps {
   word: string | null;
   onClose: () => void;
 }
+
 const Modal: React.FC<ModalProps> = ({ data, word, onClose }) => {
+  console.log("Modal data:", data);
+
   const addCategoryNote =
     data[0].categories &&
     (data[0].categories.includes("parallels") ||
       data[0].categories.includes("queer"));
-      console.log(data)
-  const createDiv = (albumshort: string, alb: string, song: string) => (
-    <div key={`${albumshort}-${song}`}>
-      <div
-        className={`flex flex-col justify-center items-center opacity-90 bg-album-${alb} rounded-full shadow-2xl p-2 m-4`}
-      >
-        <div className="text-center text-lg text-white lyric-header-text">{`${song
-          .replace("Taylor's Version", "TV")
-          .replace("From the Vault", "FtV")}`}</div>
-        <div className="text-center text-md text-white lyric-header-text">{`${albumshort}`}</div>
-      </div>
-      {data
-        .filter((item) => item.albumshort === albumshort && item.song === song)
-        .map((filteredItem) => (
-          <div
-            className="text-center mb-8"
-            key={`${filteredItem.lyric}-${filteredItem.lyricid}`}
-          > 
-            <p className="text-xs py-1 font-light">{filteredItem.lyricbefore && HtmlReactParser(filteredItem.lyricbefore)}</p>
-            <p className="text-sm py-2">{HtmlReactParser(filteredItem.lyric)}</p>
-            <p className="text-xs py-1 font-light">{filteredItem.lyricafter && HtmlReactParser(filteredItem.lyricafter)}</p>
+
+  const createDiv = (albumshort: string, alb: string, song: string) => {
+    console.log(
+      `Creating div for albumshort: ${albumshort}, alb: ${alb}, song: ${song}`
+    );
+
+    return (
+      <div key={`${albumshort}-${alb}-${song}`}>
+        <div
+          className={`flex flex-col justify-center items-center opacity-90 bg-album-${alb} rounded-full shadow-2xl p-2 m-4`}
+        >
+          <div className="text-center text-lg text-white lyric-header-text">
+            {`${song
+              .replace("Taylor's Version", "TV")
+              .replace("From the Vault", "FtV")}`}
           </div>
-        ))}
-    </div>
-  );
+          <div className="text-center text-md text-white lyric-header-text">
+            {albumshort}
+          </div>
+        </div>
+        {data
+          .filter(
+            (item) => item.albumshort === albumshort && item.song === song
+          )
+          .map((filteredItem) => {
+            console.log("Filtered item:", filteredItem);
+            return (
+              <div
+                className="text-center mb-8"
+                key={`${filteredItem.lyric}-${filteredItem.lyricid}`}
+              >
+                <p className="text-xs py-1 font-light">
+                  {filteredItem.lyricbefore &&
+                    HtmlReactParser(filteredItem.lyricbefore)}
+                </p>
+                <p className="text-sm py-2">
+                  {HtmlReactParser(filteredItem.lyric)}
+                </p>
+                <p className="text-xs py-1 font-light">
+                  {filteredItem.lyricafter &&
+                    HtmlReactParser(filteredItem.lyricafter)}
+                </p>
+              </div>
+            );
+          })}
+      </div>
+    );
+  };
 
   // Get unique album and song combinations
   const uniqueAlbumsAndSongs = [
@@ -45,9 +71,15 @@ const Modal: React.FC<ModalProps> = ({ data, word, onClose }) => {
     ),
   ];
 
+  // Log the unique combinations
+  console.log("Unique album and song combinations:", uniqueAlbumsAndSongs);
+
   // Render div elements for each unique album and song combination
   const result = uniqueAlbumsAndSongs.map((combination) => {
     const [albumshort, alb, song] = combination.split("-");
+    if (song === "Anti") {
+      return createDiv(albumshort, alb, "Anti-Hero");
+    }
     return createDiv(albumshort, alb, song);
   });
 
@@ -86,7 +118,7 @@ const Modal: React.FC<ModalProps> = ({ data, word, onClose }) => {
         <div className="mb-10 p-4">{result}</div>
         {addCategoryNote && (
           <div>
-            <p>Check out these awesome people for more indepth analysis.</p>
+            <p>Check out these awesome people for more in-depth analysis.</p>
           </div>
         )}
       </div>
