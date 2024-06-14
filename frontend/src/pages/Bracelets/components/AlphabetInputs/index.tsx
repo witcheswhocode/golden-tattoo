@@ -69,7 +69,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
         ? "https://golden-tattoo-a7c279f70d6d.herokuapp.com/"
         : "http://localhost:3001/";
 
-    const urlWithParams = `${apiUrl}getAllCombinations?${params.toString()}`;
+    const urlWithParams = `${apiUrl}getBraceletIdeas?${params.toString()}`;
 
     // Perform the fetch with the updated URL
     fetch(urlWithParams)
@@ -99,6 +99,19 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
       })
       .catch((error) => console.error("Error fetching modal data:", error))
       .finally(() => setIsLoading(false)); // Set loading to false after fetch is completed
+
+    const urlWithParams1 = `${apiUrl}getBestBraceletCombos?${params.toString()}`;
+
+    // Perform the fetch with the updated URL
+    fetch(urlWithParams1)
+      .then((response) => response.json())
+      .then((data: any) => {
+        handleMostLetterCombinationPossibilities(data.data.mostLettersUsed);
+        handleMostBraceletCombinationPossibilities(
+          data.data.mostBraceletOptions
+        );
+      })
+      .catch((error) => console.error("Error fetching best combo data:", error))
   };
 
   const handleReset = () => {

@@ -135,7 +135,7 @@ function buildSQLQuery(options) {
   return sqlQuery;
 }
 
-app.get("/getAllCombinations", (data, res, next) => {
+app.get("/getBraceletIdeas", (data, res, next) => {
   var sql = buildSQLQuery(data.query["options"]);
   delete data.query["options"];
   console.log(sql);
@@ -150,14 +150,33 @@ app.get("/getAllCombinations", (data, res, next) => {
     const validWords = preprocessWords(wordList, letterCounts);
     const [maxCombinations, combinationsList, finalLetterCounts] =
       findLongestCombinations(validWords, letterCounts);
-    //console.log(combinationsList);
 
-    const bestOf = findBestCombination(validWords, letterCounts);
-    console.log(bestOf);
     res.json({
       message: "success",
       data: {
         combinationList: combinationsList,
+      },
+    });
+  });
+});
+app.get("/getBestBraceletCombos", (data, res, next) => {
+  var sql = buildSQLQuery(data.query["options"]);
+  delete data.query["options"];
+  console.log(sql);
+  var params = [];
+  db.all(sql, params, (err, rows) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
+    const wordList = rows;
+    const letterCounts = data.query;
+    const validWords = preprocessWords(wordList, letterCounts);
+    const bestOf = findBestCombination(validWords, letterCounts);
+
+    res.json({
+      message: "success",
+      data: {
         mostLettersUsed: bestOf.firstItems,
         mostBraceletOptions: bestOf.mostBraceletOptions,
       },

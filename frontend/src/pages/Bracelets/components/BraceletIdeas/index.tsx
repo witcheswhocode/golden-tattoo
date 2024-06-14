@@ -6,6 +6,7 @@ import ListOfBestCombinations from "../ListOfBestCombinations";
 import Tabs from "src/components/Tabs";
 import Tab from "src/components/Tabs/components/Tab";
 import ExpandableDiv from "../ExpandableDiv";
+import LoadingBeads from "src/components/LoadingBeads";
 
 interface Bracelet {
   name: string;
@@ -200,6 +201,7 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
           />
         </Tab>
         <Tab label="Optimized">
+          ({mostLettersUsed && mostBraceletOptions} ?{" "}
           <ListOfBestCombinations
             combinations={mostLettersUsed}
             title={"Use the Most Letters"}
@@ -207,14 +209,14 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
               "This list gives you the variation that will use the most beads."
             }
           />
-
           <ListOfBestCombinations
             combinations={mostBraceletOptions}
             title={"Make the Most Bracelets"}
             desc={
               "This is a list a various combinations you can try to make the most bracelets."
             }
-          />
+          />{" "}
+          : <LoadingBeads />)
         </Tab>
       </Tabs>
     </div>
