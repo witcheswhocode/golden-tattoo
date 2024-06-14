@@ -194,6 +194,7 @@ function cleanWord(word) {
 }
 
 function canConstruct(word, letterDict) {
+  console.log(word)
   const wordCount = letterCounter(cleanWord(word.toLowerCase()));
   for (let [letter, value] in wordCount) {
     if (wordCount[letter] <= letterDict[letter]) {
@@ -207,6 +208,7 @@ function canConstruct(word, letterDict) {
 
 function preprocessWords(wordList, letterDict) {
   const validWords = [];
+  console.log(wordList)
   for (const word of wordList) {
     if (canConstruct(word["word"], letterDict)) {
       validWords.push(word["word"]);
