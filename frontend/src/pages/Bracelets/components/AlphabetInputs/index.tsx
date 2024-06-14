@@ -233,7 +233,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
                   </div>
                 );
               })}
-              <div className={`flex justify-between space-x-8 pt-8 py-2`}>
+              {/*<div className={`flex justify-between space-x-8 pt-8 py-2`}>
                 <div className={`flex flex-row`}>
                   <label
                     className={`mr-2 flex justify-center items-center text-${theme}-panelText`}
@@ -264,7 +264,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
                     onChange={handleCheckboxChange}
                   />
                 </div>
-              </div>
+            </div>*/}
             </div>
             <div className="flex justify-center items-center pt-2 mt-2">
               <CustomButton type="submit" text="Submit" />
