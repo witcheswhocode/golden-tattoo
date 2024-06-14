@@ -2,7 +2,6 @@ import express from "express";
 import cors from "cors";
 import sqlite3 from "sqlite3";
 import path from "path";
-
 import { fileURLToPath } from "url";
 
 const app = express();
@@ -28,6 +27,61 @@ app.use(
 app.use(express.json());
 
 const db = new sqlite3.Database("./server/TS_liz_new.db");
+
+// Track the current request's cancellation status
+let currentRequest = { cancel: false };
+
+// Middleware to reset cancellation flag for each new request
+app.use((req, res, next) => {
+  currentRequest.cancel = true; // Cancel any ongoing request
+  currentRequest = { cancel: false }; // Create a new request context
+  next();
+});
+
+app.get("/getBestBraceletCombos", async (req, res) => {
+  try {
+    // Function to fetch data from the database
+    const fetchWords = () => {
+      return new Promise((resolve, reject) => {
+        var sql = buildSQLQuery(data.query["options"]);
+        delete data.query["options"];
+        console.log(sql);
+        var params = [];
+        db.all(sql, params, (err, rows) => {
+          if (err) {
+            res.status(400).json({ error: err.message });
+            return;
+          }
+          const wordList = rows;
+          const letterCounts = data.query;
+          const validWords = preprocessWords(wordList, letterCounts);
+          const bestOf = findBestCombination(validWords, letterCounts);
+
+          res.json({
+            message: "success",
+            data: {
+              mostLettersUsed: bestOf.firstItems,
+              mostBraceletOptions: bestOf.mostBraceletOptions,
+            },
+          });
+        });
+      });
+    };
+
+    // Check for cancellation and fetch data
+    if (currentRequest.cancel) {
+      throw new Error("Request canceled");
+    }
+
+    const words = await fetchWords();
+
+    if (currentRequest.cancel) {
+      throw new Error("Request canceled");
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 app.get("/words", (req, res) => {
   db.all("select * from word", (err, rows) => {
@@ -159,30 +213,6 @@ app.get("/getBraceletIdeas", (data, res, next) => {
     });
   });
 });
-app.get("/getBestBraceletCombos", (data, res, next) => {
-  var sql = buildSQLQuery(data.query["options"]);
-  delete data.query["options"];
-  console.log(sql);
-  var params = [];
-  db.all(sql, params, (err, rows) => {
-    if (err) {
-      res.status(400).json({ error: err.message });
-      return;
-    }
-    const wordList = rows;
-    const letterCounts = data.query;
-    const validWords = preprocessWords(wordList, letterCounts);
-    const bestOf = findBestCombination(validWords, letterCounts);
-
-    res.json({
-      message: "success",
-      data: {
-        mostLettersUsed: bestOf.firstItems,
-        mostBraceletOptions: bestOf.mostBraceletOptions,
-      },
-    });
-  });
-});
 
 // Serve the built frontend files
 app.use(express.static(path.join(__dirname, "../frontend/build")));
@@ -213,7 +243,7 @@ function cleanWord(word) {
 }
 
 function canConstruct(word, letterDict) {
-  console.log(word)
+  console.log(word);
   const wordCount = letterCounter(cleanWord(word.toLowerCase()));
   for (let [letter, value] in wordCount) {
     if (wordCount[letter] <= letterDict[letter]) {
@@ -227,7 +257,7 @@ function canConstruct(word, letterDict) {
 
 function preprocessWords(wordList, letterDict) {
   const validWords = [];
-  console.log(wordList)
+  console.log(wordList);
   for (const word of wordList) {
     if (canConstruct(word["word"], letterDict)) {
       validWords.push(word["word"]);
