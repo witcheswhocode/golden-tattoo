@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Writers from "./pages/Writers";
@@ -82,12 +87,26 @@ function ThemeWrapper() {
 }
 
 function AppContent() {
+  const { theme } = useTheme();
   return (
     <Routes>
       <Route path="/writers" element={<Writers />} />
       <Route path="/bracelets" element={<Bracelets />} />
       <Route path="/lyrics" element={<LyricsTable />} />
       <Route path="/about" element={<About />} />
+      <Route
+        path="/"
+        element={
+          <Navigate to={theme ? `/bracelets?theme=${theme}` : "/bracelets"} />
+        }
+      />
+      {/* Catch-all route to handle undefined paths */}
+      <Route
+        path="*"
+        element={
+          <Navigate to={theme ? `/bracelets?theme=${theme}` : "/bracelets"} />
+        }
+      />
     </Routes>
   );
 }
