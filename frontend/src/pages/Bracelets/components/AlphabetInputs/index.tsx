@@ -66,7 +66,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
 
     const apiUrl =
       process.env.NODE_ENV === "production"
-        ? "https://golden-tattoo-a7c279f70d6d.herokuapp.com/"
+        ? "http://golden.tattoo/"
         : "http://localhost:3001/";
 
     const urlWithParams = `${apiUrl}getBraceletIdeas?${params.toString()}`;
