@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
-type Theme = "midnights" | "ttpd" | "reputation" | "lover";
+export type Theme = "midnights" | "ttpd" | "reputation" | "lover";
 
 interface ThemeContextProps {
   theme: Theme;
@@ -16,9 +16,18 @@ interface ThemeProviderProps {
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [theme, setTheme] = useState<Theme>("midnights");
 
+
+  useEffect(() => {
+    const storedTheme = localStorage.getItem("theme") as Theme | null;
+    if (storedTheme) {
+      setTheme(storedTheme);
+    }
+  }, []);
+
   const toggleTheme = (theme?: Theme) => {
     if (theme) {
       setTheme(theme);
+      localStorage.setItem("theme", theme);
       document.documentElement.setAttribute("data-theme", theme);
     } else {
       setTheme("midnights");
