@@ -269,7 +269,7 @@ module.exports = {
         },
         lover: {
           background: "bg-gradient-to-r from-lover-pink to-lover-blue",
-          text: "#ff38a7",
+          text: "white",
 
           panel: "#e2f8ff",
           panelText: "#0967b3",

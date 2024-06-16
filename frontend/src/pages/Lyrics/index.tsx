@@ -49,7 +49,7 @@ const LyricsTable: React.FC = () => {
           theme === "ttpd"
             ? `bg-ttpd-background z-10 border-t-2 border-b-2 border-${theme}-tableBorder`
             : ""
-        }`}
+        } text-${theme}-text`}
       >
         Explore Taylor Swift's lyrics by clicking on the table and filters. The
         data was collected from multiple sources, learn more about the data.

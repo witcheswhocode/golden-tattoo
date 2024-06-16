@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import Jukebox from "./components/Jukebox";
 import MetaTags from "src/components/MetaTags";
 import { WritersProps } from "./components/Jukebox";
+import { useTheme } from "src/components/ThemeContext";
 
 function Writers() {
+  const { theme } = useTheme();
   const [writerData, setWriterData] = useState<WritersProps[] | null>(null);
 
   useEffect(() => {
@@ -26,7 +28,13 @@ function Writers() {
         image="/assets/lover-meta-img.png"
       />
       <div className="px-2 m-auto">
-        <p className="text-sm text-start p-2 my-2">
+        <p
+          className={`text-sm text-start p-2 my-2 ${
+            theme === "ttpd"
+              ? `bg-ttpd-background z-10 border-t-2 border-b-2 border-${theme}-tableBorder`
+              : ""
+          } text-${theme}-text`}
+        >
           Explore the complete list of Taylor's discography and the songwriters
           who contributed to her music. Click on the writers name to see their
           picture.
