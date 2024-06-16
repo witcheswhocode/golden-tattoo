@@ -65,7 +65,7 @@ const allCategories = [
   "secrets",
   "family",
   "body",
-  "reflective light",
+  "reflective-light",
   "place",
   "transportation",
   "person",
@@ -96,12 +96,19 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
   };
 
   const filteredData = props.data
-    .filter(
-      (item) =>
-        item.otherwords.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        item.categories &&
-        hasCommonElement(item.categories.split("|"), selectedCategories)
-    )
+    .filter((item) => {
+      const matchesSearchTerm = item.otherwords
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+
+      const matchesCategory = selectedCategories.length
+        ? item.categories
+          ? hasCommonElement(item.categories.split("|"), selectedCategories)
+          : selectedCategories.includes("all categories")
+        : true; // Always true if no category is selected
+
+      return matchesSearchTerm && matchesCategory;
+    })
     .sort((a, b) => {
       const startsWithSearchTermA = a.otherwords
         .toLowerCase()
@@ -201,7 +208,13 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
         />
       </div>
       <div className="relative w-full">
-        <div className={`py-2 mb-2 ${theme === "ttpd" ? `bg-ttpd-background z-5 border-t-2 border-b-2 border-${theme}-tableBorder`:''} fade-right${isMobile ? "" : "-none"}`}>
+        <div
+          className={`py-2 mb-2 ${
+            theme === "ttpd"
+              ? `bg-ttpd-background z-5 border-t-2 border-b-2 border-${theme}-tableBorder`
+              : ""
+          } fade-right${isMobile ? "" : "-none"}`}
+        >
           <div className="all-categories flex flex-row flex-nowrap w-full overflow-auto gap-1 md:flex-wrap md:justify-center">
             {allCategories.map((category, index) => (
               <div

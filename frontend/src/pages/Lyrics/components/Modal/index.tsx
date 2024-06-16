@@ -9,18 +9,12 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ data, word, onClose }) => {
-  console.log("Modal data:", data);
-
   const addCategoryNote =
     data[0].categories &&
     (data[0].categories.includes("parallels") ||
       data[0].categories.includes("queer"));
 
   const createDiv = (albumshort: string, alb: string, song: string) => {
-    console.log(
-      `Creating div for albumshort: ${albumshort}, alb: ${alb}, song: ${song}`
-    );
-
     return (
       <div key={`${albumshort}-${alb}-${song}`}>
         <div
@@ -40,7 +34,6 @@ const Modal: React.FC<ModalProps> = ({ data, word, onClose }) => {
             (item) => item.albumshort === albumshort && item.song === song
           )
           .map((filteredItem) => {
-            console.log("Filtered item:", filteredItem);
             return (
               <div
                 className="text-center mb-8"
@@ -70,9 +63,6 @@ const Modal: React.FC<ModalProps> = ({ data, word, onClose }) => {
       data.map((item) => `${item.albumshort}-${item.alb}-${item.song}`)
     ),
   ];
-
-  // Log the unique combinations
-  console.log("Unique album and song combinations:", uniqueAlbumsAndSongs);
 
   // Render div elements for each unique album and song combination
   const result = uniqueAlbumsAndSongs.map((combination) => {

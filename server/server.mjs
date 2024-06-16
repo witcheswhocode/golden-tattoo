@@ -267,7 +267,6 @@ function preprocessWords(wordList, letterDict) {
   for (const word of wordList) {
     if (canConstruct(word["word"], letterDict)) {
       validWords.push(word["word"]);
-      //console.log(word['word']);
     }
   }
   return validWords;

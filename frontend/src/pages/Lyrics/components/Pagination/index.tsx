@@ -57,11 +57,12 @@ const Pagination: React.FC<PaginationProps> = ({
         disabled={currentPage === 1}
       />
       {visiblePages().map((page, index) => (
+        <div key={`page-${index}`}>
         <CustomButton
           text={`${page}`}
           onClick={() => goToPage(page)}
           selected={page === currentPage ? true : false}
-        />
+        /></div>
       ))}
       <CustomButton
         text={">"}

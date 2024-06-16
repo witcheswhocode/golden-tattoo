@@ -26,7 +26,6 @@ export const ThemeLoader = () => {
       link.href = hrefDictionary[theme];
       link.rel = "stylesheet";
       document.head.appendChild(link);
-      console.log(`Loading... ${theme}`);
     }
   };
 

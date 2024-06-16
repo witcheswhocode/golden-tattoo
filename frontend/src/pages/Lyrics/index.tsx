@@ -16,7 +16,6 @@ const LyricsTable: React.FC = () => {
       .then((response) => response.json())
       .then((data) => setSelectedItem(data.data))
       .catch((error) => console.error("Error fetching modal data:", error));
-    console.log(selectedItem);
   };
 
   const closeModal = () => {
@@ -31,10 +30,10 @@ const LyricsTable: React.FC = () => {
 
     fetch(`${apiUrl}words`)
       .then((response) => response.json())
-      .then((data) => setTableRows(data))
+      .then((data: any) => {
+        setTableRows(data)
+      })
       .catch((error) => console.error("Error fetching data:", error));
-
-    console.log(tableRows);
   }, []);
 
   return (
