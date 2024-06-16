@@ -2,6 +2,7 @@ import React from "react";
 import { useTheme } from "../ThemeContext";
 import Curtains from "../Curtains";
 import RandomTypewriterBackground from "../RandomTypewriterBackground";
+import BloodMoon from "../BloodMoon";
 
 interface HeaderProps {
   // Define any props you want to pass to the Header component
@@ -40,17 +41,7 @@ function Header(props: HeaderProps) {
               </span>{" "}
               tattoo
             </span>
-            <div
-              className={`absolute flex justify-center items-center w-full ${
-                theme === "midnights" ? "" : "hidden"
-              }`}
-            >
-              {/* Moon image */}
-              <div className="absolute mb-6 h-24 w-24 shadow-custom-light rounded-full z-10 bg-center bg-cover midnights-moon animate-animating-bloodmoon-properties">
-                {/* Background with gradient */}
-                <div className="absolute inset-0 rounded-full bloodmoon-gradient animate-bloodmoon-animation"></div>
-              </div>
-            </div>
+            <BloodMoon />
           </div>
         )}
       </div>

@@ -21,6 +21,7 @@ import About from "./pages/About";
 import Typewriter from "./components/Typewriter";
 import RandomTypewriterBackground from "./components/RandomTypewriterBackground";
 import initializeAnalytics from "./analytics";
+import Showcase from "./pages/Showcase";
 
 const usePageTracking = () => {
   const location = useLocation();
@@ -123,6 +124,7 @@ function AppContent() {
       <Route path="/" element={<Bracelets />} />
       {/* Catch-all route to handle undefined paths */}
       <Route path="*" element={<Bracelets />} />
+      <Route path="/showcase" element={<Showcase />} />
     </Routes>
   );
 }
