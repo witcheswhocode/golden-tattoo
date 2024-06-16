@@ -17,9 +17,9 @@ const LetterCount: React.FC<LetterCountProps> = ({
     <div className={`p-1 mb-3 border-4 border-${theme}-scoreBoardBorder bg-${theme}-scoreBoard m-auto`}>
       <div className={`w-full flex p-1 justify-between`}>
         <p className={`text-sm font-semibold text-${theme}-scoreBoardTextHeader`}>LETTERS LEFT</p>
-        <p className={`text-sm`}>
+        {/*<p className={`text-sm`}>
           (<span className={`text-${theme}-scoreBoardTextNumber`}> {lettersLeft}</span><span className={`text-${theme}-scoreBoardTextHeader`}> / {letterTotal} </span>)
-        </p>
+        </p>*/}
       </div>
       <div className={`flex w-full border border-r-2 border-${theme}-scoreBoardBorder`}>
         {availableLetters &&
