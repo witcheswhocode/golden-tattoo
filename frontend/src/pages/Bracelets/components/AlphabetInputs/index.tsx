@@ -45,7 +45,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
     );
   };
 
-  const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true); // Set loading to true when form is submitted
     const formData = new FormData(event.target as HTMLFormElement);
@@ -72,7 +72,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
     const urlWithParams = `${apiUrl}getBraceletIdeas?${params.toString()}`;
 
     // Perform the fetch with the updated URL
-    fetch(urlWithParams)
+    await fetch(urlWithParams)
       .then((response) => response.json())
       .then((data: any) => {
         handleCombinationPossibilities(data.data.combinationList);

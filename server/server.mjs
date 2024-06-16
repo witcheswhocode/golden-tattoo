@@ -40,30 +40,20 @@ app.use((req, res, next) => {
 
 app.get("/getBestBraceletCombos", async (req, res) => {
   try {
+    // Assuming data.query is coming from req.query or req.body
+    const options = req.query["options"]; // Adjust this according to your actual request format
+
     // Function to fetch data from the database
     const fetchWords = () => {
       return new Promise((resolve, reject) => {
-        var sql = buildSQLQuery(data.query["options"]);
-        delete data.query["options"];
-        console.log(sql);
-        var params = [];
+        const sql = buildSQLQuery(options); // Use options directly
+        const params = [];
         db.all(sql, params, (err, rows) => {
           if (err) {
-            res.status(400).json({ error: err.message });
+            reject(err);
             return;
           }
-          const wordList = rows;
-          const letterCounts = data.query;
-          const validWords = preprocessWords(wordList, letterCounts);
-          const bestOf = findBestCombination(validWords, letterCounts);
-
-          res.json({
-            message: "success",
-            data: {
-              mostLettersUsed: bestOf.firstItems,
-              mostBraceletOptions: bestOf.mostBraceletOptions,
-            },
-          });
+          resolve(rows);
         });
       });
     };
@@ -73,15 +63,32 @@ app.get("/getBestBraceletCombos", async (req, res) => {
       throw new Error("Request canceled");
     }
 
-    const words = await fetchWords();
+    const wordList = await fetchWords(); // Await the promise result
 
+    // Assuming letterCounts is also coming from req.query or req.body
+    const letterCounts = req.query; // Adjust this according to your actual request format
+
+    // Preprocess and find best combination
+    const validWords = preprocessWords(wordList, letterCounts);
+    const bestOf = findBestCombination(validWords, letterCounts);
+
+    // Check for cancellation again before responding
     if (currentRequest.cancel) {
       throw new Error("Request canceled");
     }
+
+    res.json({
+      message: "success",
+      data: {
+        mostLettersUsed: bestOf.firstItems,
+        mostBraceletOptions: bestOf.mostBraceletOptions,
+      },
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
+
 
 app.get("/words", (req, res) => {
   db.all("select * from word", (err, rows) => {
@@ -95,7 +102,7 @@ app.get("/words", (req, res) => {
 
 app.get("/getLyrics/:id", (req, res, next) => {
   var id = req.params.id;
-  console.log("getting", id);
+  
   const sql = `
   SELECT 
   l.lyricid AS lyricid,
@@ -192,7 +199,7 @@ function buildSQLQuery(options) {
 app.get("/getBraceletIdeas", (data, res, next) => {
   var sql = buildSQLQuery(data.query["options"]);
   delete data.query["options"];
-  console.log(sql);
+
   var params = [];
   db.all(sql, params, (err, rows) => {
     if (err) {
@@ -243,7 +250,6 @@ function cleanWord(word) {
 }
 
 function canConstruct(word, letterDict) {
-  console.log(word);
   const wordCount = letterCounter(cleanWord(word.toLowerCase()));
   for (let [letter, value] in wordCount) {
     if (wordCount[letter] <= letterDict[letter]) {
@@ -257,7 +263,7 @@ function canConstruct(word, letterDict) {
 
 function preprocessWords(wordList, letterDict) {
   const validWords = [];
-  console.log(wordList);
+  
   for (const word of wordList) {
     if (canConstruct(word["word"], letterDict)) {
       validWords.push(word["word"]);
