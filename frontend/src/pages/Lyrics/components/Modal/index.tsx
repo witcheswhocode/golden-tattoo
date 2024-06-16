@@ -1,6 +1,7 @@
 import React from "react";
 import { ModalData } from "../DataTable"; // Update the import path accordingly
 import HtmlReactParser from "html-react-parser";
+import { useTheme } from "src/components/ThemeContext";
 
 interface ModalProps {
   data: ModalData[];
@@ -9,6 +10,7 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ data, word, onClose }) => {
+  const { theme } = useTheme();
   const addCategoryNote =
     data[0].categories &&
     (data[0].categories.includes("parallels") ||
@@ -105,10 +107,17 @@ const Modal: React.FC<ModalProps> = ({ data, word, onClose }) => {
             </span>
           </>
         </div>
-        <div className="mb-10 p-4">{result}</div>
+        <div className="p-4">{result}</div>
         {addCategoryNote && (
-          <div>
-            <p>Check out these awesome people for more in-depth analysis.</p>
+          <div className="w-80% flex justify-center items-center">
+            <p>
+              <a
+                className={`internal underline text-sm text-blue-500 hover:text-gray-500 visited:text-black focus:ring`}
+                href="/about"
+              >
+                Check out these creators for more in-depth analysis.
+              </a>
+            </p>
           </div>
         )}
       </div>
