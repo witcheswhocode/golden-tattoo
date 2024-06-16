@@ -64,7 +64,7 @@ const People: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               href={person.href}
-              className={`underline text-${theme}-link hover:text-${theme}-linkHover visited:text-${theme}-linkVisited focus:ring`}
+              className={`underline text-${theme === 'midnights' ? 'ttpd' : theme }-link hover:text-${theme}-linkHover visited:text-${theme}-linkVisited focus:ring`}
             >
               {person.name}
             </a>
@@ -75,7 +75,7 @@ const People: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   href={person.extraLink.href}
-                  className={`underline text-${theme}-link hover:text-${theme}-linkHover visited:text-${theme}-linkVisited focus:ring`}
+                  className={`underline text-${theme === 'midnights' ? 'ttpd' : theme }-link hover:text-${theme}-linkHover visited:text-${theme}-linkVisited focus:ring`}
                 >
                   {person.extraLink.name}
                 </a>
@@ -84,7 +84,7 @@ const People: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   href={person.extraLink.extraHref}
-                  className={`underline text-${theme}-link hover:text-${theme}-linkHover visited:text-${theme}-linkVisited focus:ring`}
+                  className={`underline text-${theme === 'midnights' ? 'ttpd' : theme }-link hover:text-${theme}-linkHover visited:text-${theme}-linkVisited focus:ring`}
                 >
                   {person.extraLink.extraName}
                 </a>

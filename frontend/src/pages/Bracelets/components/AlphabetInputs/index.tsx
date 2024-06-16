@@ -111,7 +111,9 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
           data.data.mostBraceletOptions
         );
       })
-      .catch((error) => console.error("Error fetching best combo data:", error))
+      .catch((error) =>
+        console.error("Error fetching best combo data:", error)
+      );
   };
 
   const handleReset = () => {
@@ -266,7 +268,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
                     onChange={handleCheckboxChange}
                   />
                 </div>*/}
-            </div>
+              </div>
             </div>
             <div className="flex justify-center items-center pt-2 mt-2">
               <CustomButton type="submit" text="Submit" />
@@ -288,6 +290,15 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
           </div>
         </div>
       )}
+      <p className="flex flex-col justify-center items-center mt-4 w-80% text-sm">
+        Bracelet ideas compiled from multiple resources.{" "}
+        <a
+          href="/about"
+          className={`internal underline text-${theme}-link hover:text-${theme}-linkHover visited:text-${theme}-linkVisited focus:ring`}
+        >
+          See credits on the about page.
+        </a>
+      </p>
     </div>
   );
 };

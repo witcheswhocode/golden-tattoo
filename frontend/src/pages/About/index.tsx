@@ -5,15 +5,17 @@ import { useTheme } from "src/components/ThemeContext";
 const About: React.FC = () => {
   const { theme } = useTheme();
   const headerStyle = `text-xl font-bold text-left ml-2`;
-  const pageText = `text-sm p-2 mb-2 space-y-2 leading-5 flex flex-col justify-center items-center`;
+  const pageText = `text-sm p-2 mb-2 space-y-2 leading-5 flex flex-col justify-start items-start`;
   return (
-    <div className={`bg-${theme}-panel text-${theme}-panelText rounded-md p-4 m-4 space-y-2`}>
-      <h2 className={headerStyle}>The data</h2>
+    <div
+      className={`bg-${theme}-panel text-${theme}-panelText rounded-md p-4 m-4 space-y-2`}
+    >
+      <h2 className={headerStyle}>The lyrical data</h2>
       <div className={pageText}>
         <p>
-          Should your heart yearn for even more profound revelations, I implore
-          you to seek out these illustrious minds, for they hold the keys to a
-          deeper understanding of the lore:
+          Should your heart yearn for even more revelations, you shall seek out
+          these illustrious minds, for they hold the keys to a deeper
+          understanding of the lore:
         </p>
         <People />
         <p>
@@ -24,7 +26,9 @@ const About: React.FC = () => {
             target="_blank"
             rel="noopener noreferrer"
             href="https://forms.gle/ycZYm5YwaNam5yrp7"
-            className={`underline text-${theme}-link hover:text-${theme}-linkHover visited:text-${theme}-linkVisited focus:ring`}
+            className={`underline text-${
+              theme === "midnights" ? "ttpd" : theme
+            }-link hover:text-${theme}-linkHover visited:text-${theme}-linkVisited focus:ring`}
           >
             please give your feedback
           </a>
@@ -57,6 +61,34 @@ const About: React.FC = () => {
           Rock's grand narrative.
         </p>
       </div>
+      <h2 className={headerStyle}>About the bracelet ideas</h2>
+      <div className={pageText}>
+        <p>
+          Majority of the bracelet ideas were found on forms online from{" "}
+          <a
+            href="https://www.reddit.com/r/TaylorSwift/comments/12yyerj/need_friendship_bracelet_ideas_for_the_eras_tour/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`underline text-${
+              theme === "midnights" ? "ttpd" : theme
+            }-link hover:text-${theme}-linkHover visited:text-${theme}-linkVisited focus:ring`}
+          >
+            wrecking_ball_z
+          </a>{" "}
+          and{" "}
+          <a
+            href="https://www.reddit.com/r/TaylorSwift/comments/13zhhzh/eras_tour_friendship_bracelet_ideas/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`underline text-${
+              theme === "midnights" ? "ttpd" : theme
+            }-link hover:text-${theme}-linkHover visited:text-${theme}-linkVisited focus:ring`}
+          >
+            vigilanteish
+          </a>
+          .
+        </p>
+      </div>
       <h2 className={headerStyle}>Appreciation</h2>
       <div className={pageText}>
         <p>
@@ -65,7 +97,9 @@ const About: React.FC = () => {
             href="https://twitter.com/write_this_way"
             target="_blank"
             rel="noopener noreferrer"
-            className={`underline text-${theme}-link hover:text-${theme}-linkHover visited:text-${theme}-linkVisited focus:ring`}
+            className={`underline text-${
+              theme === "midnights" ? "ttpd" : theme
+            }-link hover:text-${theme}-linkHover visited:text-${theme}-linkVisited focus:ring`}
           >
             Dana Amihere
           </a>{" "}
@@ -76,7 +110,9 @@ const About: React.FC = () => {
             href="https://codeblackmedia.io/"
             target="_blank"
             rel="noopener noreferrer"
-            className={`underline text-${theme}-link hover:text-${theme}-linkHover visited:text-${theme}-linkVisited focus:ring`}
+            className={`underline text-${
+              theme === "midnights" ? "ttpd" : theme
+            }-link hover:text-${theme}-linkHover visited:text-${theme}-linkVisited focus:ring`}
           >
             codeblackmedia.io
           </a>
@@ -88,7 +124,9 @@ const About: React.FC = () => {
             href="https://twitter.com/JJ_TSversion"
             target="_blank"
             rel="noopener noreferrer"
-            className={`underline text-${theme}-link hover:text-${theme}-linkHover visited:text-${theme}-linkVisited focus:ring`}
+            className={`underline text-${
+              theme === "midnights" ? "ttpd" : theme
+            }-link hover:text-${theme}-linkHover visited:text-${theme}-linkVisited focus:ring`}
           >
             JingJing
           </a>

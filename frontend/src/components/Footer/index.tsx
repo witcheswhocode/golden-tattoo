@@ -5,7 +5,9 @@ interface FooterProps {}
 function Footer(props: FooterProps) {
   const { theme } = useTheme();
   return (
-    <footer className={`m-auto mt-8 text-${theme}-text p-4 px-8 md:w-2/3 lg:w-1/2 z-20`}>
+    <footer
+      className={`w-80% m-auto mt-8 text-sm text-${theme}-text p-4 md:w-2/3 lg:w-1/2 z-20`}
+    >
       <div className="flex flex-col justify-start items-start gap-2">
         <p>
           Have suggestions or comments?{" "}
@@ -27,7 +29,10 @@ function Footer(props: FooterProps) {
             Liz Anderson
           </a>{" "}
           with the input of many more,{" "}
-          <a className="internal" href="#about">
+          <a
+            className={`internal underline text-${theme}-link hover:text-${theme}-linkHover visited:text-${theme}-linkVisited focus:ring`}
+            href="/about"
+          >
             learn more about this project.
           </a>
         </p>
