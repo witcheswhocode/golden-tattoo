@@ -12,7 +12,7 @@ const __dirname = path.dirname(__filename);
 
 const apiUrl =
   process.env.NODE_ENV === "production"
-    ? "http://golden.tattoo/"
+    ? "https://golden.tattoo/"
     : "http://localhost:3000";
 const port = process.env.PORT || 3001; // Use 3001 as fallback
 

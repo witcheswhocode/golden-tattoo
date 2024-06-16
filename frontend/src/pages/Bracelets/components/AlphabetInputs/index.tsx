@@ -66,7 +66,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
 
     const apiUrl =
       process.env.NODE_ENV === "production"
-        ? "http://golden.tattoo/"
+        ? "https://golden.tattoo/"
         : "http://localhost:3001/";
 
     const urlWithParams = `${apiUrl}getBraceletIdeas?${params.toString()}`;

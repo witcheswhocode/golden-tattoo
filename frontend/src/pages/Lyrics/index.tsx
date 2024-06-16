@@ -26,7 +26,7 @@ const LyricsTable: React.FC = () => {
   useEffect(() => {
     const apiUrl =
       process.env.NODE_ENV === "production"
-        ? "http://golden.tattoo/"
+        ? "https://golden.tattoo/"
         : "http://localhost:3001/";
 
     fetch(`${apiUrl}words`)
