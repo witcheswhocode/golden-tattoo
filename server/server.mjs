@@ -169,20 +169,12 @@ function buildSQLQuery(options) {
 
   if (!options) {
     var sqlQuery =
-      "SELECT * FROM bracelets b WHERE b.explicit IS NULL AND b.acronyms IS NULL";
+      "SELECT * FROM bracelets b";
   } else {
     // Check if options include 'explicit' or 'acronym'
-    if (options.includes("explicit")) {
-      whereConditions.push("(b.explicit IS NULL OR b.explicit = 'TRUE')");
-    } else {
-      whereConditions.push("(b.explicit IS NULL)");
-    }
-
-    if (options.includes("acronyms")) {
-      whereConditions.push("(b.acronyms IS NULL OR b.acronyms = 'TRUE')");
-    } else {
-      whereConditions.push("(b.acronyms IS NULL)");
-    }
+    if (options.includes("kids")) {
+      whereConditions.push("b.kids = 'TRUE'");
+    } 
 
     // Construct the WHERE clause if there are conditions
     const whereClause =
@@ -193,6 +185,7 @@ function buildSQLQuery(options) {
     // Combine all parts to form the final query
     var sqlQuery = `${selectClause} ${fromClause} ${whereClause}`;
   }
+  console.log(sqlQuery)
   return sqlQuery;
 }
 
