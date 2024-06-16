@@ -23,7 +23,7 @@ function Writers() {
       <MetaTags
         title="writers - golden tattoo"
         description="See the writer credits on each Taylor Swift learn more about her history writing her own music."
-        image="https://golden.tattoo/assets/lover-meta-img.png"
+        image="/assets/lover-meta-img.png"
       />
       <div className="px-2 m-auto">
         <p className="text-sm text-start p-2 my-2">
