@@ -20,7 +20,7 @@ function Header(props: HeaderProps) {
         } text-justify`}
       >
         {theme === "ttpd" ? (
-          <Curtains />
+          <Curtains theme={'ttpd'}/>
         ) : (
           <div className="relative w-full h-full flex justify-center items-center">
             <span className={`absolute text-${theme}-text font-${theme} z-20`}>
@@ -41,7 +41,7 @@ function Header(props: HeaderProps) {
               </span>{" "}
               tattoo
             </span>
-            <BloodMoon />
+            <BloodMoon theme={'midnights'} />
           </div>
         )}
       </div>

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useTheme } from "../ThemeContext";
 
-const Curtains = ({ text = "golden tattoo", speed = 100 }) => {
-  const { theme } = useTheme();
+const Curtains = ({ text = "golden tattoo", speed = 100, theme }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   useEffect(() => {

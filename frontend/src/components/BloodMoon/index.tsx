@@ -1,8 +1,10 @@
 import React from "react";
-import { useTheme } from "src/components/ThemeContext";
 
-const BloodMoon: React.FC = ({}) => {
-  const { theme } = useTheme();
+interface BloodMoonProps {
+  theme: string;
+}
+
+const BloodMoon: React.FC<BloodMoonProps> = ({ theme }) => {
   return (
     <div
       className={`absolute flex justify-center items-center w-full ${
