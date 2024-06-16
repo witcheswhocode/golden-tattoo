@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from "react";
 
 type Theme = "midnights" | "ttpd" | "reputation" | "lover";
 
@@ -19,12 +25,21 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const toggleTheme = (theme?: Theme) => {
     if (theme) {
       setTheme(theme);
+      localStorage.setItem("theme", theme);
       document.documentElement.setAttribute("data-theme", theme);
     } else {
       setTheme("midnights");
+      localStorage.setItem("theme", "midnights");
       document.documentElement.setAttribute("data-theme", "midnights");
     }
   };
+
+  useEffect(() => {
+    const storedTheme = localStorage.getItem("theme") as Theme | null;
+    if (storedTheme) {
+      setTheme(storedTheme);
+    }
+  }, []);
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>

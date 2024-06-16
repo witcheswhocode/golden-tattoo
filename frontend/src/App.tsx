@@ -120,19 +120,9 @@ function AppContent() {
       <Route path="/bracelets" element={<Bracelets />} />
       <Route path="/lyrics" element={<LyricsTable />} />
       <Route path="/about" element={<About />} />
-      <Route
-        path="/"
-        element={
-          <Navigate to={theme ? `/bracelets?theme=${theme}` : "/bracelets"} />
-        }
-      />
+      <Route path="/" element={<Bracelets />} />
       {/* Catch-all route to handle undefined paths */}
-      <Route
-        path="*"
-        element={
-          <Navigate to={theme ? `/bracelets?theme=${theme}` : "/bracelets"} />
-        }
-      />
+      <Route path="*" element={<Bracelets />} />
     </Routes>
   );
 }
