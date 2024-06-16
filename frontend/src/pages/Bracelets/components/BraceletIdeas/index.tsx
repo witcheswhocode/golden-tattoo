@@ -201,22 +201,30 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
           />
         </Tab>
         <Tab label="Optimized">
-          ({mostLettersUsed && mostBraceletOptions} ?{" "}
-          <ListOfBestCombinations
-            combinations={mostLettersUsed}
-            title={"Use the Most Letters"}
-            desc={
-              "This list gives you the variation that will use the most beads."
-            }
-          />
-          <ListOfBestCombinations
-            combinations={mostBraceletOptions}
-            title={"Make the Most Bracelets"}
-            desc={
-              "This is a list a various combinations you can try to make the most bracelets."
-            }
-          />{" "}
-          : <LoadingBeads />)
+          (
+          {mostLettersUsed && mostBraceletOptions ? (
+            <>
+              <ListOfBestCombinations
+                combinations={mostLettersUsed}
+                title={"Use the Most Letters"}
+                desc={
+                  "This list gives you the variation that will use the most beads."
+                }
+              />
+              <ListOfBestCombinations
+                combinations={mostBraceletOptions}
+                title={"Make the Most Bracelets"}
+                desc={
+                  "This is a list a various combinations you can try to make the most bracelets."
+                }
+              />
+            </>
+          ) : (
+            <>
+              <LoadingBeads />
+            </>
+          )}
+          )
         </Tab>
       </Tabs>
     </div>
