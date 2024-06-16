@@ -91,7 +91,7 @@ app.get("/getBestBraceletCombos", async (req, res) => {
 
 
 app.get("/words", (req, res) => {
-  db.all("select * from word", (err, rows) => {
+  db.all("select * from word order by wordid", (err, rows) => {
     if (err) {
       res.status(500).json({ error: err.message });
       return;
