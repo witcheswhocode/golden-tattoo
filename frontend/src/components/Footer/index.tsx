@@ -26,7 +26,7 @@ function Footer(props: FooterProps) {
             href="https://liz-anderson-portfolio.webflow.io/"
             className={`underline text-${theme}-link hover:text-${theme}-linkHover visited:text-${theme}-linkVisited focus:ring`}
           >
-            Liz Anderson
+            liz
           </a>{" "}
           with the input of many more,{" "}
           <a
