@@ -26,7 +26,7 @@ const LetterCount: React.FC<LetterCountProps> = ({
           Object.entries(availableLetters)
             .slice(0, 13)
             .map(([id, quantity], index) => (
-              <div className={`w-full border border-t-2 border-${theme}-scoreBoardBorder`}>
+              <div className={`w-full border border-t-2 border-${theme}-scoreBoardBorder`} key={`${id}-count`}>
                 <div
                   className={`flex justify-center items-center text-sm text-${theme}-scoreBoardTextHeader`}
                   key={`${id}-letter`}
@@ -47,7 +47,7 @@ const LetterCount: React.FC<LetterCountProps> = ({
           Object.entries(availableLetters)
             .slice(13, 26)
             .map(([id, quantity], index) => (
-              <div className={`w-full border border-${theme}-scoreBoardBorder`}>
+              <div className={`w-full border border-${theme}-scoreBoardBorder`} key={`${id}-count`}>
                 <div
                   className={`flex justify-center items-center text-sm text-${theme}-scoreBoardTextHeader`}
                   key={`${id}-letter`}
