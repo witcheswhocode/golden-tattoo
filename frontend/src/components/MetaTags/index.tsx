@@ -11,7 +11,7 @@ interface MetaTagsProps {
 const MetaTags: React.FC<MetaTagsProps> = ({ title, description, image }) => {
     // Construct absolute URL for the image
     const imageUrl = `${window.location.origin}${process.env.PUBLIC_URL}${image}`;
-
+    console.log(imageUrl);
     return (
         <Helmet>
             <title>{title}</title>
