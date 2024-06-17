@@ -57,26 +57,11 @@ app.use((req, res, next) => {
   next();
 });
 
+// Serve static files from the 'frontend/build/assets' directory
+app.use('/assets', express.static(path.join(__dirname, '../frontend/build/assets')));
+
 // Serve the built frontend files
 app.use(express.static(path.join(__dirname, "../frontend/build")));
-
-// Serve index.
-app.use("/assets", (req, res, next) => {
-  const options = {
-    root: path.join(__dirname, "public"),
-    headers: {
-      "Content-Type": "image/png",
-    },
-  };
-
-  res.sendFile(req.url, options, (err) => {
-    if (err) {
-      next(err);
-    } else {
-      console.log("Sent:", req.url);
-    }
-  });
-});
 
 app.get("/getBestBraceletCombos", async (req, res) => {
   try {
