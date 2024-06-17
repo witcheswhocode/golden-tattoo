@@ -60,8 +60,32 @@ app.use((req, res, next) => {
 // Serve the built frontend files
 app.use(express.static(path.join(__dirname, "../frontend/build")));
 
+// Custom middleware to set Content-Type for specific file types
+function setContentType(req, res, next) {
+  const contentTypeMap = {
+    ".png": "image/png",
+    // Add more file types as needed
+  };
+
+  // Get the file extension
+  const extname = path.extname(req.url);
+
+  // Set Content-Type header if it's a known file type
+  if (contentTypeMap[extname]) {
+    res.type(contentTypeMap[extname]);
+  }
+
+  next();
+}
+
+// Middleware to set Content-Type based on file extension
+app.use("/assets", setContentType);
+
 // Serve static files from the 'frontend/build/assets' directory
-app.use('/assets', express.static(path.join(__dirname, '../frontend/build/assets')));
+app.use(
+  "/assets",
+  express.static(path.join(__dirname, "../frontend/build/assets"))
+);
 
 app.get("/getBestBraceletCombos", async (req, res) => {
   try {
@@ -257,7 +281,6 @@ app.get("/getBraceletIdeas", (data, res, next) => {
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
 });
-
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
