@@ -46,7 +46,7 @@ const LyricsTable: React.FC = () => {
       <MetaTags
         title="lyrics - golden tattoo"
         description="Explore lyrical parallels and themes thoroughout Taylor Swift's discography."
-        image="/public/assets/lover-meta-img.png"
+        image="/assets/lover-meta-img.png"
       />
       <p
         className={`text-sm text-center p-2 mb-4 ${

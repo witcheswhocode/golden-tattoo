@@ -33,7 +33,7 @@ const Bracelets = () => {
       <MetaTags
         title="bracelets - golden tattoo"
         description="Input your bead counts into the Taylor Swift friendship bracelet generator."
-        image="/public/assets/midnights-meta-img.png"
+        image="/assets/midnights-meta-img.png"
       />
       <AlphabetInputs
         handleCombinationPossibilities={setCombinationPossibilities}
