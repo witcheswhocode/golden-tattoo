@@ -39,8 +39,7 @@ const LoadingBeads = () => {
         </div>
       </div>
       <p className={`w-3/4 m-auto text-center text-sm text-${theme}-panelText`}>
-        This may take a minute or so depending on the number of beads and if
-        you're including acronyms.
+        This may take a minute or so depending on the number of beads. If you are stuck in a loading loop on submit, hard refresh or clear history.
       </p>
     </>
   );

@@ -4,6 +4,23 @@ import sqlite3 from "sqlite3";
 import path from "path";
 import { fileURLToPath } from "url";
 
+const timeoutMiddleware = (req, res, next) => {
+  const timeoutDuration = 10000; // 10 seconds timeout for example
+  const timeout = setTimeout(() => {
+    res.status(408).json({
+      error: "Request timed out",
+      data: {
+        mostLettersUsed: [["Too many letters, workload too large."]],
+        mostBraceletOptions: [["Too many letters, workload too large."]],
+      },
+    });
+  }, timeoutDuration);
+
+  // Attach the timeout handler to the response object
+  res.on("finish", () => clearTimeout(timeout));
+  next();
+};
+
 const app = express();
 
 // Get __dirname equivalent in ES modules
@@ -27,6 +44,8 @@ app.use(
 app.use(express.json());
 
 const db = new sqlite3.Database("./server/TS_liz_new.db");
+
+app.use(timeoutMiddleware); // Apply the timeout middleware globally or per route
 
 // Track the current request's cancellation status
 let currentRequest = { cancel: false };
@@ -68,6 +87,22 @@ app.get("/getBestBraceletCombos", async (req, res) => {
     // Assuming letterCounts is also coming from req.query or req.body
     const letterCounts = req.query; // Adjust this according to your actual request format
 
+    // Sum up all letter counts
+    const totalWorkload = Object.values(letterCounts).reduce(
+      (acc, count) => acc + Number(count),
+      0
+    );
+
+    // Check if the total workload exceeds the threshold
+    if (totalWorkload > 100) {
+      return res.status(400).json({
+        error: "workload too large",
+        data: {
+          mostLettersUsed: [["Too many letters, workload too large."]],
+          mostBraceletOptions: [["Too many letters, workload too large."]],
+        },
+      });
+    }
     // Preprocess and find best combination
     const validWords = preprocessWords(wordList, letterCounts);
     const bestOf = findBestCombination(validWords, letterCounts);
@@ -89,7 +124,6 @@ app.get("/getBestBraceletCombos", async (req, res) => {
   }
 });
 
-
 app.get("/words", (req, res) => {
   db.all("select * from word order by wordid", (err, rows) => {
     if (err) {
@@ -102,7 +136,7 @@ app.get("/words", (req, res) => {
 
 app.get("/getLyrics/:id", (req, res, next) => {
   var id = req.params.id;
-  
+
   const sql = `
   SELECT 
   l.lyricid AS lyricid,
@@ -168,13 +202,12 @@ function buildSQLQuery(options) {
   const fromClause = "FROM bracelets b";
 
   if (!options) {
-    var sqlQuery =
-      "SELECT * FROM bracelets b";
+    var sqlQuery = "SELECT * FROM bracelets b";
   } else {
     // Check if options include 'explicit' or 'acronym'
     if (options.includes("kids")) {
       whereConditions.push("b.kids = 'TRUE'");
-    } 
+    }
 
     // Construct the WHERE clause if there are conditions
     const whereClause =
@@ -185,7 +218,7 @@ function buildSQLQuery(options) {
     // Combine all parts to form the final query
     var sqlQuery = `${selectClause} ${fromClause} ${whereClause}`;
   }
-  console.log(sqlQuery)
+
   return sqlQuery;
 }
 
@@ -256,7 +289,7 @@ function canConstruct(word, letterDict) {
 
 function preprocessWords(wordList, letterDict) {
   const validWords = [];
-  
+
   for (const word of wordList) {
     if (canConstruct(word["word"], letterDict)) {
       validWords.push(word["word"]);
