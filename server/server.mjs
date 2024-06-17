@@ -57,6 +57,10 @@ app.use((req, res, next) => {
   next();
 });
 
+// Serve the built frontend files
+app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+// Serve index.
 app.use("/assets", (req, res, next) => {
   const options = {
     root: path.join(__dirname, "public"),
@@ -264,13 +268,11 @@ app.get("/getBraceletIdeas", (data, res, next) => {
   });
 });
 
-// Serve the built frontend files
-app.use(express.static(path.join(__dirname, "../frontend/build")));
-
-// Serve index.html for any other routes to enable SPA behavior
+// html for any other routes to enable SPA behavior
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
 });
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
