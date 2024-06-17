@@ -43,11 +43,11 @@ const LyricsTable: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4 md:w-2/3 lg:w-1/2 z-20">
-      <MetaTags
+      {/*<MetaTags
         title="lyrics - golden tattoo"
         description="Explore lyrical parallels and themes thoroughout Taylor Swift's discography."
         image="/assets/lover-meta-img.png"
-      />
+      />*/}
       <p
         className={`text-sm text-center p-2 mb-4 ${
           theme === "ttpd"

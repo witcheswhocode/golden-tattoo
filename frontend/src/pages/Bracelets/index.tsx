@@ -30,11 +30,11 @@ const Bracelets = () => {
 
   return (
     <div className={`w-full md:w-2/3 lg:w-1/2 z-10 text-${theme}-text`}>
-      <MetaTags
+      {/*<MetaTags
         title="bracelets - golden tattoo"
         description="Input your bead counts into the Taylor Swift friendship bracelet generator."
         image="/assets/lover-meta-img.png"
-      />
+  />*/}
       <AlphabetInputs
         handleCombinationPossibilities={setCombinationPossibilities}
         handleMostLetterCombinationPossibilities={
