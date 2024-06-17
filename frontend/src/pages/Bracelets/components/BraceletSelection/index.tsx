@@ -16,14 +16,18 @@ const BraceletSelection: React.FC<BraceletSelectionProps> = ({
 }) => {
   const { theme } = useTheme();
   return (
-    <div className="p-4">
+    <div className="p-4 h-1/3 overflow-scroll">
       {braceletSelection &&
         Object.entries(braceletSelection).map(([id, quantity]) => (
           <div
             key={`${id}-${quantity}`}
             className="flex items-center justify-between p-2 mb-4 rounded-md bg-white"
           >
-            <span className={`text-sm md:text-md text-${theme}-braceletItemTextSelected`}>{id}</span>
+            <span
+              className={`text-sm md:text-md text-${theme}-braceletItemTextSelected`}
+            >
+              {id}
+            </span>
             <div className="flex items-center">
               <button
                 onClick={() => handleDecrement(id)}
@@ -36,7 +40,11 @@ const BraceletSelection: React.FC<BraceletSelectionProps> = ({
               >
                 -
               </button>
-              <span className={`px-4 w-10 text-${theme}-braceletItemTextSelected`}>{braceletSelection[id]}</span>
+              <span
+                className={`px-4 w-10 text-${theme}-braceletItemTextSelected`}
+              >
+                {braceletSelection[id]}
+              </span>
               <button
                 onClick={() => handleIncrement(id)}
                 disabled={!braceletQuantities[id].active}

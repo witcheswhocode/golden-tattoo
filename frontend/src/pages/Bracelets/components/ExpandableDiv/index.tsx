@@ -15,7 +15,7 @@ const ExpandableDiv: React.FC<ExpandableDivProps> = ({ children, count }) => {
   };
 
   return (
-    <div className={`z-10 fixed bottom-0 left-0 w-full p-4 bg-${theme}-bottomExpander shadow-lg md:w-3/4 md:left-auto`}>
+    <div className={`${isExpanded ? 'h-3/4' : ''} z-90 fixed bottom-0 left-0 w-full p-4 bg-${theme}-bottomExpander shadow-lg md:w-3/4 md:left-auto`}>
       <div
         className={`flex justify-between items-center cursor-pointer`}
         onClick={toggleExpansion}
@@ -40,8 +40,8 @@ const ExpandableDiv: React.FC<ExpandableDivProps> = ({ children, count }) => {
         </div>
       </div>
       <div
-        className={`overflow-hidden transition-all duration-300 ${
-          isExpanded ? `max-h-screen border-t-2 border-${theme}-bottomExpanderTextHeader mt-4` : "max-h-0"
+        className={`overflow-y-scroll transition-all duration-300 ${
+          isExpanded ? `h-full border-t-2 border-${theme}-bottomExpanderTextHeader mt-4` : "max-h-0"
         }`}
       >
         {count ? (

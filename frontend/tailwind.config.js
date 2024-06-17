@@ -261,7 +261,7 @@ module.exports = {
           tabInactive: "#a48a6b",
           tabTextInactive: "white",
           braceletItemText: "var(--ttpdDark)",
-          braceletItemTextSelected: "#ff38a7",
+          braceletItemTextSelected: "var(--ttpdDark)",
           minus: "#B0A999",
           plus: "black",
           bottomExpander: "#B0A999",
