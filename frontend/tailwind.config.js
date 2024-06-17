@@ -214,6 +214,7 @@ module.exports = {
             2: "#fff",
           },
         },
+        disabled: 'rgb(203 213 225)',
         lightpurple: "#a99daf",
         moonstone: "#3AA8c1",
         mommyYellow: "#d39a1e",

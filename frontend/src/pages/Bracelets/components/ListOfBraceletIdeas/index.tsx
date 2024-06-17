@@ -25,17 +25,19 @@ const ListOfBraceletIdeas: React.FC<ListOfBraceletIdeasProps> = ({
           className={`flex items-center justify-between bg-white p-2 rounded-md mb-4 z-10 ${
             braceletQuantities[key].active
               ? `text-${theme}-braceletItemText`
-              : "text-slate-200"
+              : "text-disabled"
           }`}
         >
-          <span
-            className={`text-sm md:text-md ${
-              braceletQuantities[key].active
-                ? `text-${theme}-braceletItemText`
-                : "text-slate-200"
-            }`}
-          >
-            {key}
+          <span>
+            <p
+              className={`text-sm md:text-md ${
+                braceletQuantities[key].active
+                  ? `text-${theme}-braceletItemText`
+                  : "text-gray"
+              }`}
+            >
+              {key}
+            </p>
           </span>
           <div className="flex items-center text-sm">
             <button
@@ -52,7 +54,7 @@ const ListOfBraceletIdeas: React.FC<ListOfBraceletIdeasProps> = ({
             </button>
             <span
               className={`px-4 w-10 text-${theme}-braceletItemText ${
-                braceletQuantities[key].active ? `text-black` : "text-slate-200"
+                braceletQuantities[key].active ? `text-black` : "text-gray"
               }`}
             >
               {braceletQuantities[key].value}
@@ -60,8 +62,8 @@ const ListOfBraceletIdeas: React.FC<ListOfBraceletIdeasProps> = ({
             <button
               onClick={() => handleIncrement(key)}
               disabled={!braceletQuantities[key].active}
-              className={`text-sm bg-${theme}-plus text-white p-2 rounded-r ${
-                braceletQuantities[key].active ? "" : "cursor-not-allowed"
+              className={`text-sm text-white p-2 rounded-r ${
+                braceletQuantities[key].active ? `bg-${theme}-plus` : "bg-disabled cursor-not-allowed"
               }`}
             >
               +
