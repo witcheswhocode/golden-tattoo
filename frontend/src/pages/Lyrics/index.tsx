@@ -12,8 +12,12 @@ const LyricsTable: React.FC = () => {
   const [tableRows, setTableRows] = useState<TableRow[] | null>(null);
 
   const openModal = (item: TableRow) => {
+    const apiUrl =
+      process.env.NODE_ENV === "production"
+        ? "https://golden.tattoo/"
+        : "http://localhost:3001/";
     setSelectedWord(item.word);
-    fetch(`http://localhost:3001/getLyrics/${item.wordid}`)
+    fetch(`${apiUrl}getLyrics/${item.wordid}`)
       .then((response) => response.json())
       .then((data) => setSelectedItem(data.data))
       .catch((error) => console.error("Error fetching modal data:", error));
