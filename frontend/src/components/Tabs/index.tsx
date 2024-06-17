@@ -10,7 +10,7 @@ const Tabs: React.FC<TabsProps> = ({ children }) => {
   const [activeTab, setActiveTab] = useState<number>(0);
 
   return (
-    <div className="w-full">
+    <div className="w-full z-10">
       <div className="flex">
         {React.Children.map(children, (child, index) => {
           if (React.isValidElement(child)) {

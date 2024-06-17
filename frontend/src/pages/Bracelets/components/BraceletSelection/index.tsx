@@ -16,7 +16,7 @@ const BraceletSelection: React.FC<BraceletSelectionProps> = ({
 }) => {
   const { theme } = useTheme();
   return (
-    <div className="p-4 h-1/3 overflow-scroll">
+    <div className="p-4">
       {braceletSelection &&
         Object.entries(braceletSelection).map(([id, quantity]) => (
           <div
