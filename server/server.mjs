@@ -57,11 +57,11 @@ app.use((req, res, next) => {
   next();
 });
 
-// Serve static files from the 'frontend/build/assets' directory
-app.use('/assets', express.static(path.join(__dirname, '../frontend/build/assets')));
-
 // Serve the built frontend files
 app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+// Serve static files from the 'frontend/build/assets' directory
+app.use('/assets', express.static(path.join(__dirname, '../frontend/build/assets')));
 
 app.get("/getBestBraceletCombos", async (req, res) => {
   try {
