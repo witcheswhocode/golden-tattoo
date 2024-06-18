@@ -14,24 +14,13 @@ const factory = {
 const pool = createPool(factory, { max: 10, min: 2 });
 
 // Middleware to handle request timeout
+const timeoutDuration = 10000; // 10 seconds timeout for example
 const timeoutMiddleware = (req, res, next) => {
-  const timeoutDuration = 10000; // 10 seconds timeout for example
-  req.timeout = setTimeout(() => {
+  req.setTimeout(timeoutDuration, () => {
     res.status(408).json({
       error: "Request timed out",
-      data: {
-        mostLettersUsed: [["Too many letters, workload too large."]],
-        mostBraceletOptions: [["Too many letters, workload too large."]],
-      },
     });
-  }, timeoutDuration);
-
-  next();
-};
-
-// Middleware to release the timeout if request finishes before timeout
-const clearRequestTimeout = (req, res, next) => {
-  clearTimeout(req.timeout);
+  });
   next();
 };
 
@@ -58,7 +47,6 @@ app.use(
 );
 
 app.use(express.json());
-
 app.use(timeoutMiddleware); // Apply the timeout middleware globally or per route
 
 // Track the current request's cancellation status
