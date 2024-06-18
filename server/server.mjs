@@ -107,20 +107,23 @@ app.get("/getBestBraceletCombos", async (req, res) => {
     // Function to fetch data from the database
     const fetchWords = () => {
       return new Promise((resolve, reject) => {
-        pool.acquire().then((db) => {
-          const sql = buildSQLQuery(options); // Use options directly
-          const params = [];
-          db.all(sql, params, (err, rows) => {
-            pool.release(db); // Release the connection back to the pool
-            if (err) {
-              reject(err);
-              return;
-            }
-            resolve(rows);
+        pool
+          .acquire()
+          .then((db) => {
+            const sql = buildSQLQuery(options); // Use options directly
+            const params = [];
+            db.all(sql, params, (err, rows) => {
+              pool.release(db); // Release the connection back to the pool
+              if (err) {
+                reject(err);
+                return;
+              }
+              resolve(rows);
+            });
+          })
+          .catch((err) => {
+            reject(err);
           });
-        }).catch((err) => {
-          reject(err);
-        });
       });
     };
 
@@ -171,7 +174,6 @@ app.get("/getBestBraceletCombos", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
 
 app.get("/words", (req, res) => {
   pool
@@ -341,6 +343,14 @@ app.get("*", (req, res) => {
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
+});
+
+// Gracefully handle process termination
+process.on("SIGTERM", () => {
+  server.close(() => {
+    console.log("Server terminated");
+    pool.drain().then(() => pool.clear());
+  });
 });
 
 function letterCounter(word) {
