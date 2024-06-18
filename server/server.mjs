@@ -13,9 +13,10 @@ const factory = {
 
 const pool = createPool(factory, { max: 10, min: 2 });
 
+// Middleware to handle request timeout
 const timeoutMiddleware = (req, res, next) => {
   const timeoutDuration = 10000; // 10 seconds timeout for example
-  const timeout = setTimeout(() => {
+  req.timeout = setTimeout(() => {
     res.status(408).json({
       error: "Request timed out",
       data: {
@@ -25,12 +26,18 @@ const timeoutMiddleware = (req, res, next) => {
     });
   }, timeoutDuration);
 
-  // Attach the timeout handler to the response object
-  res.on("finish", () => clearTimeout(timeout));
+  next();
+};
+
+// Middleware to release the timeout if request finishes before timeout
+const clearRequestTimeout = (req, res, next) => {
+  clearTimeout(req.timeout);
   next();
 };
 
 const app = express();
+
+app.use(timeoutMiddleware); // Apply the timeout middleware globally or per route
 
 // Get __dirname equivalent in ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -103,20 +110,23 @@ app.get("/getBestBraceletCombos", async (req, res) => {
     // Function to fetch data from the database
     const fetchWords = () => {
       return new Promise((resolve, reject) => {
-        pool.acquire().then((db) => {
-          const sql = buildSQLQuery(options); // Use options directly
-          const params = [];
-          db.all(sql, params, (err, rows) => {
-            pool.release(db); // Release the connection back to the pool
-            if (err) {
-              reject(err);
-              return;
-            }
-            resolve(rows);
+        pool
+          .acquire()
+          .then((db) => {
+            const sql = buildSQLQuery(options); // Use options directly
+            const params = [];
+            db.all(sql, params, (err, rows) => {
+              pool.release(db); // Release the connection back to the pool
+              if (err) {
+                reject(err);
+                return;
+              }
+              resolve(rows);
+            });
+          })
+          .catch((err) => {
+            reject(err);
           });
-        }).catch((err) => {
-          reject(err);
-        });
       });
     };
 
@@ -167,7 +177,6 @@ app.get("/getBestBraceletCombos", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
 
 app.get("/words", (req, res) => {
   pool
@@ -330,6 +339,9 @@ app.get("/getBraceletIdeas", (data, res, next) => {
     });
 });
 
+// Apply middleware to clear request timeout if request finishes before timeout
+app.use(clearRequestTimeout);
+
 // html for any other routes to enable SPA behavior
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
@@ -338,6 +350,15 @@ app.get("*", (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+process.on("SIGTERM", () => {
+  server.close(() => {
+    console.log("Server terminated");
+    pool.drain().then(() => pool.clear());
+  });
+});
+
+/* OTHER HELPER FUNCTIONS BELOW */
 
 function letterCounter(word) {
   let data = new Map();
