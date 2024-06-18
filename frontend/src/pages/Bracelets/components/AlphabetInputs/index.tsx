@@ -227,7 +227,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
                     <input
                       type="number"
                       min={0}
-                      max={50}
+                      max={55}
                       id={letter.toLowerCase()}
                       name={letter.toLowerCase()}
                       onChange={handleInputChange}
