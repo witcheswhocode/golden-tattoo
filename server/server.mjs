@@ -3,6 +3,15 @@ import cors from "cors";
 import sqlite3 from "sqlite3";
 import path from "path";
 import { fileURLToPath } from "url";
+import { createPool } from "generic-pool";
+
+// Create a connection pool for SQLite
+const factory = {
+  create: () => new sqlite3.Database("./server/TS_liz_new.db"),
+  destroy: (db) => db.close(),
+};
+
+const pool = createPool(factory, { max: 10, min: 2 });
 
 const timeoutMiddleware = (req, res, next) => {
   const timeoutDuration = 10000; // 10 seconds timeout for example
@@ -42,8 +51,6 @@ app.use(
 );
 
 app.use(express.json());
-
-const db = new sqlite3.Database("./server/TS_liz_new.db");
 
 app.use(timeoutMiddleware); // Apply the timeout middleware globally or per route
 
@@ -89,20 +96,26 @@ app.use(
 
 app.get("/getBestBraceletCombos", async (req, res) => {
   try {
-    // Assuming data.query is coming from req.query or req.body
+    console.log("Received query parameters:", req.query);
+
     const options = req.query["options"]; // Adjust this according to your actual request format
 
     // Function to fetch data from the database
     const fetchWords = () => {
       return new Promise((resolve, reject) => {
-        const sql = buildSQLQuery(options); // Use options directly
-        const params = [];
-        db.all(sql, params, (err, rows) => {
-          if (err) {
-            reject(err);
-            return;
-          }
-          resolve(rows);
+        pool.acquire().then((db) => {
+          const sql = buildSQLQuery(options); // Use options directly
+          const params = [];
+          db.all(sql, params, (err, rows) => {
+            pool.release(db); // Release the connection back to the pool
+            if (err) {
+              reject(err);
+              return;
+            }
+            resolve(rows);
+          });
+        }).catch((err) => {
+          reject(err);
         });
       });
     };
@@ -114,7 +127,6 @@ app.get("/getBestBraceletCombos", async (req, res) => {
 
     const wordList = await fetchWords(); // Await the promise result
 
-    // Assuming letterCounts is also coming from req.query or req.body
     const letterCounts = req.query; // Adjust this according to your actual request format
 
     // Sum up all letter counts
@@ -133,6 +145,7 @@ app.get("/getBestBraceletCombos", async (req, res) => {
         },
       });
     }
+
     // Preprocess and find best combination
     const validWords = preprocessWords(wordList, letterCounts);
     const bestOf = findBestCombination(validWords, letterCounts);
@@ -150,22 +163,32 @@ app.get("/getBestBraceletCombos", async (req, res) => {
       },
     });
   } catch (err) {
+    console.error("Error processing request:", err.message);
     res.status(500).json({ error: err.message });
   }
 });
 
+
 app.get("/words", (req, res) => {
-  db.all("select * from word order by wordid", (err, rows) => {
-    if (err) {
+  pool
+    .acquire()
+    .then((db) => {
+      db.all("select * from word order by wordid", (err, rows) => {
+        pool.release(db); // Release the connection back to the pool
+        if (err) {
+          res.status(500).json({ error: err.message });
+          return;
+        }
+        res.json(rows);
+      });
+    })
+    .catch((err) => {
       res.status(500).json({ error: err.message });
-      return;
-    }
-    res.json(rows);
-  });
+    });
 });
 
 app.get("/getLyrics/:id", (req, res, next) => {
-  var id = req.params.id;
+  const id = req.params.id;
 
   const sql = `
   SELECT 
@@ -186,42 +209,63 @@ FROM
   JOIN word w ON w.wordid = l.wordid 
   JOIN song s ON s.songid = l.songid 
 WHERE 
-  l.wordid = ${id}
+  l.wordid = ?
 ORDER BY 
   CASE WHEN a.albumid > 99 THEN 1 ELSE 0 END, 
   a.albumid DESC
-`;
-  var params = [];
-  db.all(sql, params, (err, rows) => {
-    if (err) {
-      res.status(400).json({ error: err.message });
-      return;
-    }
-    res.json({
-      message: "success",
-      data: rows,
+  `;
+
+  const params = [id];
+
+  pool
+    .acquire()
+    .then((db) => {
+      db.all(sql, params, (err, rows) => {
+        pool.release(db); // Release the connection back to the pool
+        if (err) {
+          res.status(400).json({ error: err.message });
+          return;
+        }
+        res.json({
+          message: "success",
+          data: rows,
+        });
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
     });
-  });
 });
 
 app.get("/getWriters", (req, res, next) => {
-  const id = req.params.id;
-
-  const sql =
-    "SELECT * FROM song s JOIN album a ON s.albumid = a.albumid ORDER BY albumid DESC, songid";
+  const sql = `
+    SELECT * 
+    FROM song s 
+    JOIN album a ON s.albumid = a.albumid 
+    ORDER BY albumid DESC, songid
+  `;
   const params = [];
 
-  db.all(sql, params, (err, rows) => {
-    if (err) {
-      res.status(400).json({ error: err.message });
-      return;
-    }
-    res.json({
-      message: "success",
-      data: rows,
+  pool
+    .acquire()
+    .then((db) => {
+      db.all(sql, params, (err, rows) => {
+        pool.release(db); // Release the connection back to the pool
+        if (err) {
+          res.status(400).json({ error: err.message });
+          return;
+        }
+        res.json({
+          message: "success",
+          data: rows,
+        });
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
     });
-  });
 });
+
 function buildSQLQuery(options) {
   let whereConditions = [];
 
@@ -253,28 +297,37 @@ function buildSQLQuery(options) {
 }
 
 app.get("/getBraceletIdeas", (data, res, next) => {
-  var sql = buildSQLQuery(data.query["options"]);
+  const sql = buildSQLQuery(data.query["options"]);
   delete data.query["options"];
 
-  var params = [];
-  db.all(sql, params, (err, rows) => {
-    if (err) {
-      res.status(400).json({ error: err.message });
-      return;
-    }
-    const wordList = rows;
-    const letterCounts = data.query;
-    const validWords = preprocessWords(wordList, letterCounts);
-    const [maxCombinations, combinationsList, finalLetterCounts] =
-      findLongestCombinations(validWords, letterCounts);
+  const params = [];
 
-    res.json({
-      message: "success",
-      data: {
-        combinationList: combinationsList,
-      },
+  pool
+    .acquire()
+    .then((db) => {
+      db.all(sql, params, (err, rows) => {
+        pool.release(db); // Release the connection back to the pool
+        if (err) {
+          res.status(400).json({ error: err.message });
+          return;
+        }
+        const wordList = rows;
+        const letterCounts = data.query;
+        const validWords = preprocessWords(wordList, letterCounts);
+        const [maxCombinations, combinationsList, finalLetterCounts] =
+          findLongestCombinations(validWords, letterCounts);
+
+        res.json({
+          message: "success",
+          data: {
+            combinationList: combinationsList,
+          },
+        });
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
     });
-  });
 });
 
 // html for any other routes to enable SPA behavior
