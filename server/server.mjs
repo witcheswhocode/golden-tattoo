@@ -23,8 +23,8 @@ const timeoutMiddleware = (req, res, next) => {
     res.status(408).json({
       error: "Request timed out",
       data: {
-        mostLettersUsed: [["Too many letters, workload too large."]],
-        mostBraceletOptions: [["Too many letters, workload too large."]],
+        mostLettersUsed: [["Temporarily disabled, sorry! "]],
+        mostBraceletOptions: [["Temporarily disabled, sorry! "]],
       },
     });
   }, timeoutDuration);
@@ -99,7 +99,14 @@ app.use(
 );
 
 app.get("/getBestBraceletCombos", async (req, res) => {
-  try {
+  return res.json({
+    error: "workload too large",
+    data: {
+      mostLettersUsed: [["Temporarily disabled while server issues are sorted out!"]],
+      mostBraceletOptions: [["Temporarily disabled server issues are sorted out!"]],
+    },
+  });
+  /*try {
     console.log("Received query parameters:", req.query);
 
     const options = req.query["options"]; // Adjust this according to your actual request format
@@ -147,8 +154,8 @@ app.get("/getBestBraceletCombos", async (req, res) => {
       return res.status(400).json({
         error: "workload too large",
         data: {
-          mostLettersUsed: [["Too many letters, workload too large."]],
-          mostBraceletOptions: [["Too many letters, workload too large."]],
+          mostLettersUsed: [["Temporarily disabled, sorry! "]],
+          mostBraceletOptions: [["Temporarily disabled, sorry! "]],
         },
       });
     }
@@ -172,7 +179,7 @@ app.get("/getBestBraceletCombos", async (req, res) => {
   } catch (err) {
     console.error("Error processing request:", err.message);
     res.status(500).json({ error: err.message });
-  }
+  }*/
 });
 
 app.get("/words", (req, res) => {

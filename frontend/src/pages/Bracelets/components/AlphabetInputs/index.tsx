@@ -52,7 +52,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
 
     const params = new URLSearchParams();
     formData.forEach((value, key) => {
-      const numericValue = parseFloat(value as string);
+      const numericValue = value ? parseFloat(value as string) : 0;
       params.append(
         key.toLowerCase(),
         isNaN(numericValue)
