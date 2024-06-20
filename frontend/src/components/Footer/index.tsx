@@ -6,7 +6,7 @@ function Footer(props: FooterProps) {
   const { theme } = useTheme();
   return (
     <footer
-      className={`w-80% m-auto mt-8 text-sm text-${theme}-text p-4 md:w-2/3 lg:w-1/2 z-20`}
+      className={`w-80% m-auto mt-4 pb-20 text-sm text-${theme}-text p-4 md:w-2/3 lg:w-1/2 z-90`}
     >
       <div className="flex flex-col justify-start items-start gap-2">
         <p>

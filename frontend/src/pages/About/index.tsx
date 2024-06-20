@@ -8,7 +8,7 @@ const About: React.FC = () => {
   const pageText = `text-sm p-2 mb-2 space-y-2 leading-5 flex flex-col justify-start items-start`;
   return (
     <div
-      className={`bg-${theme}-panel text-${theme}-panelText rounded-md p-4 m-4 space-y-2`}
+      className={`bg-${theme}-panel text-${theme}-panelText rounded-md p-4 m-4 space-y-2 z-20 md:w-2/3`}
     >
       <h2 className={headerStyle}>The lyrical data</h2>
       <div className={pageText}>
