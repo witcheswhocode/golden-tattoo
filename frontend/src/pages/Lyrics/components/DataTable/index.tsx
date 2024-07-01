@@ -177,25 +177,11 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
     }
   };
 
-  const handleCategoryClick = (category: string) => {
-    if (!clickedCategory) {
-      setClickedCategory(true);
-      setSelectedCategories([category]);
-    }
-    if (category === "all categories") {
-      setClickedCategory(false);
-      setSelectedCategories(allCategories);
-    } else {
-      if (selectedCategories.includes(category)) {
-        // Deselect the category if it's already selected
-        setSelectedCategories(selectedCategories.filter((c) => c === category));
-      } else {
-        // Select the category if it's not already selected
-        setSelectedCategories([...selectedCategories, category]);
-      }
-    }
+  const handleUpdateCategories = (items: string[]) => {
+    console.log(items)
+    setClickedCategory(true);
+    setSelectedCategories(items);
   };
-  const isMobile = useMediaQuery({ maxWidth: 767 }); // Adjust the breakpoint as needed
 
   return (
     <>
@@ -208,7 +194,7 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
           className={`border-2 p-1 m-2 mb-4 md:w-1/3`}
         />
       </div>
-      <CategorySelector />
+      <CategorySelector handleFilterCategories={handleUpdateCategories} />
       <Table
         openModal={handleOpenModal}
         headerClick={handleHeaderClick}

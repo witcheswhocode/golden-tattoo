@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTheme } from "src/components/ThemeContext";
 import { useMediaQuery } from "react-responsive"; // Import react-responsive library
 import { TableRow } from "../DataTable";
 
 interface CategorySelectorProps {
+  handleFilterCategories: (items: string[]) => void;
 }
 
 const allCategories = [
@@ -32,7 +33,9 @@ const allCategories = [
   "no category",
 ];
 
-const CategorySelector: React.FC<CategorySelectorProps> = (props: CategorySelectorProps) => {
+const CategorySelector: React.FC<CategorySelectorProps> = (
+  props: CategorySelectorProps
+) => {
   const { theme } = useTheme();
   const [selectedCategories, setSelectedCategories] =
     useState<string[]>(allCategories);
@@ -57,7 +60,11 @@ const CategorySelector: React.FC<CategorySelectorProps> = (props: CategorySelect
       }
     }
   };
-  const isMobile = useMediaQuery({ maxWidth: 767 }); // Adjust the breakpoint as needed
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+
+  useEffect(() => {
+    props.handleFilterCategories(selectedCategories);
+  }, [selectedCategories]);
 
   return (
     <>
