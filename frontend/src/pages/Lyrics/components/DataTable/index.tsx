@@ -3,6 +3,7 @@ import Pagination from "../Pagination";
 import Table from "../Table";
 import { useTheme } from "src/components/ThemeContext";
 import { useMediaQuery } from "react-responsive"; // Import react-responsive library
+import CategorySelector from "../CategorySelector";
 
 export interface TableRow {
   wordid: number;
@@ -207,33 +208,7 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
           className={`border-2 p-1 m-2 mb-4 md:w-1/3`}
         />
       </div>
-      <div className="relative w-full">
-        <div
-          className={`py-2 mb-2 ${
-            theme === "ttpd"
-              ? `bg-ttpd-background z-5 border-t-2 border-b-2 border-${theme}-tableBorder`
-              : ""
-          } fade-right${isMobile ? "" : "-none"}`}
-        >
-          <div className="all-categories flex flex-row flex-nowrap w-full overflow-auto gap-1 md:flex-wrap md:justify-center">
-            {allCategories.map((category, index) => (
-              <div
-                className={`flex flex-nowrap justify-center items-center w-auto px-3 py-1 text-sm text-white rounded-full cursor-pointer whitespace-nowrap category-color-${
-                  ["queer", "midnights"].includes(category)
-                    ? category
-                    : index > 7
-                    ? `100`
-                    : index
-                }  ${selectedCategories.includes(category) ? "selected" : ""}`}
-                key={category}
-                onClick={() => handleCategoryClick(category)}
-              >
-                {category}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      <CategorySelector />
       <Table
         openModal={handleOpenModal}
         headerClick={handleHeaderClick}
