@@ -28,8 +28,12 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
   const [braceletQuantities, setBraceletQuantities] = useState<{
     [key: string]: { value: number; active: boolean };
   }>(
-    bracelets.reduce((acc: any, bracelet) => {
-      acc[bracelet] = { value: 0, active: true };
+    bracelets.reduce((acc: any, bracelet: any) => {
+      acc[bracelet["word"]] = {
+        value: 0,
+        active: true,
+        category: bracelet["category"],
+      };
       return acc;
     }, {})
   );

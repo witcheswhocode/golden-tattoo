@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useTheme } from "src/components/ThemeContext";
+import CategorySelector from "./components/CategorySelector";
 
 interface Bracelet {
   name: string;
@@ -11,14 +12,50 @@ interface ListOfBraceletIdeasProps {
   handleIncrement: (id: string) => void;
 }
 
+const allCategories = [
+  "all categories",
+  "ttpd",
+  "explicit",
+];
+
 const ListOfBraceletIdeas: React.FC<ListOfBraceletIdeasProps> = ({
   braceletQuantities,
   handleDecrement,
   handleIncrement,
 }) => {
   const { theme } = useTheme();
+  const [selectedCategories, setSelectedCategories] =
+    useState<string[]>(allCategories);
+  const numberOfCategories = allCategories.length;
+  const [clickedCategory, setClickedCategory] = useState<Boolean>(false);
+
+  /*const filteredData = braceletQuantities
+    .filter((item: Bracelet) => {
+
+      const matchesCategory = selectedCategories.length
+        ? item.categories
+          ? hasCommonElement(item.categories.split(","), selectedCategories)
+          : selectedCategories.includes("all categories")
+        : true; // Always true if no category is selected
+
+      return matchesSearchTerm && matchesCategory;
+    })
+
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);*/
+  console.log(braceletQuantities)
+
+  const handleUpdateCategories = (items: string[]) => {
+    console.log(items);
+    setClickedCategory(true);
+    setSelectedCategories(items);
+  };
+  console.log(braceletQuantities);
   return (
     <div className={`p-4 z-10`}>
+      <CategorySelector
+        allCategories={allCategories}
+        handleFilterCategories={handleUpdateCategories}
+      />
       {Object.keys(braceletQuantities).map((key) => (
         <div
           key={key}
@@ -63,7 +100,9 @@ const ListOfBraceletIdeas: React.FC<ListOfBraceletIdeasProps> = ({
               onClick={() => handleIncrement(key)}
               disabled={!braceletQuantities[key].active}
               className={`text-sm text-white p-2 rounded-r ${
-                braceletQuantities[key].active ? `bg-${theme}-plus` : "bg-disabled cursor-not-allowed"
+                braceletQuantities[key].active
+                  ? `bg-${theme}-plus`
+                  : "bg-disabled cursor-not-allowed"
               }`}
             >
               +

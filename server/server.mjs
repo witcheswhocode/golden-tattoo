@@ -330,6 +330,8 @@ app.get("/getBraceletIdeas", (data, res, next) => {
         const [maxCombinations, combinationsList, finalLetterCounts] =
           findLongestCombinations(validWords, letterCounts);
 
+          console.log(combinationsList)
+
         res.json({
           message: "success",
           data: {
@@ -393,7 +395,7 @@ function preprocessWords(wordList, letterDict) {
 
   for (const word of wordList) {
     if (canConstruct(word["word"], letterDict)) {
-      validWords.push(word["word"]);
+      validWords.push({word: word["word"], category: word["category"]});
     }
   }
   return validWords;
@@ -405,10 +407,10 @@ function findLongestCombinations(words, letterDict) {
   const combinationsList = [];
 
   for (const word of words) {
-    if (canConstruct(word, letterDict)) {
+    if (canConstruct(word["word"], letterDict)) {
       maxCombinations += 1;
-      combinationsList.push(word);
-      for (const letter of word) {
+      combinationsList.push({word:word["word"], category:["category"]});
+      for (const letter of word["word"]) {
         letterCounts[letter] -= 1;
         //if (letterCounts[letter] === 0) {
         //  delete letterCounts[letter];
