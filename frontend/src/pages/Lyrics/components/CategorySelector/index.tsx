@@ -5,41 +5,16 @@ import { TableRow } from "../DataTable";
 
 interface CategorySelectorProps {
   handleFilterCategories: (items: string[]) => void;
+  allCategories: string[];
 }
-
-const allCategories = [
-  "all categories",
-  "parallels",
-  "literature",
-  "color",
-  "queer",
-  "date",
-  "number",
-  "explicit",
-  "alcohol",
-  "hiding",
-  "secrets",
-  "family",
-  "body",
-  "reflective-light",
-  "place",
-  "transportation",
-  "person",
-  "games",
-  "spiritual",
-  "elements",
-  "space",
-  "kingdom",
-  "no category",
-];
 
 const CategorySelector: React.FC<CategorySelectorProps> = (
   props: CategorySelectorProps
 ) => {
   const { theme } = useTheme();
   const [selectedCategories, setSelectedCategories] =
-    useState<string[]>(allCategories);
-  const numberOfCategories = allCategories.length;
+    useState<string[]>(props.allCategories);
+  const numberOfCategories = props.allCategories.length;
   const [clickedCategory, setClickedCategory] = useState<Boolean>(false);
 
   const handleCategoryClick = (category: string) => {
@@ -49,7 +24,7 @@ const CategorySelector: React.FC<CategorySelectorProps> = (
     }
     if (category === "all categories") {
       setClickedCategory(false);
-      setSelectedCategories(allCategories);
+      setSelectedCategories(props.allCategories);
     } else {
       if (selectedCategories.includes(category)) {
         // Deselect the category if it's already selected
@@ -77,7 +52,7 @@ const CategorySelector: React.FC<CategorySelectorProps> = (
           } fade-right${isMobile ? "" : "-none"}`}
         >
           <div className="all-categories flex flex-row flex-nowrap w-full overflow-auto gap-1 md:flex-wrap md:justify-center">
-            {allCategories.map((category, index) => (
+            {props.allCategories.map((category, index) => (
               <div
                 className={`flex flex-nowrap justify-center items-center w-auto px-3 py-1 text-sm text-white rounded-full cursor-pointer whitespace-nowrap category-color-${
                   ["queer", "midnights"].includes(category)
