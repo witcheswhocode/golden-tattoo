@@ -26,9 +26,10 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
   letters,
 }) => {
   const [braceletQuantities, setBraceletQuantities] = useState<{
-    [key: string]: { value: number; active: boolean };
+    [key: string]: { value: number; active: boolean; category: string[]; };
   }>(
     bracelets.reduce((acc: any, bracelet: any) => {
+      console.log(bracelet)
       acc[bracelet["word"]] = {
         value: 0,
         active: true,
@@ -52,7 +53,7 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
   const handleIncrement = (id: string) => {
     setBraceletQuantities((prevQuantities) => ({
       ...prevQuantities,
-      [id]: { value: prevQuantities[id].value + 1, active: true },
+      [id]: { value: prevQuantities[id].value + 1, active: true, category: prevQuantities[id].category },
     }));
 
     setBraceletSelection((prevSelection) => ({
@@ -84,7 +85,7 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
 
     setBraceletQuantities((prevQuantities) => ({
       ...prevQuantities,
-      [id]: { value: prevQuantities[id].value - 1, active: true }, // Assuming you want to decrement the value
+      [id]: { value: prevQuantities[id].value - 1, active: true, category: prevQuantities[id].category  }, // Assuming you want to decrement the value
     }));
 
     setBraceletSelection((prevSelection) => {

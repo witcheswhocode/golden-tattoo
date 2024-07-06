@@ -5,13 +5,19 @@ import Sparkles from "src/components/Sparkles";
 import { useTheme } from "src/components/ThemeContext";
 import MetaTags from "src/components/MetaTags";
 
+type Bracelet = {
+  value: number;
+  active: boolean;
+  category: string[];
+};
 type LetterCount = { [letter: string]: number };
 
 const Bracelets = () => {
   const { theme } = useTheme();
-  const [combinationPossibilities, setCombinationPossibilities] = useState<
-    string[] | null
-  >(null);
+  const [combinationPossibilities, setCombinationPossibilities] = useState<{
+    [key: string]: Bracelet;
+  } | null>(null);
+  
   const [
     mostLetterCombinationPossibilities,
     setMostLetterCombinationPossibilities,
@@ -27,7 +33,7 @@ const Bracelets = () => {
   const resultsRef = useRef<HTMLDivElement>(null);
 
   const [showSparkles, setShowSparkles] = useState<boolean>(false);
-
+  
   return (
     <div className={`w-full md:w-2/3 lg:w-1/2 z-10 text-${theme}-text`}>
       {/*<MetaTags

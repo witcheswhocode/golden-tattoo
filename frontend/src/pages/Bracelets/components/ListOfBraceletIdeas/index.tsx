@@ -2,21 +2,21 @@ import React, { useState, useEffect } from "react";
 import { useTheme } from "src/components/ThemeContext";
 import CategorySelector from "./components/CategorySelector";
 
-interface Bracelet {
-  name: string;
-}
+export type Bracelet = {
+  value: number;
+  active: boolean;
+  category: string[];
+};
 
 interface ListOfBraceletIdeasProps {
-  braceletQuantities: { [key: string]: { value: number; active: boolean } };
+  braceletQuantities: {
+    [key: string]: { value: number; active: boolean; category: string[] };
+  };
   handleDecrement: (id: string) => void;
   handleIncrement: (id: string) => void;
 }
 
-const allCategories = [
-  "all categories",
-  "ttpd",
-  "explicit",
-];
+const allCategories = ["all categories", "ttpd", "explicit"];
 
 const ListOfBraceletIdeas: React.FC<ListOfBraceletIdeasProps> = ({
   braceletQuantities,
@@ -28,35 +28,48 @@ const ListOfBraceletIdeas: React.FC<ListOfBraceletIdeasProps> = ({
     useState<string[]>(allCategories);
   const numberOfCategories = allCategories.length;
   const [clickedCategory, setClickedCategory] = useState<Boolean>(false);
+  const hasCommonElement = (arr1: string[], arr2: string[]): boolean => {
+    return arr1.some((element) => arr2.includes(element));
+  };
+  function filterByCategories(
+    data: { [key: string]: Bracelet },
+    categories: string[]
+  ): { [key: string]: Bracelet } {
+    const filteredData: { [key: string]: Bracelet } = {};
+    for (const key in data) {
+    //console.log(key, data[key])
+      if (
+        data[key].category /*&&
+        data[key].category.some((cat) => categories.includes(cat))*/
+      ) {
+        //console.log(data[key].category)
+        filteredData[key] = data[key];
+      } else {
+        if (categories.includes("all categories")) {
+          filteredData[key] = braceletQuantities[key];
+        }
+      }
+    }
 
-  /*const filteredData = braceletQuantities
-    .filter((item: Bracelet) => {
+    return filteredData;
+  }
 
-      const matchesCategory = selectedCategories.length
-        ? item.categories
-          ? hasCommonElement(item.categories.split(","), selectedCategories)
-          : selectedCategories.includes("all categories")
-        : true; // Always true if no category is selected
+  const filteredData = filterByCategories(braceletQuantities, allCategories);
 
-      return matchesSearchTerm && matchesCategory;
-    })
-
-  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);*/
-  console.log(braceletQuantities)
+  console.log(filteredData);
 
   const handleUpdateCategories = (items: string[]) => {
     console.log(items);
     setClickedCategory(true);
     setSelectedCategories(items);
   };
-  console.log(braceletQuantities);
   return (
     <div className={`p-4 z-10`}>
       <CategorySelector
         allCategories={allCategories}
         handleFilterCategories={handleUpdateCategories}
       />
-      {Object.keys(braceletQuantities).map((key) => (
+      {Object.keys(filteredData).map((key) => (
         <div
           key={key}
           className={`flex items-center justify-between bg-white p-2 rounded-md mb-4 z-10 ${
