@@ -177,19 +177,24 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
         letterTotal={letterTotal}
         lettersLeft={lettersLeft}
       />
-      <div className="flex items-center justify-center">
-        <ExpandableDiv
-          count={braceletSelection && Object.keys(braceletSelection).length}
-        >
-          <BraceletSelection
-            braceletSelection={braceletSelection || {}}
-            braceletQuantities={braceletQuantities}
-            handleDecrement={handleDecrement}
-            handleIncrement={handleIncrement}
-          />
-        </ExpandableDiv>
-      </div>
-
+      {braceletQuantities && Object.keys(braceletQuantities).length > 0 ? (
+        <>
+          <div className="flex items-center justify-center">
+            <ExpandableDiv
+              count={braceletSelection && Object.keys(braceletSelection).length}
+            >
+              <BraceletSelection
+                braceletSelection={braceletSelection || {}}
+                braceletQuantities={braceletQuantities}
+                handleDecrement={handleDecrement}
+                handleIncrement={handleIncrement}
+              />
+            </ExpandableDiv>
+          </div>
+        </>
+      ) : (
+        <></>
+      )}
       <Tabs>
         <Tab label="Build Your Own">
           <ListOfBraceletIdeas
@@ -205,23 +210,17 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
               <ListOfBestCombinations
                 combinations={mostBraceletOptions.any.words}
                 title={"Use the Most Letters"}
-                desc={
-                  `Uses ${mostBraceletOptions.any.count} beads. This is a list a various combinations you can try to use the most letters.`
-                }
+                desc={`Uses ${mostBraceletOptions.any.count} beads. This is a list a various combinations you can try to use the most letters.`}
               />
               <ListOfBestCombinations
                 combinations={mostBraceletOptions.asc.words}
                 title={"Makes Smaller Worded Bracelets"}
-                desc={
-                  `Uses ${mostBraceletOptions.asc.count} beads. This is a list a various combinations you can try to use the most letters.`
-                }
+                desc={`Uses ${mostBraceletOptions.asc.count} beads. This is a list a various combinations you can try to use the most letters.`}
               />
               <ListOfBestCombinations
                 combinations={mostBraceletOptions.desc.words}
                 title={"Makes Longer Worded Bracelets"}
-                desc={
-                  `Uses ${mostBraceletOptions.desc.count} beads. This is a list a various combinations you can try to use the most letters.`
-                }
+                desc={`Uses ${mostBraceletOptions.desc.count} beads. This is a list a various combinations you can try to use the most letters.`}
               />
             </>
           ) : (

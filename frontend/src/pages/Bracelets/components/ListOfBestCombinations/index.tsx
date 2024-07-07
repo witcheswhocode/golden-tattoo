@@ -22,12 +22,16 @@ const ListOfBestCombinations: React.FC<ListOfBestCombinationsProps> = ({
         <div className={`text-xs my-1 mb-2 text-${theme}-panelText`}>
           {desc}
         </div>
-        <div className={`my-4 bg-white p-2 rounded-md text-center`}>
-          {combinations?.map((item, index) => (
-            <div className={`text-${theme}-tabTextActive`} key={index}>
-              {item}
-            </div>
-          ))}
+        <div className="my-4 bg-white p-2 rounded-md text-center">
+          {combinations && combinations.length > 0 ? (
+            combinations.map((item, index) => (
+              <div className={`text-${theme}-tabTextActive`} key={index}>
+                {item}
+              </div>
+            ))
+          ) : (
+            <p>No combinations available.</p>
+          )}
         </div>
       </div>
     );
