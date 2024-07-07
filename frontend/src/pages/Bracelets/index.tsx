@@ -12,10 +12,6 @@ const Bracelets = () => {
   const [combinationPossibilities, setCombinationPossibilities] = useState<
     string[] | null
   >(null);
-  const [
-    mostLetterCombinationPossibilities,
-    setMostLetterCombinationPossibilities,
-  ] = useState<string[][] | null>(null);
 
   const [
     mostBraceletCombinationPossibilities,
@@ -30,7 +26,6 @@ const Bracelets = () => {
 
   useEffect(() => {
     if (inputValues && combinationPossibilities) {
-      console.log(inputValues, combinationPossibilities);
       const optList: any = getOptimizedLists(
         inputValues,
         combinationPossibilities
@@ -48,12 +43,6 @@ const Bracelets = () => {
   />*/}
       <AlphabetInputs
         handleCombinationPossibilities={setCombinationPossibilities}
-        handleMostLetterCombinationPossibilities={
-          setMostLetterCombinationPossibilities
-        }
-        handleMostBraceletCombinationPossibilities={
-          setMostBraceletCombinationPossibilities
-        }
         inputValues={inputValues}
         setInputValues={setInputValues}
         resultsRef={resultsRef}
@@ -64,12 +53,21 @@ const Bracelets = () => {
           {showSparkles && <Sparkles />}
           <BraceletIdeas
             bracelets={combinationPossibilities}
-            mostLettersUsed={mostLetterCombinationPossibilities}
             mostBraceletOptions={mostBraceletCombinationPossibilities}
             letters={inputValues}
           />
         </div>
       )}
+
+      <p className="flex flex-col justify-center items-center mt-4 w-80% text-sm">
+        Bracelet ideas compiled from multiple resources.{" "}
+        <a
+          href="/about"
+          className={`internal underline text-${theme}-link hover:text-${theme}-linkHover visited:text-${theme}-linkVisited focus:ring`}
+        >
+          See credits on the about page.
+        </a>
+      </p>
     </div>
   );
 };

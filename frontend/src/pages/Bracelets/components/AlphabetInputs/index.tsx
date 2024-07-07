@@ -5,8 +5,6 @@ import { useTheme } from "src/components/ThemeContext";
 
 interface AlphabetInputProps {
   handleCombinationPossibilities: (value: string[] | null) => void;
-  handleMostLetterCombinationPossibilities: (value: string[][]) => void;
-  handleMostBraceletCombinationPossibilities: (value: string[][]) => void;
   inputValues: { [key: string]: number };
   setInputValues: (value: { [key: string]: number | any }) => void;
   resultsRef: React.RefObject<HTMLDivElement>;
@@ -16,8 +14,6 @@ interface AlphabetInputProps {
 const AlphabetInputs: React.FC<AlphabetInputProps> = ({
   inputValues,
   handleCombinationPossibilities,
-  handleMostLetterCombinationPossibilities,
-  handleMostBraceletCombinationPossibilities,
   setInputValues,
   resultsRef,
   setShowSparkles,
@@ -102,64 +98,64 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
     setIsSubmitted(false);
 
     setInputValues({
-      a: 2,
-      b: 2,
-      c: 2,
-      d: 2,
-      e: 2,
-      f: 2,
-      g: 2,
-      h: 2,
-      i: 2,
-      j: 2,
-      k: 2,
-      l: 2,
-      m: 2,
-      n: 2,
-      o: 2,
-      p: 2,
-      q: 2,
-      r: 2,
-      s: 2,
-      t: 2,
-      u: 2,
-      v: 2,
-      w: 2,
-      x: 2,
-      y: 2,
-      z: 2,
+      a: 55,
+      b: 55,
+      c: 55,
+      d: 55,
+      e: 55,
+      f: 55,
+      g: 55,
+      h: 55,
+      i: 55,
+      j: 55,
+      k: 55,
+      l: 55,
+      m: 55,
+      n: 55,
+      o: 55,
+      p: 55,
+      q: 55,
+      r: 55,
+      s: 55,
+      t: 55,
+      u: 55,
+      v: 55,
+      w: 55,
+      x: 55,
+      y: 55,
+      z: 55,
     });
     setIsFormVisible(true);
   };
 
   useEffect(() => {
     setInputValues({
-      a: 2,
-      b: 2,
-      c: 2,
-      d: 2,
-      e: 2,
-      f: 2,
-      g: 2,
-      h: 2,
-      i: 2,
-      j: 2,
-      k: 2,
-      l: 2,
-      m: 2,
-      n: 2,
-      o: 2,
-      p: 2,
-      q: 2,
-      r: 2,
-      s: 2,
-      t: 2,
-      u: 2,
-      v: 2,
-      w: 2,
-      x: 2,
-      y: 2,
-      z: 2,
+      a: 55,
+      b: 55,
+      c: 55,
+      d: 55,
+      e: 55,
+      f: 55,
+      g: 55,
+      h: 55,
+      i: 55,
+      j: 55,
+      k: 55,
+      l: 55,
+      m: 55,
+      n: 55,
+      o: 55,
+      p: 55,
+      q: 55,
+      r: 55,
+      s: 55,
+      t: 55,
+      u: 55,
+      v: 55,
+      w: 55,
+      x: 55,
+      y: 55,
+      z: 55,
     });
   }, []);
 
@@ -271,15 +267,6 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
           </div>
         </div>
       )}
-      <p className="flex flex-col justify-center items-center mt-4 w-80% text-sm">
-        Bracelet ideas compiled from multiple resources.{" "}
-        <a
-          href="/about"
-          className={`internal underline text-${theme}-link hover:text-${theme}-linkHover visited:text-${theme}-linkVisited focus:ring`}
-        >
-          See credits on the about page.
-        </a>
-      </p>
     </div>
   );
 };

@@ -14,14 +14,12 @@ interface Bracelet {
 
 interface BraceletIdeasProps {
   bracelets: string[];
-  mostLettersUsed: string[][] | null;
-  mostBraceletOptions: string[][] | null;
+  mostBraceletOptions: any | null;
   letters: { [key: string]: number };
 }
 
 const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
   bracelets,
-  mostLettersUsed,
   mostBraceletOptions,
   letters,
 }) => {
@@ -202,20 +200,27 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
         </Tab>
         <Tab label="Optimized">
           (
-          {mostLettersUsed && mostBraceletOptions ? (
+          {mostBraceletOptions ? (
             <>
               <ListOfBestCombinations
-                combinations={mostLettersUsed}
+                combinations={mostBraceletOptions.any.words}
                 title={"Use the Most Letters"}
                 desc={
-                  "This list gives you the variation that will use the most beads."
+                  `Uses ${mostBraceletOptions.any.count} beads. This is a list a various combinations you can try to use the most letters.`
                 }
               />
               <ListOfBestCombinations
-                combinations={mostBraceletOptions}
-                title={"Make the Most Bracelets"}
+                combinations={mostBraceletOptions.asc.words}
+                title={"Makes Smaller Worded Bracelets"}
                 desc={
-                  "This is a list a various combinations you can try to make the most bracelets."
+                  `Uses ${mostBraceletOptions.asc.count} beads. This is a list a various combinations you can try to use the most letters.`
+                }
+              />
+              <ListOfBestCombinations
+                combinations={mostBraceletOptions.desc.words}
+                title={"Makes Longer Worded Bracelets"}
+                desc={
+                  `Uses ${mostBraceletOptions.desc.count} beads. This is a list a various combinations you can try to use the most letters.`
                 }
               />
             </>

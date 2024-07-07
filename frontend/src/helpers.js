@@ -209,7 +209,7 @@ function findMaxLetterUsage(letterCounts, words) {
     }
     return counts;
   }
-  console.log(words)
+
   // Sort words by their length in descending order
   words.sort(
     (a, b) =>
