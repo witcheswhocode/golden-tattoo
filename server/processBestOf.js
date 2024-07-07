@@ -195,6 +195,79 @@ function findMaxLetterUsageAscending(letterCounts, words) {
   return result;
 }
 
+function findMaxLetterUsageWithStartingWord(letterCounts, words) {
+    function countLetters(word) {
+      let counts = {};
+      for (let letter of word) {
+        if (letter.match(/[a-zA-Z]/)) {
+          letter = letter.toLowerCase();
+          counts[letter] = (counts[letter] || 0) + 1;
+        }
+      }
+      return counts;
+    }
+  
+    function canFormWord(word, remainingLetters) {
+      let letterFrequency = countLetters(word);
+      for (let letter in letterFrequency) {
+        if (letterFrequency[letter] > (remainingLetters[letter] || 0)) {
+          return false;
+        }
+      }
+      return true;
+    }
+  
+    function updateRemainingLetters(word, remainingLetters) {
+      let letterFrequency = countLetters(word);
+      for (let letter in letterFrequency) {
+        remainingLetters[letter] -= letterFrequency[letter];
+      }
+    }
+  
+    function findMaxUsageFromStart(startIndex) {
+      let result = [];
+      let remainingLetters = { ...letterCounts };
+  
+      // Start with the given starting word
+      let startingWord = words[startIndex].word;
+      if (canFormWord(startingWord, remainingLetters)) {
+        updateRemainingLetters(startingWord, remainingLetters);
+        result.push(startingWord);
+  
+        // Continue with the rest of the words in descending order of length
+        let sortedWords = words
+          .slice(0, startIndex)
+          .concat(words.slice(startIndex + 1))
+          .sort((a, b) => b.word.replace(/[^a-zA-Z]/g, '').length - a.word.replace(/[^a-zA-Z]/g, '').length);
+  
+        for (let obj of sortedWords) {
+          let word = obj.word;
+          if (canFormWord(word, remainingLetters)) {
+            updateRemainingLetters(word, remainingLetters);
+            result.push(word);
+          }
+        }
+      }
+  
+      return result;
+    }
+  
+    let optimalList = [];
+    let maxUsedLetters = 0;
+  
+    for (let i = 0; i < words.length; i++) {
+      let currentList = findMaxUsageFromStart(i);
+      let usedLettersCount = currentList.join('').replace(/[^a-zA-Z]/g, '').length;
+  
+      if (usedLettersCount > maxUsedLetters) {
+        maxUsedLetters = usedLettersCount;
+        optimalList = currentList;
+      }
+    }
+  
+    return optimalList;
+  }
+
 const getNumOfLettersTotal = (bracelets) => {
   let count = 0;
   bracelets.forEach((bracelet) => {
@@ -214,10 +287,15 @@ const processIncrements = async () => {
 
     //await processLetterCounts(count, letterCounts, wordList);
     const ret = findMaxLetterUsage(letterCounts, wordList);
-    console.log(count, ret, getNumOfLettersTotal(ret));
+    console.log(count)
+    console.log("desc", ret, getNumOfLettersTotal(ret));
 
     const ret2 = findMaxLetterUsageAscending(letterCounts, wordList);
-    console.log(ret2, getNumOfLettersTotal(ret2));
+    console.log("asc", ret2, getNumOfLettersTotal(ret2));
+
+    const r = findMaxLetterUsageWithStartingWord(letterCounts, wordList)
+    console.log("any", r, getNumOfLettersTotal(r))
+    console.log(getNumOfLettersTotal(ret),getNumOfLettersTotal(ret2), getNumOfLettersTotal(r))
   }
 };
 
