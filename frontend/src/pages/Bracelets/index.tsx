@@ -1,9 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import BraceletIdeas from "./components/BraceletIdeas";
 import AlphabetInputs from "./components/AlphabetInputs";
 import Sparkles from "src/components/Sparkles";
 import { useTheme } from "src/components/ThemeContext";
-import MetaTags from "src/components/MetaTags";
+import { getOptimizedLists } from "../../helpers";
 
 type LetterCount = { [letter: string]: number };
 
@@ -27,6 +27,17 @@ const Bracelets = () => {
   const resultsRef = useRef<HTMLDivElement>(null);
 
   const [showSparkles, setShowSparkles] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (inputValues && combinationPossibilities) {
+      console.log(inputValues, combinationPossibilities);
+      const optList: any = getOptimizedLists(
+        inputValues,
+        combinationPossibilities
+      );
+      setMostBraceletCombinationPossibilities(optList);
+    }
+  }, [combinationPossibilities]);
 
   return (
     <div className={`w-full md:w-2/3 lg:w-1/2 z-10 text-${theme}-text`}>

@@ -4,11 +4,8 @@ import sqlite3 from "sqlite3";
 import path from "path";
 import { fileURLToPath } from "url";
 import { createPool } from "generic-pool";
-import {
-  preprocessWords,
-  findBestCombination,
-  findLongestCombinations,
-} from "./helper.js";
+import pkg from "../frontend/src/helpers.js";
+const { preprocessWords, findLongestCombinations, getOptimizedLists } = pkg;
 
 // Create a connection pool for SQLite
 const factory = {
@@ -102,85 +99,6 @@ app.use(
   "/assets",
   express.static(path.join(__dirname, "../frontend/build/assets"))
 );
-
-app.get("/getBestBraceletCombos", async (req, res) => {
-  try {
-    console.log("Received query parameters:", req.query);
-
-    const options = req.query["options"]; // Adjust this according to your actual request format
-
-    // Function to fetch data from the database
-    const fetchWords = () => {
-      return new Promise((resolve, reject) => {
-        pool
-          .acquire()
-          .then((db) => {
-            const sql = buildSQLQuery(options); // Use options directly
-            console.log(sql);
-            const params = [];
-            db.all(sql, params, (err, rows) => {
-              pool.release(db); // Release the connection back to the pool
-              if (err) {
-                reject(err);
-                return;
-              }
-              resolve(rows);
-            });
-          })
-          .catch((err) => {
-            reject(err);
-          });
-      });
-    };
-
-    // Check for cancellation and fetch data
-    if (currentRequest.cancel) {
-      throw new Error("Request canceled");
-    }
-
-    const wordList = await fetchWords(); // Await the promise result
-    console.log(wordList);
-
-    const letterCounts = req.query; // Adjust this according to your actual request format
-
-    // Sum up all letter counts
-    const totalWorkload = Object.values(letterCounts).reduce(
-      (acc, count) => acc + Number(count),
-      0
-    );
-
-    // Check if the total workload exceeds the threshold
-    if (totalWorkload > 100) {
-      return res.status(400).json({
-        error: "workload too large",
-        data: {
-          mostLettersUsed: [["Temporarily disabled, sorry! "]],
-          mostBraceletOptions: [["Temporarily disabled, sorry! "]],
-        },
-      });
-    }
-
-    // Preprocess and find best combination
-    const validWords = preprocessWords(wordList, letterCounts);
-    const bestOf = findBestCombination(validWords, letterCounts);
-
-    // Check for cancellation again before responding
-    if (currentRequest.cancel) {
-      throw new Error("Request canceled");
-    }
-
-    res.json({
-      message: "success",
-      data: {
-        mostLettersUsed: bestOf.firstItems,
-        mostBraceletOptions: bestOf.mostBraceletOptions,
-      },
-    });
-  } catch (err) {
-    console.error("Error processing request:", err.message);
-    res.status(500).json({ error: err.message });
-  }
-});
 
 app.get("/words", (req, res) => {
   pool
@@ -359,3 +277,4 @@ process.on("SIGTERM", () => {
     pool.drain().then(() => pool.clear());
   });
 });
+
