@@ -1,7 +1,7 @@
 import fs from "fs";
 import sqlite3 from "sqlite3";
 import { parse } from "json2csv";
-import { preprocessWords, findBestCombination } from "./helper.js";
+import { preprocessWords, findBestCombination, findMaxLetterUsage, findMaxLetterUsageAscending, findMaxLetterUsageWithStartingWord, getNumOfLettersTotal } from "./helper.js";
 
 const buildSQLQuery = (options) => {
   return "SELECT * FROM bracelets b";
@@ -36,7 +36,7 @@ let letterCounts = {
   z: 0,
 };
 
-const increments = [1, 2, 3, 4, 5, 10, 20, 30];
+const increments = [1, 2];
 
 const fetchWords = () => {
   return new Promise((resolve, reject) => {
@@ -95,185 +95,6 @@ const processLetterCounts = async (count, letterCounts, wordList) => {
   } catch (err) {
     console.error("Error processing letter counts:", err.message);
   }
-};
-
-function findMaxLetterUsage(letterCounts, words) {
-  // Function to count letters in a word
-  function countLetters(word) {
-    let counts = {};
-    for (let letter of word) {
-      if (letter.match(/[a-zA-Z]/)) {
-        // Only consider alphabetic characters
-        letter = letter.toLowerCase();
-        counts[letter] = (counts[letter] || 0) + 1;
-      }
-    }
-    return counts;
-  }
-
-  // Sort words by their length in descending order
-  words.sort(
-    (a, b) =>
-      b.word.replace(/[^a-zA-Z]/g, "").length -
-      a.word.replace(/[^a-zA-Z]/g, "").length
-  );
-
-  let result = [];
-  let remainingLetters = { ...letterCounts };
-
-  for (let obj of words) {
-    let word = obj.word;
-    let letterFrequency = countLetters(word);
-    let canBeFormed = true;
-
-    // Check if word can be formed with remaining letters
-    for (let letter in letterFrequency) {
-      if (letterFrequency[letter] > (remainingLetters[letter] || 0)) {
-        canBeFormed = false;
-        break;
-      }
-    }
-
-    // If the word can be formed, update the remaining letter counts and add to the result
-    if (canBeFormed) {
-      for (let letter in letterFrequency) {
-        remainingLetters[letter] -= letterFrequency[letter];
-      }
-      result.push(word);
-    }
-  }
-
-  return result;
-}
-
-function findMaxLetterUsageAscending(letterCounts, words) {
-  // Function to count letters in a word
-  function countLetters(word) {
-    let counts = {};
-    for (let letter of word) {
-      if (letter.match(/[a-zA-Z]/)) {
-        // Only consider alphabetic characters
-        letter = letter.toLowerCase();
-        counts[letter] = (counts[letter] || 0) + 1;
-      }
-    }
-    return counts;
-  }
-
-  // Sort words by their length in ascending order
-  words.sort(
-    (a, b) =>
-      a.word.replace(/[^a-zA-Z]/g, "").length -
-      b.word.replace(/[^a-zA-Z]/g, "").length
-  );
-
-  let result = [];
-  let remainingLetters = { ...letterCounts };
-
-  for (let obj of words) {
-    let word = obj.word;
-    let letterFrequency = countLetters(word);
-    let canBeFormed = true;
-
-    // Check if word can be formed with remaining letters
-    for (let letter in letterFrequency) {
-      if (letterFrequency[letter] > (remainingLetters[letter] || 0)) {
-        canBeFormed = false;
-        break;
-      }
-    }
-
-    // If the word can be formed, update the remaining letter counts and add to the result
-    if (canBeFormed) {
-      for (let letter in letterFrequency) {
-        remainingLetters[letter] -= letterFrequency[letter];
-      }
-      result.push(word);
-    }
-  }
-
-  return result;
-}
-
-function findMaxLetterUsageWithStartingWord(letterCounts, words) {
-    function countLetters(word) {
-      let counts = {};
-      for (let letter of word) {
-        if (letter.match(/[a-zA-Z]/)) {
-          letter = letter.toLowerCase();
-          counts[letter] = (counts[letter] || 0) + 1;
-        }
-      }
-      return counts;
-    }
-  
-    function canFormWord(word, remainingLetters) {
-      let letterFrequency = countLetters(word);
-      for (let letter in letterFrequency) {
-        if (letterFrequency[letter] > (remainingLetters[letter] || 0)) {
-          return false;
-        }
-      }
-      return true;
-    }
-  
-    function updateRemainingLetters(word, remainingLetters) {
-      let letterFrequency = countLetters(word);
-      for (let letter in letterFrequency) {
-        remainingLetters[letter] -= letterFrequency[letter];
-      }
-    }
-  
-    function findMaxUsageFromStart(startIndex) {
-      let result = [];
-      let remainingLetters = { ...letterCounts };
-  
-      // Start with the given starting word
-      let startingWord = words[startIndex].word;
-      if (canFormWord(startingWord, remainingLetters)) {
-        updateRemainingLetters(startingWord, remainingLetters);
-        result.push(startingWord);
-  
-        // Continue with the rest of the words in descending order of length
-        let sortedWords = words
-          .slice(0, startIndex)
-          .concat(words.slice(startIndex + 1))
-          .sort((a, b) => b.word.replace(/[^a-zA-Z]/g, '').length - a.word.replace(/[^a-zA-Z]/g, '').length);
-  
-        for (let obj of sortedWords) {
-          let word = obj.word;
-          if (canFormWord(word, remainingLetters)) {
-            updateRemainingLetters(word, remainingLetters);
-            result.push(word);
-          }
-        }
-      }
-  
-      return result;
-    }
-  
-    let optimalList = [];
-    let maxUsedLetters = 0;
-  
-    for (let i = 0; i < words.length; i++) {
-      let currentList = findMaxUsageFromStart(i);
-      let usedLettersCount = currentList.join('').replace(/[^a-zA-Z]/g, '').length;
-  
-      if (usedLettersCount > maxUsedLetters) {
-        maxUsedLetters = usedLettersCount;
-        optimalList = currentList;
-      }
-    }
-  
-    return optimalList;
-  }
-
-const getNumOfLettersTotal = (bracelets) => {
-  let count = 0;
-  bracelets.forEach((bracelet) => {
-    count = count + bracelet.length;
-  });
-  return count;
 };
 
 // Process each increment asynchronously
