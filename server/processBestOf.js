@@ -7,7 +7,6 @@ const buildSQLQuery = (options) => {
   return "SELECT * FROM bracelets b";
 };
 
-// Example letter counts
 let letterCounts = {
   a: 0,
   b: 0,
@@ -37,73 +36,195 @@ let letterCounts = {
   z: 0,
 };
 
-const increments = [1, 2, 3];
+const increments = [1, 2, 3, 4, 5, 10, 20, 30];
 
-increments.forEach((count) => {
-  // Convert letter counts to increments of 5
-  Object.keys(letterCounts).forEach((letter) => {
-    letterCounts[letter] = count;
+const fetchWords = () => {
+  return new Promise((resolve, reject) => {
+    const db = new sqlite3.Database("./server/TS_liz_new.db");
+    const sql = buildSQLQuery({});
+
+    db.all(sql, [], (err, rows) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(rows);
+      }
+      db.close();
+    });
   });
+};
 
-  // Function to fetch data from the SQLite database
-  const fetchWords = () => {
-    return new Promise((resolve, reject) => {
-      const db = new sqlite3.Database("./server/TS_liz_new.db");
-      const sql = buildSQLQuery({});
+const processLetterCounts = async (count, letterCounts, wordList) => {
+  try {
+    // Preprocess and find best combination
+    const validWords = preprocessWords(wordList, letterCounts);
+    const bestOf = findBestCombination(validWords, letterCounts);
+    console.log(`Processed letter count: ${count}`);
 
-      db.all(sql, [], (err, rows) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(rows);
-        }
-        db.close();
+    let csvData = [];
+
+    // Append firstItems
+    bestOf.firstItems.forEach((itemArray, index) => {
+      itemArray.forEach((word) => {
+        csvData.push({
+          word: word,
+          group: index,
+          letterCount: count,
+          type: "mostLetters",
+        });
       });
     });
-  };
 
-  const processLetterCounts = async (letterCount) => {
-    try {
-      const wordList = await fetchWords(); // Await the promise result
-
-      // Preprocess and find best combination
-      const validWords = preprocessWords(wordList, letterCounts);
-      const bestOf = findBestCombination(validWords, letterCounts);
-      console.log(bestOf);
-
-      let csvData = [];
-
-      // Append firstItems
-      bestOf.firstItems.forEach((itemArray) => {
-        itemArray.forEach((word) => {
-          csvData.push({
-            word: word,
-            letterCount: letterCount,
-            type: "mostLetters",
-          });
+    // Append mostBraceletOptions
+    bestOf.mostBraceletOptions.forEach((optionArray, index) => {
+      optionArray.forEach((word) => {
+        csvData.push({
+          word: word,
+          group: index,
+          letterCount: count,
+          type: "maxBracelets",
         });
       });
+    });
 
-      // Append mostBraceletOptions
-      bestOf.mostBraceletOptions.forEach((optionArray) => {
-        optionArray.forEach((word) => {
-          csvData.push({
-            word: word,
-            letterCount: letterCount,
-            type: "maxBracelets",
-          });
-        });
-      });
+    const csv = parse(csvData, { header: false }); // Exclude headers
 
-      const csv = parse(csvData, { header: false }); // Exclude headers
+    // Append CSV data to file (without overwriting)
+    fs.appendFileSync("output.csv", csv + "\n"); // Add newline for each CSV entry
+    console.log(`CSV data for count ${count} has been appended to output.csv.`);
+  } catch (err) {
+    console.error("Error processing letter counts:", err.message);
+  }
+};
 
-      // Append CSV data to file (without overwriting)
-      fs.appendFileSync("output.csv", csv);
-      console.log("CSV file has been saved.");
-    } catch (err) {
-      console.error("Error processing letter counts:", err.message);
+function findMaxLetterUsage(letterCounts, words) {
+  // Function to count letters in a word
+  function countLetters(word) {
+    let counts = {};
+    for (let letter of word) {
+      if (letter.match(/[a-zA-Z]/)) {
+        // Only consider alphabetic characters
+        letter = letter.toLowerCase();
+        counts[letter] = (counts[letter] || 0) + 1;
+      }
     }
-  };
+    return counts;
+  }
 
-  processLetterCounts(count);
-});
+  // Sort words by their length in descending order
+  words.sort(
+    (a, b) =>
+      b.word.replace(/[^a-zA-Z]/g, "").length -
+      a.word.replace(/[^a-zA-Z]/g, "").length
+  );
+
+  let result = [];
+  let remainingLetters = { ...letterCounts };
+
+  for (let obj of words) {
+    let word = obj.word;
+    let letterFrequency = countLetters(word);
+    let canBeFormed = true;
+
+    // Check if word can be formed with remaining letters
+    for (let letter in letterFrequency) {
+      if (letterFrequency[letter] > (remainingLetters[letter] || 0)) {
+        canBeFormed = false;
+        break;
+      }
+    }
+
+    // If the word can be formed, update the remaining letter counts and add to the result
+    if (canBeFormed) {
+      for (let letter in letterFrequency) {
+        remainingLetters[letter] -= letterFrequency[letter];
+      }
+      result.push(word);
+    }
+  }
+
+  return result;
+}
+
+function findMaxLetterUsageAscending(letterCounts, words) {
+  // Function to count letters in a word
+  function countLetters(word) {
+    let counts = {};
+    for (let letter of word) {
+      if (letter.match(/[a-zA-Z]/)) {
+        // Only consider alphabetic characters
+        letter = letter.toLowerCase();
+        counts[letter] = (counts[letter] || 0) + 1;
+      }
+    }
+    return counts;
+  }
+
+  // Sort words by their length in ascending order
+  words.sort(
+    (a, b) =>
+      a.word.replace(/[^a-zA-Z]/g, "").length -
+      b.word.replace(/[^a-zA-Z]/g, "").length
+  );
+
+  let result = [];
+  let remainingLetters = { ...letterCounts };
+
+  for (let obj of words) {
+    let word = obj.word;
+    let letterFrequency = countLetters(word);
+    let canBeFormed = true;
+
+    // Check if word can be formed with remaining letters
+    for (let letter in letterFrequency) {
+      if (letterFrequency[letter] > (remainingLetters[letter] || 0)) {
+        canBeFormed = false;
+        break;
+      }
+    }
+
+    // If the word can be formed, update the remaining letter counts and add to the result
+    if (canBeFormed) {
+      for (let letter in letterFrequency) {
+        remainingLetters[letter] -= letterFrequency[letter];
+      }
+      result.push(word);
+    }
+  }
+
+  return result;
+}
+
+const getNumOfLettersTotal = (bracelets) => {
+  let count = 0;
+  bracelets.forEach((bracelet) => {
+    count = count + bracelet.length;
+  });
+  return count;
+};
+
+// Process each increment asynchronously
+const processIncrements = async () => {
+  for (const count of increments) {
+    const wordList = await fetchWords();
+
+    Object.keys(letterCounts).forEach((letter) => {
+      letterCounts[letter] = count;
+    });
+
+    //await processLetterCounts(count, letterCounts, wordList);
+    const ret = findMaxLetterUsage(letterCounts, wordList);
+    console.log(count, ret, getNumOfLettersTotal(ret));
+
+    const ret2 = findMaxLetterUsageAscending(letterCounts, wordList);
+    console.log(ret2, getNumOfLettersTotal(ret2));
+  }
+};
+
+processIncrements()
+  .then(() => {
+    console.log("All increments processed successfully.");
+  })
+  .catch((err) => {
+    console.error("Error processing increments:", err.message);
+  });
