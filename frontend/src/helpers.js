@@ -1,9 +1,11 @@
 const apiUrl =
-      process.env.NODE_ENV === "production"
-        ? "https://golden.tattoo/"
-        : (process.env.NODE_ENV === "test"
-        ? "https://golden-tattoo-staging-6a9c78f27539.herokuapp.com/"
-        : "http://localhost:3001/");
+  process.env.NODE_ENV === "production"
+    ? "https://golden.tattoo/"
+    : process.env.NODE_ENV === "test"
+    ? "https://golden-tattoo-staging-6a9c78f27539.herokuapp.com/"
+    : "http://localhost:3001/";
+
+console.log(apiUrl);
 
 function preprocessWords(wordList, letterDict) {
   const validWords = [];
@@ -220,8 +222,7 @@ function findMaxLetterUsage(letterCounts, words) {
   // Sort words by their length in descending order
   words.sort(
     (a, b) =>
-      b.replace(/[^a-zA-Z]/g, "").length -
-      a.replace(/[^a-zA-Z]/g, "").length
+      b.replace(/[^a-zA-Z]/g, "").length - a.replace(/[^a-zA-Z]/g, "").length
   );
 
   let result = [];
@@ -269,8 +270,7 @@ function findMaxLetterUsageAscending(letterCounts, words) {
   // Sort words by their length in ascending order
   words.sort(
     (a, b) =>
-      a.replace(/[^a-zA-Z]/g, "").length -
-      b.replace(/[^a-zA-Z]/g, "").length
+      a.replace(/[^a-zA-Z]/g, "").length - b.replace(/[^a-zA-Z]/g, "").length
   );
 
   let result = [];
@@ -403,5 +403,5 @@ module.exports = {
   preprocessWords,
   findLongestCombinations,
   getOptimizedLists,
-  apiUrl
+  apiUrl,
 };
