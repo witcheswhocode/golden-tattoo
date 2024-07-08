@@ -1,8 +1,14 @@
+const pathname = window.location.pathname;
+const baseURL = `${window.location.protocol}//${window.location.host}`;
+
+console.log('Pathname:', pathname);
+console.log('Base URL:', baseURL);
+
 const apiUrl =
   process.env.NODE_ENV === "production"
-    ? "https://golden.tattoo/"
+    ? baseURL
     : process.env.NODE_ENV === "test"
-    ? "https://golden-tattoo-staging-6a9c78f27539.herokuapp.com/"
+    ? baseURL
     : "http://localhost:3001/";
 
 console.log(process.env.NODE_ENV, process.env.env);
