@@ -45,7 +45,10 @@ const __dirname = path.dirname(__filename);
 const apiUrl =
   process.env.NODE_ENV === "production"
     ? "https://golden.tattoo/"
-    : "http://localhost:3000";
+    : (process.env.NODE_ENV === "test"
+    ? "https://golden-tattoo-staging-6a9c78f27539.herokuapp.com/"
+    : "http://localhost:3000");
+
 const port = process.env.PORT || 3001; // Use 3001 as fallback
 
 app.use(cors());
@@ -277,4 +280,3 @@ process.on("SIGTERM", () => {
     pool.drain().then(() => pool.clear());
   });
 });
-
