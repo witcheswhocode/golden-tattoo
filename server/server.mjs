@@ -49,6 +49,8 @@ const apiUrl =
     ? "https://golden-tattoo-staging-6a9c78f27539.herokuapp.com/"
     : "http://localhost:3000");
 
+console.log("API URL: ", apiUrl);
+
 const port = process.env.PORT || 3001; // Use 3001 as fallback
 
 app.use(cors());
