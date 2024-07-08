@@ -5,7 +5,7 @@ const apiUrl =
     ? "https://golden-tattoo-staging-6a9c78f27539.herokuapp.com/"
     : "http://localhost:3001/";
 
-console.log(apiUrl);
+console.log(process.env.NODE_ENV, process.env.env);
 
 function preprocessWords(wordList, letterDict) {
   const validWords = [];
