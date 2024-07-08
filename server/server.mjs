@@ -42,24 +42,30 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const apiUrl =
-  process.env.NODE_ENV === "production"
-    ? "https://golden.tattoo/"
-    : (process.env.NODE_ENV === "test"
-    ? "https://golden-tattoo-staging-6a9c78f27539.herokuapp.com/"
-    : "http://localhost:3000");
+const allowedOrigins = [
+  "https://golden.tattoo",
+  "https://golden-tattoo-staging-6a9c78f27539.herokuapp.com",
+  "http://localhost:3000",
+];
 
-console.log("API URL FROM ", process.env.NODE_ENV);
+console.log("API URL FROM ", process.env.NODE_ENV, process.env.env);
 
 const port = process.env.PORT || 3001; // Use 3001 as fallback
 
-app.use(cors());
-app.use(
-  cors({
-    origin: apiUrl, // Replace with your frontend URL
-    optionsSuccessStatus: 200, // Some legacy browsers choke on 204
-  })
-);
+// Configure CORS
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  optionsSuccessStatus: 200, // Some legacy browsers choke on 204
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
