@@ -1,3 +1,10 @@
+const apiUrl =
+      process.env.NODE_ENV === "production"
+        ? "https://golden.tattoo/"
+        : (process.env.NODE_ENV === "test"
+        ? "https://golden-tattoo-staging-6a9c78f27539.herokuapp.com/"
+        : "http://localhost:3001/");
+
 function preprocessWords(wordList, letterDict) {
   const validWords = [];
 
@@ -396,4 +403,5 @@ module.exports = {
   preprocessWords,
   findLongestCombinations,
   getOptimizedLists,
+  apiUrl
 };

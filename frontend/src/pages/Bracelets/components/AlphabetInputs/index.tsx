@@ -1,6 +1,7 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import LoadingBeads from "src/components/LoadingBeads";
 import CustomButton from "src/components/Button";
+import { apiUrl } from "src/helpers";
 import { useTheme } from "src/components/ThemeContext";
 
 interface AlphabetInputProps {
@@ -59,11 +60,6 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
 
     // Append selected checkboxes values
     selectedOptions.forEach((option) => params.append("options", option));
-
-    const apiUrl =
-      process.env.NODE_ENV === "production"
-        ? "https://golden.tattoo/"
-        : "http://localhost:3001/";
 
     const urlWithParams = `${apiUrl}getBraceletIdeas?${params.toString()}`;
 

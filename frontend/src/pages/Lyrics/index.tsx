@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import DataTable, { ModalData } from "./components/DataTable";
 import Modal from "./components/Modal";
-import MetaTags from "src/components/MetaTags";
+import { apiUrl } from "src/helpers";
 import { TableRow } from "./components/DataTable";
 import { useTheme } from "src/components/ThemeContext";
 
@@ -12,10 +12,6 @@ const LyricsTable: React.FC = () => {
   const [tableRows, setTableRows] = useState<TableRow[] | null>(null);
 
   const openModal = (item: TableRow) => {
-    const apiUrl =
-      process.env.NODE_ENV === "production"
-        ? "https://golden.tattoo/"
-        : "http://localhost:3001/";
     setSelectedWord(item.word);
     fetch(`${apiUrl}getLyrics/${item.wordid}`)
       .then((response) => response.json())
@@ -28,11 +24,6 @@ const LyricsTable: React.FC = () => {
   };
 
   useEffect(() => {
-    const apiUrl =
-      process.env.NODE_ENV === "production"
-        ? "https://golden.tattoo/"
-        : "http://localhost:3001/";
-
     fetch(`${apiUrl}words`)
       .then((response) => response.json())
       .then((data: any) => {
