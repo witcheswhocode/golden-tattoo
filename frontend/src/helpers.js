@@ -1,6 +1,6 @@
 const apiUrl =
   process.env.NODE_ENV === "production"
-    ? "https://golden:tattoo/"
+    ? "https://golden-tattoo-staging-6a9c78f27539.herokuapp.com"//https://golden.tattoo/"
     : process.env.NODE_ENV === "development"
     ? "http://localhost:3001/"
     : "https://golden-tattoo-staging-6a9c78f27539.herokuapp.com";
