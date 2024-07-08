@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "start": "ts-node ./server/server.mjs",
-    "heroku-postbuild": "cd frontend && yarn install && yarn build"
+    "heroku-postbuild": "node heroku-build.js"
   },
   "dependencies": {
     "cors": "^2.8.5",

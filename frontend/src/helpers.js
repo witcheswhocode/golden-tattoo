@@ -1,11 +1,6 @@
-const apiUrl =
-  process.env.NODE_ENV === "production"
-    ? "https://golden-tattoo-staging-6a9c78f27539.herokuapp.com/"//https://golden.tattoo/"
-    : process.env.NODE_ENV === "development"
-    ? "http://localhost:3001/"
-    : "https://golden-tattoo-staging-6a9c78f27539.herokuapp.com/";
+const apiUrl = process.env.REACT_APP_API_URL;
 
-console.log(process.env.NODE_ENV, process.env.env);
+console.log(process.env.NODE_ENV, process.env.env, process.env.REACT_APP_API_URL);
 
 function preprocessWords(wordList, letterDict) {
   const validWords = [];
