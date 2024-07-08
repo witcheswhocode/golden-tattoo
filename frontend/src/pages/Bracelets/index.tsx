@@ -1,9 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import BraceletIdeas from "./components/BraceletIdeas";
 import AlphabetInputs from "./components/AlphabetInputs";
 import Sparkles from "src/components/Sparkles";
 import { useTheme } from "src/components/ThemeContext";
-import MetaTags from "src/components/MetaTags";
+import { getOptimizedLists } from "../../helpers";
 
 type LetterCount = { [letter: string]: number };
 
@@ -12,10 +12,6 @@ const Bracelets = () => {
   const [combinationPossibilities, setCombinationPossibilities] = useState<
     string[] | null
   >(null);
-  const [
-    mostLetterCombinationPossibilities,
-    setMostLetterCombinationPossibilities,
-  ] = useState<string[][] | null>(null);
 
   const [
     mostBraceletCombinationPossibilities,
@@ -28,6 +24,16 @@ const Bracelets = () => {
 
   const [showSparkles, setShowSparkles] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (inputValues && combinationPossibilities) {
+      const optList: any = getOptimizedLists(
+        inputValues,
+        combinationPossibilities
+      );
+      setMostBraceletCombinationPossibilities(optList);
+    }
+  }, [combinationPossibilities]);
+
   return (
     <div className={`w-full md:w-2/3 lg:w-1/2 z-10 text-${theme}-text`}>
       {/*<MetaTags
@@ -37,12 +43,6 @@ const Bracelets = () => {
   />*/}
       <AlphabetInputs
         handleCombinationPossibilities={setCombinationPossibilities}
-        handleMostLetterCombinationPossibilities={
-          setMostLetterCombinationPossibilities
-        }
-        handleMostBraceletCombinationPossibilities={
-          setMostBraceletCombinationPossibilities
-        }
         inputValues={inputValues}
         setInputValues={setInputValues}
         resultsRef={resultsRef}
@@ -53,12 +53,21 @@ const Bracelets = () => {
           {showSparkles && <Sparkles />}
           <BraceletIdeas
             bracelets={combinationPossibilities}
-            mostLettersUsed={mostLetterCombinationPossibilities}
             mostBraceletOptions={mostBraceletCombinationPossibilities}
             letters={inputValues}
           />
         </div>
       )}
+
+      <p className="flex flex-col justify-center items-center mt-4 w-80% text-sm">
+        Bracelet ideas compiled from multiple resources.{" "}
+        <a
+          href="/about"
+          className={`internal underline text-${theme}-link hover:text-${theme}-linkHover visited:text-${theme}-linkVisited focus:ring`}
+        >
+          See credits on the about page.
+        </a>
+      </p>
     </div>
   );
 };

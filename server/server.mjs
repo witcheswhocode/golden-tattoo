@@ -4,6 +4,8 @@ import sqlite3 from "sqlite3";
 import path from "path";
 import { fileURLToPath } from "url";
 import { createPool } from "generic-pool";
+import pkg from "../frontend/src/helpers.js";
+const { preprocessWords, findLongestCombinations, getOptimizedLists } = pkg;
 
 // Create a connection pool for SQLite
 const factory = {
@@ -40,19 +42,30 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const apiUrl =
-  process.env.NODE_ENV === "production"
-    ? "https://golden.tattoo/"
-    : "http://localhost:3000";
+const allowedOrigins = [
+  "https://golden.tattoo",
+  "https://golden-tattoo-staging-6a9c78f27539.herokuapp.com",
+  "http://localhost:3000",
+];
+
+console.log("API URL FROM ", process.env.NODE_ENV, process.env.env);
+
 const port = process.env.PORT || 3001; // Use 3001 as fallback
 
-app.use(cors());
-app.use(
-  cors({
-    origin: apiUrl, // Replace with your frontend URL
-    optionsSuccessStatus: 200, // Some legacy browsers choke on 204
-  })
-);
+// Configure CORS
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  optionsSuccessStatus: 200, // Some legacy browsers choke on 204
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
@@ -97,90 +110,6 @@ app.use(
   "/assets",
   express.static(path.join(__dirname, "../frontend/build/assets"))
 );
-
-app.get("/getBestBraceletCombos", async (req, res) => {
-  return res.json({
-    error: "workload too large",
-    data: {
-      mostLettersUsed: [["Temporarily disabled while server issues are sorted out!"]],
-      mostBraceletOptions: [["Temporarily disabled server issues are sorted out!"]],
-    },
-  });
-  /*try {
-    console.log("Received query parameters:", req.query);
-
-    const options = req.query["options"]; // Adjust this according to your actual request format
-
-    // Function to fetch data from the database
-    const fetchWords = () => {
-      return new Promise((resolve, reject) => {
-        pool
-          .acquire()
-          .then((db) => {
-            const sql = buildSQLQuery(options); // Use options directly
-            const params = [];
-            db.all(sql, params, (err, rows) => {
-              pool.release(db); // Release the connection back to the pool
-              if (err) {
-                reject(err);
-                return;
-              }
-              resolve(rows);
-            });
-          })
-          .catch((err) => {
-            reject(err);
-          });
-      });
-    };
-
-    // Check for cancellation and fetch data
-    if (currentRequest.cancel) {
-      throw new Error("Request canceled");
-    }
-
-    const wordList = await fetchWords(); // Await the promise result
-
-    const letterCounts = req.query; // Adjust this according to your actual request format
-
-    // Sum up all letter counts
-    const totalWorkload = Object.values(letterCounts).reduce(
-      (acc, count) => acc + Number(count),
-      0
-    );
-
-    // Check if the total workload exceeds the threshold
-    if (totalWorkload > 100) {
-      return res.status(400).json({
-        error: "workload too large",
-        data: {
-          mostLettersUsed: [["Temporarily disabled, sorry! "]],
-          mostBraceletOptions: [["Temporarily disabled, sorry! "]],
-        },
-      });
-    }
-
-    // Preprocess and find best combination
-    const validWords = preprocessWords(wordList, letterCounts);
-    const bestOf = findBestCombination(validWords, letterCounts);
-
-    // Check for cancellation again before responding
-    if (currentRequest.cancel) {
-      throw new Error("Request canceled");
-    }
-
-    res.json({
-      message: "success",
-      data: {
-        mostLettersUsed: bestOf.firstItems,
-        mostBraceletOptions: bestOf.mostBraceletOptions,
-      },
-    });
-  } catch (err) {
-    console.error("Error processing request:", err.message);
-    res.status(500).json({ error: err.message });
-  }*/
-});
 
 app.get("/words", (req, res) => {
   pool
@@ -359,205 +288,3 @@ process.on("SIGTERM", () => {
     pool.drain().then(() => pool.clear());
   });
 });
-
-function letterCounter(word) {
-  let data = new Map();
-  for (let letter of word) {
-    if (!data[letter]) {
-      data[letter] = 1;
-    } else {
-      data[letter] += 1;
-    }
-  }
-  return data;
-}
-
-function cleanWord(word) {
-  return word.replaceAll(" ", "").replaceAll(",", "").replaceAll("'", "");
-}
-
-function canConstruct(word, letterDict) {
-  const wordCount = letterCounter(cleanWord(word.toLowerCase()));
-  for (let [letter, value] in wordCount) {
-    if (wordCount[letter] <= letterDict[letter]) {
-      continue;
-    } else {
-      return false;
-    }
-  }
-  return true;
-}
-
-function preprocessWords(wordList, letterDict) {
-  const validWords = [];
-
-  for (const word of wordList) {
-    if (canConstruct(word["word"], letterDict)) {
-      validWords.push(word["word"]);
-    }
-  }
-  return validWords;
-}
-
-function findLongestCombinations(words, letterDict) {
-  let maxCombinations = 0;
-  const letterCounts = { ...letterDict };
-  const combinationsList = [];
-
-  for (const word of words) {
-    if (canConstruct(word, letterDict)) {
-      maxCombinations += 1;
-      combinationsList.push(word);
-      for (const letter of word) {
-        letterCounts[letter] -= 1;
-        //if (letterCounts[letter] === 0) {
-        //  delete letterCounts[letter];
-        //}
-      }
-    }
-  }
-  return [maxCombinations, combinationsList, letterCounts];
-}
-
-export default function findBestCombination(words, letterCounts) {
-  let bestSolution = [];
-  let bestCount = 0;
-  let allSolutions = [];
-  const MAX_SOLUTIONS = 20; // Limit the number of solutions to store
-
-  function backtrackIterative() {
-    const stack = [
-      { index: 0, solution: [], letterCounts: { ...letterCounts } },
-    ];
-
-    while (stack.length > 0) {
-      const { index, solution, letterCounts } = stack.pop();
-
-      if (index === words.length) {
-        const count = countLettersUsed(solution);
-        if (count > bestCount) {
-          bestCount = count;
-          bestSolution = solution.slice();
-        }
-        continue;
-      }
-
-      const word = words[index];
-      if (canFormWord(word, letterCounts)) {
-        const newLetterCounts = updateLetterCounts(word, { ...letterCounts });
-        const newSolution = [...solution, word];
-
-        if (newSolution.length > 1) {
-          allSolutions.push(newSolution);
-          if (allSolutions.length > MAX_SOLUTIONS) {
-            pruneSolutions();
-          }
-        }
-
-        stack.push({
-          index: index + 1,
-          solution: newSolution,
-          letterCounts: newLetterCounts,
-        });
-      }
-
-      stack.push({ index: index + 1, solution, letterCounts });
-    }
-  }
-
-  function pruneSolutions() {
-    allSolutions.sort((a, b) => {
-      const totalA = a.join("").length;
-      const totalB = b.join("").length;
-      if (totalA === totalB) {
-        return b.length - a.length;
-      }
-      return totalB - totalA;
-    });
-
-    allSolutions = allSolutions.slice(0, MAX_SOLUTIONS);
-  }
-
-  backtrackIterative();
-
-  return findTheBests(allSolutions);
-
-  function findTheBests(allSolutions) {
-    const arrayTotals = allSolutions.map((array) => array.join("").length);
-
-    allSolutions.sort((a, b) => {
-      const totalA = a.join("").length;
-      const totalB = b.join("").length;
-
-      if (totalA === totalB) {
-        return b.length - a.length;
-      }
-
-      return totalB - totalA;
-    });
-
-    const firstItems = [];
-    firstItems.push(allSolutions[0]);
-    const totalCharacters = allSolutions[0].join("").length;
-    for (let i = 1; i < allSolutions.length; i++) {
-      if (arrayTotals[i] === totalCharacters) {
-        firstItems.push(allSolutions[i]);
-      } else {
-        break;
-      }
-    }
-
-    const maxItems = Math.max(
-      ...allSolutions.map((solution) => solution.length)
-    );
-
-    const maxItemsSolutions = allSolutions.filter(
-      (solution) => solution.length === maxItems
-    );
-
-    return { firstItems: firstItems, mostBraceletOptions: maxItemsSolutions };
-  }
-
-  function canFormWord(word, letterCounts) {
-    const wordLetters = word.replace(/\s/g, "").toLowerCase();
-    const countsCopy = { ...letterCounts };
-
-    for (let char of wordLetters) {
-      if (!countsCopy[char] || countsCopy[char] === "0") {
-        return false;
-      }
-      countsCopy[char] = String(Number(countsCopy[char]) - 1);
-    }
-
-    return true;
-  }
-
-  function updateLetterCounts(word, letterCounts) {
-    const countsCopy = { ...letterCounts };
-
-    for (let char of word.replace(/\s/g, "").toLowerCase()) {
-      if (countsCopy[char] && countsCopy[char] !== "0") {
-        countsCopy[char] = String(Number(countsCopy[char]) - 1);
-      }
-    }
-
-    return countsCopy;
-  }
-
-  function countLettersUsed(solution) {
-    const letterCounts = {};
-
-    for (let word of solution) {
-      for (let char of word) {
-        letterCounts[char] = (letterCounts[char] || 0) + 1;
-      }
-    }
-
-    let totalCount = 0;
-    for (let count of Object.values(letterCounts)) {
-      totalCount += count;
-    }
-
-    return totalCount;
-  }
-}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Jukebox from "./components/Jukebox";
-import MetaTags from "src/components/MetaTags";
+import { apiUrl } from "src/helpers";
 import { WritersProps } from "./components/Jukebox";
 import { useTheme } from "src/components/ThemeContext";
 
@@ -9,11 +9,6 @@ function Writers() {
   const [writerData, setWriterData] = useState<WritersProps[] | null>(null);
 
   useEffect(() => {
-    const apiUrl =
-      process.env.NODE_ENV === "production"
-        ? "https://golden.tattoo/"
-        : "http://localhost:3001/";
-
     fetch(`${apiUrl}getWriters`)
       .then((response) => response.json())
       .then((data) => setWriterData(data.data))

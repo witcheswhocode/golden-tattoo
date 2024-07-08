@@ -12,6 +12,7 @@
     "@types/react-dom": "^18.2.13",
     "@types/react-helmet": "^6.1.11",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "express": "^4.18.2",
     "html-react-parser": "^5.1.1",
     "jest-environment-jsdom": "^29.7.0",
@@ -31,7 +32,9 @@
     "start-server": "ts-node ./server/server.mjs",
     "test": "jest",
     "eject": "react-scripts eject",
-    "build": "react-scripts build"
+    "build:development": "cross-env NODE_ENV=development react-scripts build",
+    "build:production": "cross-env NODE_ENV=production react-scripts build",
+    "build:test": "cross-env NODE_ENV=staging react-scripts build"
   },
   "eslintConfig": {
     "extends": [
@@ -41,6 +44,11 @@
   },
   "browserslist": {
     "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "test": [
       ">0.2%",
       "not dead",
       "not op_mini all"

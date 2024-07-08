@@ -14,14 +14,12 @@ interface Bracelet {
 
 interface BraceletIdeasProps {
   bracelets: string[];
-  mostLettersUsed: string[][] | null;
-  mostBraceletOptions: string[][] | null;
+  mostBraceletOptions: any | null;
   letters: { [key: string]: number };
 }
 
 const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
   bracelets,
-  mostLettersUsed,
   mostBraceletOptions,
   letters,
 }) => {
@@ -179,19 +177,24 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
         letterTotal={letterTotal}
         lettersLeft={lettersLeft}
       />
-      <div className="flex items-center justify-center">
-        <ExpandableDiv
-          count={braceletSelection && Object.keys(braceletSelection).length}
-        >
-          <BraceletSelection
-            braceletSelection={braceletSelection || {}}
-            braceletQuantities={braceletQuantities}
-            handleDecrement={handleDecrement}
-            handleIncrement={handleIncrement}
-          />
-        </ExpandableDiv>
-      </div>
-
+      {braceletQuantities && Object.keys(braceletQuantities).length > 0 ? (
+        <>
+          <div className="flex items-center justify-center">
+            <ExpandableDiv
+              count={braceletSelection && Object.keys(braceletSelection).length}
+            >
+              <BraceletSelection
+                braceletSelection={braceletSelection || {}}
+                braceletQuantities={braceletQuantities}
+                handleDecrement={handleDecrement}
+                handleIncrement={handleIncrement}
+              />
+            </ExpandableDiv>
+          </div>
+        </>
+      ) : (
+        <></>
+      )}
       <Tabs>
         <Tab label="Build Your Own">
           <ListOfBraceletIdeas
@@ -202,21 +205,22 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
         </Tab>
         <Tab label="Optimized">
           (
-          {mostLettersUsed && mostBraceletOptions ? (
+          {mostBraceletOptions ? (
             <>
               <ListOfBestCombinations
-                combinations={mostLettersUsed}
+                combinations={mostBraceletOptions.any.words}
                 title={"Use the Most Letters"}
-                desc={
-                  "This list gives you the variation that will use the most beads."
-                }
+                desc={`Uses ${mostBraceletOptions.any.count} beads. This is a list a various combinations you can try to use the most letters.`}
               />
               <ListOfBestCombinations
-                combinations={mostBraceletOptions}
-                title={"Make the Most Bracelets"}
-                desc={
-                  "This is a list a various combinations you can try to make the most bracelets."
-                }
+                combinations={mostBraceletOptions.asc.words}
+                title={"Makes Smaller Worded Bracelets"}
+                desc={`Uses ${mostBraceletOptions.asc.count} beads. This is a list a various combinations you can try to use the most letters.`}
+              />
+              <ListOfBestCombinations
+                combinations={mostBraceletOptions.desc.words}
+                title={"Makes Longer Worded Bracelets"}
+                desc={`Uses ${mostBraceletOptions.desc.count} beads. This is a list a various combinations you can try to use the most letters.`}
               />
             </>
           ) : (
