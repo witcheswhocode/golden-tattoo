@@ -1,7 +1,5 @@
 const apiUrl = process.env.REACT_APP_API_URL;
 
-console.log(process.env.NODE_ENV, process.env.env, process.env.REACT_APP_API_URL);
-
 function preprocessWords(wordList, letterDict) {
   const validWords = [];
 
