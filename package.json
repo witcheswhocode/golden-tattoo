@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "dotenv-cli": "^7.4.2",
     "express": "^4.17.1",
     "generic-pool": "^3.9.0",
     "jsdom": "^23.2.0",
