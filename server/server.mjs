@@ -4,7 +4,7 @@ import sqlite3 from "sqlite3";
 import path from "path";
 import { fileURLToPath } from "url";
 import { createPool } from "generic-pool";
-import pkg from "../frontend/src/helpers.js";
+import pkg from "./helpers.js";
 const { preprocessWords, findLongestCombinations, getOptimizedLists } = pkg;
 
 // Create a connection pool for SQLite
