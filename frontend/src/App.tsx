@@ -19,6 +19,7 @@ import { ThemeLoader } from "./components/ThemeContext/components/ThemeLoader";
 import ShimmeringStars from "./components/ShimmeringStars";
 import About from "./pages/About";
 import Typewriter from "./components/Typewriter";
+import ErasOutfits from "./pages/ErasOutfits";
 import RandomTypewriterBackground from "./components/RandomTypewriterBackground";
 import initializeAnalytics from "./analytics";
 
@@ -120,6 +121,7 @@ function AppContent() {
       <Route path="/bracelets" element={<Bracelets />} />
       <Route path="/lyrics" element={<LyricsTable />} />
       <Route path="/about" element={<About />} />
+      <Route path="/erasoutfits" element={<ErasOutfits />} />
       <Route path="/" element={<Bracelets />} />
       {/* Catch-all route to handle undefined paths */}
       <Route path="*" element={<Bracelets />} />
