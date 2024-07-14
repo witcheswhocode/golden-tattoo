@@ -1,13 +1,9 @@
-import React from "react";
+import SVG from "../SVG";
 
 const Red = () => {
   return (
     <div className="relative w-16 h-16 flex justify-center items-center">
-      <svg
-        viewBox="0 0 512 512"
-        className="absolute w-full h-full"
-        xmlns="http://www.w3.org/2000/svg"
-      >
+      <SVG>
         <g>
           {/* Background white fill */}
           <path
@@ -38,7 +34,7 @@ const Red = () => {
             strokeWidth="32"
           />
         </g>
-      </svg>
+      </SVG>
       <p className="absolute text-red">EW</p>
     </div>
   );

@@ -1,14 +1,10 @@
-import React from "react";
+import SVG from "../SVG";
 
 const Lover = ({ id, house, heart, roof }) => {
   const gradientId = `gradient-lover-${id}`;
 
   return (
-    <svg
-      viewBox="0 0 24 24"
-      className="w-16 h-16"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <SVG>
       <defs>
         <linearGradient id={gradientId} x1="0%" y1="0%" x2="100%" y2="0%">
           {house.map((element, index) => (
@@ -20,7 +16,7 @@ const Lover = ({ id, house, heart, roof }) => {
           ))}
         </linearGradient>
       </defs>
-      <g>
+      <g transform="scale(24) translate(2,2)">
         <path
           d="M7.293 1.5a1 1 0 0 1 1.414 0L11 3.793V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v3.293l2.354 2.353a.5.5 0 0 1-.708.707L8 2.207 1.354 8.853a.5.5 0 1 1-.708-.707z"
           fill={roof}
@@ -35,7 +31,7 @@ const Lover = ({ id, house, heart, roof }) => {
           fill={heart}
         />
       </g>
-    </svg>
+    </SVG>
   );
 };
 
