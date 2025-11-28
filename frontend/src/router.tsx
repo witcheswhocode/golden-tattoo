@@ -27,6 +27,12 @@ const writersSearchSchema = z.object({
   sortOrder: z.enum(["asc", "desc"]).optional().default("desc"),
 }); // Schema for writers: ?sortOrder=asc|desc
 
+const lyricsSearchSchema = z.object({
+  searchTerm: z.string().optional(),
+  categories: z.array(z.string()).optional(),
+  selectedWord: z.string().optional(),
+});
+
 const rootRoute = createRootRoute({
   component: App,
 });
@@ -55,6 +61,7 @@ const lyricsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "lyrics",
   component: LyricsTable,
+  validateSearch: lyricsSearchSchema,
 });
 
 const aboutRoute = createRoute({

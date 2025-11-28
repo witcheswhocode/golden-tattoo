@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Pagination from "../Pagination";
 import Table from "../Table";
 import { useTheme } from "src/components/ThemeContext";
 import { useMediaQuery } from "react-responsive"; // Import react-responsive library
+import { useSearch, useNavigate } from "@tanstack/react-router";
 
 export interface TableRow {
   wordid: number;
@@ -79,9 +80,11 @@ const allCategories = [
 
 const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
   const { theme } = useTheme();
+  const search = useSearch({ from: "/lyrics" });
+  const navigate = useNavigate();
+
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(20);
-  const [searchTerm, setSearchTerm] = useState("");
   const [sortColumn, setSortColumn] = useState<string | null>(null);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [selectedCategories, setSelectedCategories] =
@@ -99,7 +102,7 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
     .filter((item) => {
       const matchesSearchTerm = item.otherwords
         .toLowerCase()
-        .includes(searchTerm.toLowerCase());
+        .includes(search.searchTerm?.toLowerCase() || ""); // Default to empty string if searchTerm is undefined
 
       const matchesCategory = selectedCategories.length
         ? item.categories
@@ -112,10 +115,10 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
     .sort((a, b) => {
       const startsWithSearchTermA = a.otherwords
         .toLowerCase()
-        .startsWith(searchTerm.toLowerCase());
+        .startsWith(search.searchTerm?.toLowerCase() || "");
       const startsWithSearchTermB = b.otherwords
         .toLowerCase()
-        .startsWith(searchTerm.toLowerCase());
+        .startsWith(search.searchTerm?.toLowerCase() || "");
 
       if (startsWithSearchTermA && !startsWithSearchTermB) {
         return -1;
@@ -125,11 +128,11 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
         // If both or neither start with the search term, compare consecutive character matches
         const consecutiveMatchesA = getConsecutiveMatches(
           a.otherwords.toLowerCase(),
-          searchTerm.toLowerCase()
+          search.searchTerm?.toLowerCase() || ""
         );
         const consecutiveMatchesB = getConsecutiveMatches(
           b.otherwords.toLowerCase(),
-          searchTerm.toLowerCase()
+          search.searchTerm?.toLowerCase() || ""
         );
 
         return consecutiveMatchesB - consecutiveMatchesA; // Sort in descending order of consecutive matches
@@ -196,14 +199,40 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
   };
   const isMobile = useMediaQuery({ maxWidth: 767 }); // Adjust the breakpoint as needed
 
+  // clean up url in special case of empty search term on load
+  useEffect(() => {
+    if ("searchTerm" in search && search.searchTerm === "") {
+      navigate({
+        search: ((prev: any) => {
+          const next = { ...prev };
+          delete next.searchTerm;
+          return next;
+        }) as any,
+      });
+    }
+  }, [search.searchTerm, navigate]);
+
   return (
     <>
       <div className="w-full flex justify-center items-center">
         <input
           type="text"
           placeholder="Search..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          value={search.searchTerm ?? ""}
+          onChange={(e) => {
+            const newSearchTerm = e.target.value;
+            navigate({
+              search: ((prev: any) => {
+                const next = { ...prev };
+                if (newSearchTerm.length > 0) {
+                  next.searchTerm = newSearchTerm;
+                } else {
+                  delete next.searchTerm;
+                }
+                return next;
+              }) as any,
+            });
+          }}
           className={`border-2 p-1 m-2 mb-4 md:w-1/3`}
         />
       </div>
