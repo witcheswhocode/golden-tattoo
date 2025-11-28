@@ -1,7 +1,7 @@
 import React from "react";
 import { useTheme } from "../ThemeContext";
 import SingleEmoji from "../SingleEmoji";
-import { NavLink } from "react-router-dom";
+import { Link } from "@tanstack/react-router";
 
 const Navbar: React.FC = () => {
   const { theme } = useTheme();
@@ -12,36 +12,39 @@ const Navbar: React.FC = () => {
         <ul className="flex space-x-2">
           <SingleEmoji />
           <li>
-            <NavLink
+            <Link
               to="/bracelets"
-              className={({ isActive }) =>
-                `hover:underline text-center text-${theme}-text font-${theme} ${isActive ? 'underline' : ''}`
-              }
+              className={`hover:underline text-center text-${theme}-text font-${theme}`}
+              activeProps={{
+                className: `hover:underline text-center text-${theme}-text font-${theme} underline`,
+              }}
             >
               bracelets
-            </NavLink>
+            </Link>
           </li>
           <SingleEmoji />
           <li>
-            <NavLink
+            <Link
               to="/lyrics"
-              className={({ isActive }) =>
-                `hover:underline text-center text-${theme}-text font-${theme} ${isActive ? 'underline' : ''}`
-              }
+              className={`hover:underline text-center text-${theme}-text font-${theme}`}
+              activeProps={{
+                className: `hover:underline text-center text-${theme}-text font-${theme} underline`,
+              }}
             >
               lyrics
-            </NavLink>
+            </Link>
           </li>
           <SingleEmoji />
           <li>
-            <NavLink
+            <Link
               to="/writers"
-              className={({ isActive }) =>
-                `hover:underline text-center text-${theme}-text font-${theme} ${isActive ? 'underline' : ''}`
-              }
+              className={`hover:underline text-center text-${theme}-text font-${theme}`}
+              activeProps={{
+                className: `hover:underline text-center text-${theme}-text font-${theme} underline`,
+              }}
             >
               writers
-            </NavLink>
+            </Link>
           </li>
           <SingleEmoji />
         </ul>
