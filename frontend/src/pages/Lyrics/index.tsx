@@ -4,23 +4,38 @@ import Modal from "./components/Modal";
 import { apiUrl } from "src/helpers";
 import { TableRow } from "./components/DataTable";
 import { useTheme } from "src/components/ThemeContext";
+import { useSearch, useNavigate } from "@tanstack/react-router";
 
 const LyricsTable: React.FC = () => {
   const { theme } = useTheme();
-  const [selectedWord, setSelectedWord] = useState<string | null>(null);
-  const [selectedItem, setSelectedItem] = useState<ModalData[] | null>(null);
+  const search = useSearch({ from: "/lyrics" });
+  const navigate = useNavigate();
+  const selectedWord = search.selectedWord || "";
+  const [modalContent, setModalContent] = useState<ModalData[] | null>(null);
   const [tableRows, setTableRows] = useState<TableRow[] | null>(null);
 
   const openModal = (item: TableRow) => {
-    setSelectedWord(item.word);
+    navigate({
+      search: ((prev: any) => ({
+        ...prev,
+        selectedWord: item.word,
+      })) as any,
+    });
     fetch(`${apiUrl}getLyrics/${item.wordid}`)
       .then((response) => response.json())
-      .then((data) => setSelectedItem(data.data))
+      .then((data) => setModalContent(data.data))
       .catch((error) => console.error("Error fetching modal data:", error));
   };
 
   const closeModal = () => {
-    setSelectedItem(null);
+    setModalContent(null);
+    navigate({
+      search: ((prev: any) => {
+        const next = { ...prev };
+        delete next.selectedWord;
+        return next;
+      }) as any,
+    });
   };
 
   useEffect(() => {
@@ -30,6 +45,14 @@ const LyricsTable: React.FC = () => {
         setTableRows(data);
       })
       .catch((error) => console.error("Error fetching data:", error));
+
+    if (selectedWord) {
+      console.log("Fetching modal data for selectedWord:", selectedWord);
+      fetch(`${apiUrl}getLyrics/${selectedWord}`)
+        .then((response) => response.json())
+        .then((data) => setModalContent(data.data))
+        .catch((error) => console.error("Error fetching modal data:", error));
+    }
   }, []);
 
   return (
@@ -50,8 +73,8 @@ const LyricsTable: React.FC = () => {
         data was collected from multiple sources, learn more about the data.
       </p>
       {tableRows && <DataTable data={tableRows} openModal={openModal} />}
-      {selectedItem && (
-        <Modal data={selectedItem} word={selectedWord} onClose={closeModal} />
+      {modalContent && (
+        <Modal data={modalContent} word={selectedWord} onClose={closeModal} />
       )}
     </div>
   );

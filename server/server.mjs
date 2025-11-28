@@ -151,18 +151,16 @@ FROM
   JOIN word w ON w.wordid = l.wordid 
   JOIN song s ON s.songid = l.songid 
 WHERE 
-  l.wordid = ?
+  ${Number(id) ? `l.wordid = ${Number(id)}` : `LOWER(w.word) = LOWER("${id}")`}
 ORDER BY 
   CASE WHEN a.albumid > 99 THEN 1 ELSE 0 END, 
   a.albumid DESC
   `;
-
-  const params = [id];
-
+  
   pool
     .acquire()
     .then((db) => {
-      db.all(sql, params, (err, rows) => {
+      db.all(sql, (err, rows) => {
         pool.release(db); // Release the connection back to the pool
         if (err) {
           res.status(400).json({ error: err.message });
