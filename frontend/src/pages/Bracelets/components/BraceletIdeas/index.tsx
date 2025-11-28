@@ -7,6 +7,7 @@ import Tabs from "src/components/Tabs";
 import Tab from "src/components/Tabs/components/Tab";
 import ExpandableDiv from "../ExpandableDiv";
 import LoadingBeads from "src/components/LoadingBeads";
+import { LETTERS } from "../AlphabetInputs";
 
 interface Bracelet {
   name: string;
@@ -170,10 +171,15 @@ const BraceletIdeas: React.FC<BraceletIdeasProps> = ({
     setLettersLeft(newTotalLetter);
   }, [availableLetters]);
 
+  // url will not have letters with 0 count but UI should show all letters
+  const availableLettersForUI = LETTERS.reduce((acc, letter) => {
+    acc[letter] = availableLetters[letter] ?? 0;
+    return acc;
+  }, {} as { [key: string]: number });
   return (
     <div className="p-4">
       <LetterCount
-        availableLetters={availableLetters}
+        availableLetters={availableLettersForUI}
         letterTotal={letterTotal}
         lettersLeft={lettersLeft}
       />

@@ -1,9 +1,19 @@
-import { createRootRoute, createRoute, createRouter } from "@tanstack/react-router";
+import {
+  createRootRoute,
+  createRoute,
+  createRouter,
+} from "@tanstack/react-router";
 import App from "./App";
 import Bracelets from "./pages/Bracelets";
 import Writers from "./pages/Writers";
 import LyricsTable from "./pages/Lyrics";
 import About from "./pages/About";
+import { z } from "zod";
+
+const braceletSearchSchema = z.record(
+  z.string().regex(/^[A-Z]$/),
+  z.coerce.number()
+); // Schema: ?A=3&B=2&C=5
 
 const rootRoute = createRootRoute({
   component: App,
@@ -19,6 +29,7 @@ const braceletsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "bracelets",
   component: Bracelets,
+  validateSearch: braceletSearchSchema,
 });
 
 const writersRoute = createRoute({

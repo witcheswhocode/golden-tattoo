@@ -1,13 +1,18 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
+import { useNavigate, useSearch } from "@tanstack/react-router";
 import LoadingBeads from "src/components/LoadingBeads";
 import CustomButton from "src/components/Button";
 import { apiUrl } from "src/helpers";
 import { useTheme } from "src/components/ThemeContext";
 
+// Alphabet lowercase letters
+export const LETTERS = Array.from({ length: 26 }, (_, i) =>
+  String.fromCharCode(97 + i)
+);
+
 interface AlphabetInputProps {
   handleCombinationPossibilities: (value: string[] | null) => void;
   inputValues: { [key: string]: number };
-  setInputValues: (value: { [key: string]: number | any }) => void;
   resultsRef: React.RefObject<HTMLDivElement>;
   setShowSparkles: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -15,7 +20,6 @@ interface AlphabetInputProps {
 const AlphabetInputs: React.FC<AlphabetInputProps> = ({
   inputValues,
   handleCombinationPossibilities,
-  setInputValues,
   resultsRef,
   setShowSparkles,
 }) => {
@@ -23,13 +27,19 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
   const [isFormVisible, setIsFormVisible] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const { theme } = useTheme();
+  const navigate = useNavigate();
+  const search = useSearch({ from: "/bracelets" });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setInputValues((prevInputValues: any) => ({
-      ...prevInputValues,
-      [name]: value,
-    }));
+    const numericValue = value === "" ? 0 : Number(value);
+
+    navigate({
+      search: ((prev: any) => ({
+        ...prev,
+        [name.toUpperCase()]: numericValue,
+      })) as any,
+    });
   };
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
@@ -44,7 +54,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
 
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setIsLoading(true); // Set loading to true when form is submitted
+    setIsLoading(true);
     const formData = new FormData(event.target as HTMLFormElement);
 
     const params = new URLSearchParams();
@@ -61,99 +71,74 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
     // Append selected checkboxes values
     selectedOptions.forEach((option) => params.append("options", option));
 
+    // URL params using TanStack Router
+    // Only include letters with value > 0, and use uppercase keys
+    const letterParamsObj: Record<string, number> = Object.entries(inputValues)
+      .filter(([key, value]) => /^[a-z]$/.test(key) && value > 0)
+      .reduce((acc, [key, value]) => {
+        acc[key.toUpperCase()] = value;
+        return acc;
+      }, {} as Record<string, number>);
+    if (Object.keys(letterParamsObj).length > 0) {
+      navigate({
+        search: (() => letterParamsObj) as any, // TypeScript workaround :(
+      });
+    }
+
     const urlWithParams = `${apiUrl}getBraceletIdeas?${params.toString()}`;
 
-    // Perform the fetch with the updated URL
     await fetch(urlWithParams)
       .then((response) => response.json())
       .then((data: any) => {
         handleCombinationPossibilities(data.data.combinationList);
-        setIsFormVisible(false); // Hide the form with animation
-        setTimeout(() => setIsSubmitted(true), 300); // Wait for the animation to complete before showing the new content
-        setShowSparkles(true); // Show sparkles
+        setIsFormVisible(false);
+        setTimeout(() => setIsSubmitted(true), 300);
+        setShowSparkles(true);
 
         setTimeout(() => {
-          setIsSubmitted(true); // Show the success message and reset button
+          setIsSubmitted(true);
           if (resultsRef.current) {
-            const yOffset = -250; // Adjust the offset value as needed
+            const yOffset = -250;
             const y =
               resultsRef.current.getBoundingClientRect().top +
               window.pageYOffset +
               yOffset;
             window.scrollTo({ top: y, behavior: "smooth" });
           }
-          setTimeout(() => setShowSparkles(false), 1000); // Hide sparkles after 1 second
-        }, 300); // Wait for the animation to complete before showing the new content
+          setTimeout(() => setShowSparkles(false), 1000);
+        }, 300);
       })
       .catch((error) => console.error("Error fetching modal data:", error))
-      .finally(() => setIsLoading(false)); // Set loading to false after fetch is completed
+      .finally(() => setIsLoading(false));
   };
 
   const handleReset = () => {
     handleCombinationPossibilities(null);
     setIsSubmitted(false);
-
-    setInputValues({
-      a: 0,
-      b: 0,
-      c: 0,
-      d: 0,
-      e: 0,
-      f: 0,
-      g: 0,
-      h: 0,
-      i: 0,
-      j: 0,
-      k: 0,
-      l: 0,
-      m: 0,
-      n: 0,
-      o: 0,
-      p: 0,
-      q: 0,
-      r: 0,
-      s: 0,
-      t: 0,
-      u: 0,
-      v: 0,
-      w: 0,
-      x: 0,
-      y: 0,
-      z: 0,
-    });
     setIsFormVisible(true);
+
+    // Remove all search params from the URL
+    navigate({
+      search: (() => ({})) as any,
+    });
   };
 
   useEffect(() => {
-    setInputValues({
-      a: 0,
-      b: 0,
-      c: 0,
-      d: 0,
-      e: 0,
-      f: 0,
-      g: 0,
-      h: 0,
-      i: 0,
-      j: 0,
-      k: 0,
-      l: 0,
-      m: 0,
-      n: 0,
-      o: 0,
-      p: 0,
-      q: 0,
-      r: 0,
-      s: 0,
-      t: 0,
-      u: 0,
-      v: 0,
-      w: 0,
-      x: 0,
-      y: 0,
-      z: 0,
+    // Fill input values from search params
+    const newValues: { [key: string]: number } = {};
+    LETTERS.forEach((letter) => {
+      const upper = letter.toUpperCase();
+      if (
+        search &&
+        typeof search[upper] === "number" &&
+        !isNaN(search[upper])
+      ) {
+        newValues[letter] = search[upper];
+      } else {
+        newValues[letter] = 0;
+      }
     });
-  }, []);
+  }, [search]);
 
   return (
     <div className={`px-2`}>
