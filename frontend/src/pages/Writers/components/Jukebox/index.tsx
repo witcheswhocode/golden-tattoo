@@ -4,6 +4,7 @@ import SongItem from "./components/SongItem";
 import RowOfEmojis from "../RowOfEmojis";
 import CustomButton from "src/components/Button";
 import { useTheme } from "src/components/ThemeContext";
+import { useSearch, useNavigate } from "@tanstack/react-router";
 
 export interface WritersProps {
   alb: string | null;
@@ -33,7 +34,8 @@ export interface WritersData {
 
 function Jukebox(props: WritersData) {
   const { theme } = useTheme();
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc"); // Track sorting order
+  const search = useSearch({ from: "/writers" });
+  const navigate = useNavigate();
 
   const createDiv = (
     albumshort: string,
@@ -109,7 +111,7 @@ function Jukebox(props: WritersData) {
     const releasedNumberA = parseInt(releasedA, 10);
     const releasedNumberB = parseInt(releasedB, 10);
 
-    if (sortOrder === "asc") {
+    if (search.sortOrder === "asc") {
       return releasedNumberA - releasedNumberB;
     } else {
       return releasedNumberB - releasedNumberA;
@@ -149,7 +151,12 @@ function Jukebox(props: WritersData) {
 
   // Toggle sorting order when the button is clicked
   const toggleSortOrder = () => {
-    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+    navigate({
+      search: ((prev: any) => {
+        const newSortOrder = prev.sortOrder === "asc" ? "desc" : "asc";
+        return { ...prev, sortOrder: newSortOrder };
+      }) as any,
+    });
   };
 
   return (

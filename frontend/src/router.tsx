@@ -23,6 +23,10 @@ const braceletSearchSchema = z
     { message: "Only single uppercase letter keys and 'kidFriendly' allowed" }
   ); // Schema for alphabet: ?A=3&B=2&C=5
 
+const writersSearchSchema = z.object({
+  sortOrder: z.enum(["asc", "desc"]).optional().default("desc"),
+}); // Schema for writers: ?sortOrder=asc|desc
+
 const rootRoute = createRootRoute({
   component: App,
 });
@@ -44,6 +48,7 @@ const writersRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "writers",
   component: Writers,
+  validateSearch: writersSearchSchema,
 });
 
 const lyricsRoute = createRoute({
