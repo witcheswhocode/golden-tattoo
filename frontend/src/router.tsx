@@ -10,10 +10,18 @@ import LyricsTable from "./pages/Lyrics";
 import About from "./pages/About";
 import { z } from "zod";
 
-const braceletSearchSchema = z.record(
-  z.string().regex(/^[A-Z]$/),
-  z.coerce.number()
-); // Schema: ?A=3&B=2&C=5
+const braceletSearchSchema = z
+  .object({
+    kidFriendly: z.coerce.boolean().optional(),
+  })
+  .catchall(z.coerce.number())
+  .refine(
+    (obj) =>
+      Object.keys(obj).every(
+        (key) => key === "kidFriendly" || /^[A-Z]$/.test(key)
+      ),
+    { message: "Only single uppercase letter keys and 'kidFriendly' allowed" }
+  ); // Schema for alphabet: ?A=3&B=2&C=5
 
 const rootRoute = createRootRoute({
   component: App,

@@ -41,15 +41,21 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
       })) as any,
     });
   };
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
   const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    setSelectedOptions((prev) =>
-      prev.includes(value)
-        ? prev.filter((option) => option !== value)
-        : [...prev, value]
-    );
+    const { checked } = event.target;
+
+    navigate({
+      search: ((prev: any) => {
+        const next = { ...prev };
+        if (checked) {
+          next.kidFriendly = true;
+        } else {
+          delete next.kidFriendly;
+        }
+        return next;
+      }) as any,
+    });
   };
 
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -67,9 +73,6 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
           : numericValue.toString()
       );
     });
-
-    // Append selected checkboxes values
-    selectedOptions.forEach((option) => params.append("options", option));
 
     // URL params using TanStack Router
     // Only include letters with value > 0, and use uppercase keys
@@ -205,9 +208,9 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
                   <input
                     type="checkbox"
                     id="kids"
-                    name="options"
-                    value="kids"
+                    name="kidFriendly"
                     className="mr-1"
+                    checked={!!search.kidFriendly}
                     onChange={handleCheckboxChange}
                   />
                 </div>
