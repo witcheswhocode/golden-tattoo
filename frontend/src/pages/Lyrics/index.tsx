@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import DataTable, { ModalData } from "./components/DataTable";
 import Modal from "./components/Modal";
@@ -35,31 +35,39 @@ const LyricsTable: React.FC = () => {
   const search = useSearch({ from: "/lyrics" });
   const navigate = useNavigate();
   const selectedWord = search.selectedWord || "";
-  const [modalContent, setModalContent] = useState<ModalData[] | null>(null);
   const {
     data: tableRows,
     isLoading,
     isError,
     error,
   } = useQuery({
-    queryKey: ["words", "lyrics"],
+    queryKey: ["words"],
     queryFn: fetchWords,
-    staleTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 15,
   });
 
-  const openModal = async (item: TableRow) => {
+  const {
+    data: modalContent,
+    isLoading: isLyricsLoading,
+    isError: isLyricsError,
+    error: lyricsError,
+  } = useQuery({
+    queryKey: ["lyrics", selectedWord],
+    queryFn: () => fetchLyricsForWord(selectedWord),
+    enabled: !!selectedWord,
+    staleTime: 1000 * 60 * 15,
+  });
+
+  const openModal = (item: TableRow) => {
     navigate({
       search: ((prev: any) => ({
         ...prev,
         selectedWord: item.word,
       })) as any,
     });
-    const lyrics = await fetchLyricsForWord(item.wordid);
-    setModalContent(lyrics || null);
   };
 
   const closeModal = () => {
-    setModalContent(null);
     navigate({
       search: ((prev: any) => {
         const next = { ...prev };
@@ -68,32 +76,6 @@ const LyricsTable: React.FC = () => {
       }) as any,
     });
   };
-
-  useEffect(() => {
-    if (!selectedWord) {
-      setModalContent(null);
-      return;
-    }
-
-    const loadLyrics = async () => {
-      try {
-        const lyrics = await fetchLyricsForWord(selectedWord);
-        setModalContent(lyrics || null);
-      } catch (err) {
-        console.error("Error fetching modal data:", err);
-        setModalContent(null);
-        navigate({
-          search: ((prev: any) => {
-            const next = { ...prev };
-            delete next.selectedWord;
-            return next;
-          }) as any,
-        });
-      }
-    };
-
-    loadLyrics();
-  }, [selectedWord]);
 
   return (
     <div className="container mx-auto p-4 md:w-2/3 lg:w-1/2 z-20">
@@ -121,6 +103,16 @@ const LyricsTable: React.FC = () => {
         </p>
       )}
       {tableRows && <DataTable data={tableRows} openModal={openModal} />}
+      {isLyricsLoading && selectedWord && (
+        <p className={`text-center text-${theme}-text`}>
+          Loading lyrics for {selectedWord}...
+        </p>
+      )}
+      {isLyricsError && (
+        <p className="text-center text-red-500">
+          {(lyricsError as Error)?.message ?? "Failed to load lyrics"}
+        </p>
+      )}
       {modalContent && (
         <Modal data={modalContent} word={selectedWord} onClose={closeModal} />
       )}
