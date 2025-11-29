@@ -4,6 +4,7 @@ import AlphabetInputs from "./components/AlphabetInputs";
 import Sparkles from "src/components/Sparkles";
 import { useTheme } from "src/components/ThemeContext";
 import { getOptimizedLists } from "../../helpers";
+import { useSearch } from "@tanstack/react-router";
 
 type LetterCount = { [letter: string]: number };
 
@@ -18,21 +19,32 @@ const Bracelets = () => {
     setMostBraceletCombinationPossibilities,
   ] = useState<string[][] | null>(null);
 
-  const [inputValues, setInputValues] = useState<{ [key: string]: number }>({});
+  const search = useSearch({ from: "/bracelets" });
 
   const resultsRef = useRef<HTMLDivElement>(null);
 
   const [showSparkles, setShowSparkles] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (inputValues && combinationPossibilities) {
-      const optList: any = getOptimizedLists(
-        inputValues,
-        combinationPossibilities
-      );
-      setMostBraceletCombinationPossibilities(optList);
+  // get input values from URL search params
+  const inputValues: LetterCount = React.useMemo(() => {
+    const values: LetterCount = {};
+    for (const key in search) {
+      if (/^[A-Z]$/.test(key)) {
+        values[key.toLowerCase()] = Number(search[key]);
+      }
     }
-  }, [combinationPossibilities]);
+    return values;
+  }, [search]);
+
+  useEffect(() => {
+    if (search && combinationPossibilities) {
+      const optList: any = getOptimizedLists(
+      inputValues,
+      combinationPossibilities
+    );
+    setMostBraceletCombinationPossibilities(optList);
+  }
+}, [search, combinationPossibilities]);
 
   return (
     <div className={`w-full md:w-2/3 lg:w-1/2 z-10 text-${theme}-text`}>
@@ -42,9 +54,8 @@ const Bracelets = () => {
         image="/assets/lover-meta-img.png"
   />*/}
       <AlphabetInputs
-        handleCombinationPossibilities={setCombinationPossibilities}
         inputValues={inputValues}
-        setInputValues={setInputValues}
+        handleCombinationPossibilities={setCombinationPossibilities}
         resultsRef={resultsRef}
         setShowSparkles={setShowSparkles}
       />

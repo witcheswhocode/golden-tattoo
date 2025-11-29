@@ -1,34 +1,25 @@
-import React, { useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Navigate,
-  Route,
-  Routes,
-  useLocation,
-} from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Outlet, useRouterState } from "@tanstack/react-router";
 import ReactGA from "react-ga4";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Writers from "./pages/Writers";
-import Bracelets from "./pages/Bracelets";
-import LyricsTable from "./pages/Lyrics";
 import Navbar from "./components/Navbar";
 import Dropdown from "./components/Dropdown";
 import { ThemeProvider, useTheme } from "./components/ThemeContext";
 import { ThemeLoader } from "./components/ThemeContext/components/ThemeLoader";
 import ShimmeringStars from "./components/ShimmeringStars";
-import About from "./pages/About";
 import Typewriter from "./components/Typewriter";
-import RandomTypewriterBackground from "./components/RandomTypewriterBackground";
 import initializeAnalytics from "./analytics";
 
 const usePageTracking = () => {
-  const location = useLocation();
+  const location = useRouterState({
+    select: (state) => state.location,
+  });
 
   useEffect(() => {
     ReactGA.send({
       hitType: "pageview",
-      page: location.pathname + location.search,
+      page: location.pathname + location.searchStr,
     });
   }, [location]);
 };
@@ -46,9 +37,7 @@ function App() {
   return (
     <ThemeProvider>
       <ThemeLoader />
-      <Router>
-        <ThemeWrapper />
-      </Router>
+      <ThemeWrapper />
     </ThemeProvider>
   );
 }
@@ -104,26 +93,10 @@ function ThemeWrapper() {
       <Header />
       <Navbar />
       <ThemeToggle />
-      <AppContent />
+      <Outlet />
       <Footer />
       <ShimmeringStars />
     </div>
-  );
-}
-
-function AppContent() {
-  const { theme } = useTheme();
-
-  return (
-    <Routes>
-      <Route path="/writers" element={<Writers />} />
-      <Route path="/bracelets" element={<Bracelets />} />
-      <Route path="/lyrics" element={<LyricsTable />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/" element={<Bracelets />} />
-      {/* Catch-all route to handle undefined paths */}
-      <Route path="*" element={<Bracelets />} />
-    </Routes>
   );
 }
 

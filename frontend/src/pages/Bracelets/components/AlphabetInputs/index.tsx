@@ -1,4 +1,6 @@
-import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
+import { useNavigate, useSearch } from "@tanstack/react-router";
+import { useMutation } from "@tanstack/react-query";
 import LoadingBeads from "src/components/LoadingBeads";
 import CustomButton from "src/components/Button";
 import { apiUrl } from "src/helpers";
@@ -7,15 +9,28 @@ import { useTheme } from "src/components/ThemeContext";
 interface AlphabetInputProps {
   handleCombinationPossibilities: (value: string[] | null) => void;
   inputValues: { [key: string]: number };
-  setInputValues: (value: { [key: string]: number | any }) => void;
   resultsRef: React.RefObject<HTMLDivElement>;
   setShowSparkles: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+const fetchBraceletIdeas = async (
+  params: URLSearchParams
+): Promise<string[]> => {
+  const response = await fetch(
+    `${apiUrl}getBraceletIdeas?${params.toString()}`
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to load words");
+  }
+
+  const data = await response.json();
+  return data.data.combinationList;
+};
+
 const AlphabetInputs: React.FC<AlphabetInputProps> = ({
   inputValues,
   handleCombinationPossibilities,
-  setInputValues,
   resultsRef,
   setShowSparkles,
 }) => {
@@ -23,28 +38,71 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
   const [isFormVisible, setIsFormVisible] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const { theme } = useTheme();
+  const navigate = useNavigate();
+  const search = useSearch({ from: "/bracelets" });
+
+  const mutationSubmit = useMutation({
+    mutationKey: ["fetchBraceletIdeas"],
+    mutationFn: (params: URLSearchParams) => fetchBraceletIdeas(params),
+    onMutate: () => {
+      console.log("Starting mutation to fetch bracelet ideas");
+      setIsLoading(true);
+    },
+    onSettled: () => {
+      console.log("Mutation settled");
+      setIsLoading(false);
+    },
+    onError: () => {
+      setIsLoading(false);
+      alert("There was an error fetching bracelet ideas. Please try again.");
+    },
+    onSuccess: (data) => {
+      handleCombinationPossibilities(data);
+      setIsFormVisible(false);
+      setTimeout(() => setIsSubmitted(true), 300);
+      setShowSparkles(true);
+
+      setTimeout(() => {
+        setIsSubmitted(true);
+        if (resultsRef.current) {
+          window.scrollTo({ top: 300, behavior: "smooth" });
+        }
+        setTimeout(() => setShowSparkles(false), 1000);
+      }, 300);
+    },
+  });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setInputValues((prevInputValues: any) => ({
-      ...prevInputValues,
-      [name]: value,
-    }));
+    const numericValue = value === "" ? 0 : Number(value);
+
+    navigate({
+      search: ((prev: any) => ({
+        ...prev,
+        [name.toUpperCase()]: numericValue,
+      })) as any,
+    });
   };
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
   const handleCheckboxChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    setSelectedOptions((prev) =>
-      prev.includes(value)
-        ? prev.filter((option) => option !== value)
-        : [...prev, value]
-    );
+    const { checked } = event.target;
+
+    navigate({
+      search: ((prev: any) => {
+        const next = { ...prev };
+        if (checked) {
+          next.kidFriendly = true;
+        } else {
+          delete next.kidFriendly;
+        }
+        return next;
+      }) as any,
+    });
   };
 
   const handleFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setIsLoading(true); // Set loading to true when form is submitted
+    setIsLoading(true);
     const formData = new FormData(event.target as HTMLFormElement);
 
     const params = new URLSearchParams();
@@ -58,102 +116,19 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
       );
     });
 
-    // Append selected checkboxes values
-    selectedOptions.forEach((option) => params.append("options", option));
-
-    const urlWithParams = `${apiUrl}getBraceletIdeas?${params.toString()}`;
-
-    // Perform the fetch with the updated URL
-    await fetch(urlWithParams)
-      .then((response) => response.json())
-      .then((data: any) => {
-        handleCombinationPossibilities(data.data.combinationList);
-        setIsFormVisible(false); // Hide the form with animation
-        setTimeout(() => setIsSubmitted(true), 300); // Wait for the animation to complete before showing the new content
-        setShowSparkles(true); // Show sparkles
-
-        setTimeout(() => {
-          setIsSubmitted(true); // Show the success message and reset button
-          if (resultsRef.current) {
-            const yOffset = -250; // Adjust the offset value as needed
-            const y =
-              resultsRef.current.getBoundingClientRect().top +
-              window.pageYOffset +
-              yOffset;
-            window.scrollTo({ top: y, behavior: "smooth" });
-          }
-          setTimeout(() => setShowSparkles(false), 1000); // Hide sparkles after 1 second
-        }, 300); // Wait for the animation to complete before showing the new content
-      })
-      .catch((error) => console.error("Error fetching modal data:", error))
-      .finally(() => setIsLoading(false)); // Set loading to false after fetch is completed
+    mutationSubmit.mutate(params);
   };
 
   const handleReset = () => {
     handleCombinationPossibilities(null);
     setIsSubmitted(false);
-
-    setInputValues({
-      a: 0,
-      b: 0,
-      c: 0,
-      d: 0,
-      e: 0,
-      f: 0,
-      g: 0,
-      h: 0,
-      i: 0,
-      j: 0,
-      k: 0,
-      l: 0,
-      m: 0,
-      n: 0,
-      o: 0,
-      p: 0,
-      q: 0,
-      r: 0,
-      s: 0,
-      t: 0,
-      u: 0,
-      v: 0,
-      w: 0,
-      x: 0,
-      y: 0,
-      z: 0,
-    });
     setIsFormVisible(true);
-  };
 
-  useEffect(() => {
-    setInputValues({
-      a: 0,
-      b: 0,
-      c: 0,
-      d: 0,
-      e: 0,
-      f: 0,
-      g: 0,
-      h: 0,
-      i: 0,
-      j: 0,
-      k: 0,
-      l: 0,
-      m: 0,
-      n: 0,
-      o: 0,
-      p: 0,
-      q: 0,
-      r: 0,
-      s: 0,
-      t: 0,
-      u: 0,
-      v: 0,
-      w: 0,
-      x: 0,
-      y: 0,
-      z: 0,
+    // Remove all search params from the URL
+    navigate({
+      search: (() => ({})) as any,
     });
-  }, []);
+  };
 
   return (
     <div className={`px-2`}>
@@ -220,9 +195,9 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
                   <input
                     type="checkbox"
                     id="kids"
-                    name="options"
-                    value="kids"
+                    name="kidFriendly"
                     className="mr-1"
+                    checked={!!search.kidFriendly}
                     onChange={handleCheckboxChange}
                   />
                 </div>

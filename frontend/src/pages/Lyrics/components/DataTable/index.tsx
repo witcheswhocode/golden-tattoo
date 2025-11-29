@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import Pagination from "../Pagination";
 import Table from "../Table";
 import { useTheme } from "src/components/ThemeContext";
 import { useMediaQuery } from "react-responsive"; // Import react-responsive library
+import { useSearch, useNavigate } from "@tanstack/react-router";
 
 export interface TableRow {
   wordid: number;
@@ -79,15 +80,13 @@ const allCategories = [
 
 const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
   const { theme } = useTheme();
+  const search = useSearch({ from: "/lyrics" });
+  const navigate = useNavigate();
+
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(20);
-  const [searchTerm, setSearchTerm] = useState("");
   const [sortColumn, setSortColumn] = useState<string | null>(null);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
-  const [selectedCategories, setSelectedCategories] =
-    useState<string[]>(allCategories);
-  const numberOfCategories = allCategories.length;
-  const [clickedCategory, setClickedCategory] = useState<Boolean>(false);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -95,13 +94,22 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
     return arr1.some((element) => arr2.includes(element));
   };
 
+  const selectedCategories = useMemo(() => {
+    if (search.categories?.length === 1 && search.categories[0] === "all categories") {
+      return allCategories;
+    }
+    else if (search.categories && search.categories.length > 0) {
+      return search.categories;
+    }
+  }, [search.categories]);
+
   const filteredData = props.data
     .filter((item) => {
       const matchesSearchTerm = item.otherwords
         .toLowerCase()
-        .includes(searchTerm.toLowerCase());
+        .includes(search.searchTerm?.toLowerCase() || ""); // Default to empty string if searchTerm is undefined
 
-      const matchesCategory = selectedCategories.length
+      const matchesCategory = selectedCategories?.length
         ? item.categories
           ? hasCommonElement(item.categories.split("|"), selectedCategories)
           : selectedCategories.includes("all categories")
@@ -112,10 +120,10 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
     .sort((a, b) => {
       const startsWithSearchTermA = a.otherwords
         .toLowerCase()
-        .startsWith(searchTerm.toLowerCase());
+        .startsWith(search.searchTerm?.toLowerCase() || "");
       const startsWithSearchTermB = b.otherwords
         .toLowerCase()
-        .startsWith(searchTerm.toLowerCase());
+        .startsWith(search.searchTerm?.toLowerCase() || "");
 
       if (startsWithSearchTermA && !startsWithSearchTermB) {
         return -1;
@@ -125,11 +133,11 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
         // If both or neither start with the search term, compare consecutive character matches
         const consecutiveMatchesA = getConsecutiveMatches(
           a.otherwords.toLowerCase(),
-          searchTerm.toLowerCase()
+          search.searchTerm?.toLowerCase() || ""
         );
         const consecutiveMatchesB = getConsecutiveMatches(
           b.otherwords.toLowerCase(),
-          searchTerm.toLowerCase()
+          search.searchTerm?.toLowerCase() || ""
         );
 
         return consecutiveMatchesB - consecutiveMatchesA; // Sort in descending order of consecutive matches
@@ -177,24 +185,67 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
   };
 
   const handleCategoryClick = (category: string) => {
-    if (!clickedCategory) {
-      setClickedCategory(true);
-      setSelectedCategories([category]);
+    // special handling for UX when "all categories" is selected
+    // and user selects a specific category, it will only show that one category (and add to if they select more)
+    if (search.categories[0] === "all categories") {
+      navigate({
+        search: ((prev: any) => ({
+          ...prev,
+          categories: [category],
+        })) as any,
+      });
+      return;
     }
     if (category === "all categories") {
-      setClickedCategory(false);
-      setSelectedCategories(allCategories);
+      if (search.categories?.length === 1 && search.categories[0] === "all categories") {
+        return; // user is selecting "all categories" when it's already selected, do nothing
+      }
+      navigate({
+        search: ((prev: any) => ({
+          ...prev,
+          categories: ["all categories"],
+        })) as any,
+      });
     } else {
-      if (selectedCategories.includes(category)) {
-        // Deselect the category if it's already selected
-        setSelectedCategories(selectedCategories.filter((c) => c === category));
+      if (selectedCategories?.includes(category)) {
+        // deselect the category 
+        navigate({
+          search: ((prev: any) => {
+            const next = { ...prev };
+            const updatedCategories = selectedCategories.filter((c) => c !== category);
+            if (updatedCategories.length > 0) {
+              next.categories = updatedCategories;
+            } else {
+              delete next.categories;
+            }
+            return next;
+          }) as any,
+        });
       } else {
-        // Select the category if it's not already selected
-        setSelectedCategories([...selectedCategories, category]);
+        // select the category 
+        navigate({
+          search: ((prev: any) => ({
+            ...prev,
+            categories: [...(prev.categories || []), category],
+          })) as any,
+        });
       }
     }
   };
   const isMobile = useMediaQuery({ maxWidth: 767 }); // Adjust the breakpoint as needed
+
+  // clean up url in special case of empty search term on load
+  useEffect(() => {
+    if ("searchTerm" in search && search.searchTerm === "") {
+      navigate({
+        search: ((prev: any) => {
+          const next = { ...prev };
+          delete next.searchTerm;
+          return next;
+        }) as any,
+      });
+    }
+  }, [search.searchTerm, navigate]);
 
   return (
     <>
@@ -202,8 +253,21 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
         <input
           type="text"
           placeholder="Search..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          value={search.searchTerm ?? ""}
+          onChange={(e) => {
+            const newSearchTerm = e.target.value;
+            navigate({
+              search: ((prev: any) => {
+                const next = { ...prev };
+                if (newSearchTerm.length > 0) {
+                  next.searchTerm = newSearchTerm;
+                } else {
+                  delete next.searchTerm;
+                }
+                return next;
+              }) as any,
+            });
+          }}
           className={`border-2 p-1 m-2 mb-4 md:w-1/3`}
         />
       </div>
@@ -224,7 +288,7 @@ const DataTable: React.FC<DataTableProps> = (props: DataTableProps) => {
                     : index > 7
                     ? `100`
                     : index
-                }  ${selectedCategories.includes(category) ? "selected" : ""}`}
+                }  ${selectedCategories?.includes(category) ? "selected" : ""}`}
                 key={category}
                 onClick={() => handleCategoryClick(category)}
               >

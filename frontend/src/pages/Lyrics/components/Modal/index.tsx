@@ -1,7 +1,6 @@
 import React from "react";
 import { ModalData } from "../DataTable"; // Update the import path accordingly
 import HtmlReactParser from "html-react-parser";
-import { useTheme } from "src/components/ThemeContext";
 
 interface ModalProps {
   data: ModalData[];
@@ -10,7 +9,6 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ data, word, onClose }) => {
-  const { theme } = useTheme();
   const addCategoryNote =
     data[0].categories &&
     (data[0].categories.includes("parallels") ||
