@@ -7,11 +7,11 @@ import Tabs from "src/components/Tabs";
 import Tab from "src/components/Tabs/components/Tab";
 import ExpandableDiv from "../ExpandableDiv";
 import LoadingBeads from "src/components/LoadingBeads";
-import { LETTERS } from "../AlphabetInputs";
 
-interface Bracelet {
-  name: string;
-}
+// Alphabet lowercase letters
+export const LETTERS = Array.from({ length: 26 }, (_, i) =>
+  String.fromCharCode(97 + i)
+);
 
 interface BraceletIdeasProps {
   bracelets: string[];

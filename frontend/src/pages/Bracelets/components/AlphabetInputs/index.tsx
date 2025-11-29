@@ -1,14 +1,10 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useNavigate, useSearch } from "@tanstack/react-router";
+import { useMutation } from "@tanstack/react-query";
 import LoadingBeads from "src/components/LoadingBeads";
 import CustomButton from "src/components/Button";
 import { apiUrl } from "src/helpers";
 import { useTheme } from "src/components/ThemeContext";
-
-// Alphabet lowercase letters
-export const LETTERS = Array.from({ length: 26 }, (_, i) =>
-  String.fromCharCode(97 + i)
-);
 
 interface AlphabetInputProps {
   handleCombinationPossibilities: (value: string[] | null) => void;
@@ -16,6 +12,21 @@ interface AlphabetInputProps {
   resultsRef: React.RefObject<HTMLDivElement>;
   setShowSparkles: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+const fetchBraceletIdeas = async (
+  params: URLSearchParams
+): Promise<string[]> => {
+  const response = await fetch(
+    `${apiUrl}getBraceletIdeas?${params.toString()}`
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to load words");
+  }
+
+  const data = await response.json();
+  return data.data.combinationList;
+};
 
 const AlphabetInputs: React.FC<AlphabetInputProps> = ({
   inputValues,
@@ -29,6 +40,37 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
   const { theme } = useTheme();
   const navigate = useNavigate();
   const search = useSearch({ from: "/bracelets" });
+
+  const mutationSubmit = useMutation({
+    mutationKey: ["fetchBraceletIdeas"],
+    mutationFn: (params: URLSearchParams) => fetchBraceletIdeas(params),
+    onMutate: () => {
+      console.log("Starting mutation to fetch bracelet ideas");
+      setIsLoading(true);
+    },
+    onSettled: () => {
+      console.log("Mutation settled");
+      setIsLoading(false);
+    },
+    onError: () => {
+      setIsLoading(false);
+      alert("There was an error fetching bracelet ideas. Please try again.");
+    },
+    onSuccess: (data) => {
+      handleCombinationPossibilities(data);
+      setIsFormVisible(false);
+      setTimeout(() => setIsSubmitted(true), 300);
+      setShowSparkles(true);
+
+      setTimeout(() => {
+        setIsSubmitted(true);
+        if (resultsRef.current) {
+          window.scrollTo({ top: 300, behavior: "smooth" });
+        }
+        setTimeout(() => setShowSparkles(false), 1000);
+      }, 300);
+    },
+  });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -74,31 +116,7 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
       );
     });
 
-    const urlWithParams = `${apiUrl}getBraceletIdeas?${params.toString()}`;
-
-    await fetch(urlWithParams)
-      .then((response) => response.json())
-      .then((data: any) => {
-        handleCombinationPossibilities(data.data.combinationList);
-        setIsFormVisible(false);
-        setTimeout(() => setIsSubmitted(true), 300);
-        setShowSparkles(true);
-
-        setTimeout(() => {
-          setIsSubmitted(true);
-          if (resultsRef.current) {
-            const yOffset = -250;
-            const y =
-              resultsRef.current.getBoundingClientRect().top +
-              window.pageYOffset +
-              yOffset;
-            window.scrollTo({ top: y, behavior: "smooth" });
-          }
-          setTimeout(() => setShowSparkles(false), 1000);
-        }, 300);
-      })
-      .catch((error) => console.error("Error fetching modal data:", error))
-      .finally(() => setIsLoading(false));
+    mutationSubmit.mutate(params);
   };
 
   const handleReset = () => {
