@@ -74,20 +74,6 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
       );
     });
 
-    // URL params using TanStack Router
-    // Only include letters with value > 0, and use uppercase keys
-    const letterParamsObj: Record<string, number> = Object.entries(inputValues)
-      .filter(([key, value]) => /^[a-z]$/.test(key) && value > 0)
-      .reduce((acc, [key, value]) => {
-        acc[key.toUpperCase()] = value;
-        return acc;
-      }, {} as Record<string, number>);
-    if (Object.keys(letterParamsObj).length > 0) {
-      navigate({
-        search: (() => letterParamsObj) as any, // TypeScript workaround :(
-      });
-    }
-
     const urlWithParams = `${apiUrl}getBraceletIdeas?${params.toString()}`;
 
     await fetch(urlWithParams)
