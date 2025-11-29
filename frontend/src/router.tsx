@@ -2,6 +2,7 @@ import {
   createRootRoute,
   createRoute,
   createRouter,
+  redirect,
 } from "@tanstack/react-router";
 import App from "./App";
 import Bracelets from "./pages/Bracelets";
@@ -37,10 +38,12 @@ const rootRoute = createRootRoute({
   component: App,
 });
 
-const indexRoute = createRoute({
+const indexRedirect = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
-  component: Bracelets,
+  beforeLoad: () => {
+    throw redirect({ to: "/bracelets", replace: true });
+  },
 });
 
 const braceletsRoute = createRoute({
@@ -73,11 +76,13 @@ const aboutRoute = createRoute({
 const catchAllRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "*",
-  component: Bracelets,
+  beforeLoad: () => {
+    throw redirect({ to: "/bracelets", replace: true });
+  },
 });
 
 const routeTree = rootRoute.addChildren([
-  indexRoute,
+  indexRedirect,
   braceletsRoute,
   writersRoute,
   lyricsRoute,

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Outlet, useRouterState } from "@tanstack/react-router";
 import ReactGA from "react-ga4";
 import Header from "./components/Header";

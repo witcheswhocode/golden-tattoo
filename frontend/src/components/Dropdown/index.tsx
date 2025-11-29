@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useTheme } from "../ThemeContext";
 import CustomButton from "../Button";
 
@@ -11,14 +11,13 @@ interface DropdownProps {
 export type DropdownItem = {
   value: string;
 };
-type DropdownItemArray = DropdownItem[];
 
 export default function Dropdown(props: DropdownProps) {
   const { theme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const dropdownItems = props.items;
-  console.log("Dropdown items:", dropdownItems);
+
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
