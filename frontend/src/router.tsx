@@ -29,7 +29,7 @@ const writersSearchSchema = z.object({
 
 const lyricsSearchSchema = z.object({
   searchTerm: z.string().optional(),
-  categories: z.array(z.string()).optional(),
+  categories: z.array(z.string()).optional().default(["all categories"]),
   selectedWord: z.string().optional(),
 });
 
