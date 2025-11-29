@@ -112,23 +112,6 @@ const AlphabetInputs: React.FC<AlphabetInputProps> = ({
     });
   };
 
-  useEffect(() => {
-    // Fill input values from search params
-    const newValues: { [key: string]: number } = {};
-    LETTERS.forEach((letter) => {
-      const upper = letter.toUpperCase();
-      if (
-        search &&
-        typeof search[upper] === "number" &&
-        !isNaN(search[upper])
-      ) {
-        newValues[letter] = search[upper];
-      } else {
-        newValues[letter] = 0;
-      }
-    });
-  }, [search]);
-
   return (
     <div className={`px-2`}>
       {isLoading ? (
