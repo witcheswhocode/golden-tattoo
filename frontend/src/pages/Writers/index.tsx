@@ -1,19 +1,35 @@
-import React, { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Jukebox from "./components/Jukebox";
 import { apiUrl } from "src/helpers";
 import { WritersProps } from "./components/Jukebox";
 import { useTheme } from "src/components/ThemeContext";
 
+const fetchWriters = async (): Promise<WritersProps[]> => {
+  const response = await fetch(`${apiUrl}getWriters`);
+
+  if (!response.ok) {
+    throw new Error("Failed to load writers");
+  }
+  const data = await response.json();
+  return data.data;
+};
+
 function Writers() {
   const { theme } = useTheme();
-  const [writerData, setWriterData] = useState<WritersProps[] | null>(null);
+  const {
+    data: writerData,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["writers"],
+    queryFn: fetchWriters,
+    staleTime: 1000 * 60 * 15,
+  });
 
-  useEffect(() => {
-    fetch(`${apiUrl}getWriters`)
-      .then((response) => response.json())
-      .then((data) => setWriterData(data.data))
-      .catch((error) => console.error("Error fetching data:", error));
-  }, []);
+  if (isLoading) {
+    return <div>Loading writers...</div>;
+  }
 
   return (
     <div className="w-full md:w-2/3 lg:w-1/2 z-10">

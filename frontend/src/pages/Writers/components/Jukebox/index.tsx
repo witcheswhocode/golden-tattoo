@@ -78,6 +78,7 @@ function Jukebox(props: WritersData) {
                 <SongItem
                   song={filteredItem.song}
                   writers={filteredItem.writers}
+                  key={`${filteredItem.songid}`}
                 />
               ))}
           </div>
