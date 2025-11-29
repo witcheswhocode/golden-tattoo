@@ -6,7 +6,7 @@ import React, {
   useEffect,
 } from "react";
 
-type Theme = "midnights" | "ttpd" | "reputation" | "lover";
+type Theme = "ttpd" | "midnights" | "reputation" | "lover";
 
 interface ThemeContextProps {
   theme: Theme;
@@ -19,25 +19,23 @@ interface ThemeProviderProps {
   children: ReactNode;
 }
 
-export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>("midnights");
+const themeDefault: Theme = "midnights";
 
-  const toggleTheme = (theme?: Theme) => {
-    if (theme) {
-      setTheme(theme);
-      localStorage.setItem("theme", theme);
-      document.documentElement.setAttribute("data-theme", theme);
-    } else {
-      setTheme("midnights");
-      localStorage.setItem("theme", "midnights");
-      document.documentElement.setAttribute("data-theme", "midnights");
-    }
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
+  const [theme, setTheme] = useState<Theme>(themeDefault);
+
+  const toggleTheme = (next?: Theme) => {
+    const newTheme = next ?? themeDefault;
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
   };
 
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme") as Theme | null;
     if (storedTheme) {
       setTheme(storedTheme);
+      document.documentElement.setAttribute("data-theme", storedTheme);
     }
   }, []);
 
